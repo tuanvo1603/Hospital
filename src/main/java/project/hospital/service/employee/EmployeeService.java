@@ -1,4 +1,4 @@
-package project.hospital.service.admin;
+package project.hospital.service.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,15 +8,16 @@ import project.hospital.repository.patient.PatientRepositoryDTO;
 import java.util.List;
 
 @Service
-public class ShowingPatientService {
+public class EmployeeService {
+
     private final PatientRepositoryDTO patientRepositoryDTO;
 
     @Autowired
-    public ShowingPatientService(PatientRepositoryDTO patientRepositoryDTO) {
+    public EmployeeService(PatientRepositoryDTO patientRepositoryDTO) {
         this.patientRepositoryDTO = patientRepositoryDTO;
     }
 
-    public List<PatientDTO> findPatients() {
-        return patientRepositoryDTO.findPatients();
+    public List<PatientDTO> findManagedPatients(String employeeId) {
+        return patientRepositoryDTO.findManagedPatients(employeeId);
     }
 }

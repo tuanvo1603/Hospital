@@ -1,14 +1,15 @@
-package project.hospital.model;
+package project.hospital.model.patient;
 
 import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name= "Amitted_Patient")
+@Table(name = "Amitted_Patient")
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String patientId;
     @Column(name = "first_name")
     private String firstName;
@@ -25,7 +26,7 @@ public class Patient {
     @Column(name = "weight")
     private int weight;
     @Column(name = "emp_id")
-    private String empId;
+    private String employeeId;
     @Column(name = "dob")
     private LocalDate dob;
     @Column(name = "address")
@@ -45,6 +46,7 @@ public class Patient {
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
     public enum Gender {
         Nam,
         Nữ
@@ -82,8 +84,8 @@ public class Patient {
         this.weight = weight;
     }
 
-    public void setEmpId(String empId) {
-        this.empId = empId;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public void setDob(LocalDate dob) {
@@ -154,8 +156,8 @@ public class Patient {
         return weight;
     }
 
-    public String getEmpId() {
-        return empId;
+    public String getEmployeeId() {
+        return employeeId;
     }
 
     public LocalDate getDob() {

@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
@@ -47,6 +48,7 @@
                 <th>Reason see the doctor</th>
                 <th>Request</th>
                 <th>Admit Time</th>
+                <th>Employee Managing Id</th>
             </tr>
             </thead>
             <tbody>
@@ -59,9 +61,12 @@
                 <td><span th:text="${patient.reasonSeeTheDoctor}"></span></td>
                 <td><span th:text="${patient.request}"></span></td>
                 <td><span th:text="${patient.admitTime}"></span></td>
+                <td><span th:text="${patient.employeeId}"></span></td>
                 <td>
-                    <a href="/add-patient" type ="button" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons"></i></a>
-                    <a href="/add-patient" type ="button" class="delete" title="Discharge" data-toggle="tooltip"><i class="material-icons"></i></a>
+                    <a href="/add-patient" type="button" class="edit" title="Edit" data-toggle="tooltip"><i
+                            class="material-icons"></i></a>
+                    <a href="/add-patient" type="button" class="delete" title="Discharge" data-toggle="tooltip"><i
+                            class="material-icons"></i></a>
                 </td>
             </tr>
             </tbody>

@@ -1,21 +1,24 @@
 package project.hospital.dto;
 
 import java.time.LocalDateTime;
+
 public class PatientDTO {
     private String patientId;
     private String firstName;
     private String lastName;
     private LocalDateTime admitTime;
+    private String employeeId;
     private String reasonSeeTheDoctor;
     private String request;
     private int height;
     private int weight;
 
-    public PatientDTO(String patientId, String firstName, String lastName, LocalDateTime admitTime, String reasonSeeTheDoctor, String request, int height, int weight) {
+    public PatientDTO(String patientId, String firstName, String lastName, LocalDateTime admitTime, String employeeId, String reasonSeeTheDoctor, String request, int height, int weight) {
         this.patientId = patientId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.admitTime = admitTime;
+        this.employeeId = employeeId;
         this.reasonSeeTheDoctor = reasonSeeTheDoctor;
         this.request = request;
         this.height = height;
@@ -32,6 +35,10 @@ public class PatientDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
     }
 
     public void setAdmitTime(LocalDateTime admitTime) {
@@ -54,8 +61,8 @@ public class PatientDTO {
         this.weight = weight;
     }
 
-    public String getPatientId() {
-        return patientId;
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public String getFirstName() {
@@ -64,6 +71,10 @@ public class PatientDTO {
 
     public String getLastName() {
         return lastName;
+    }
+
+    public String getPatientId() {
+        return patientId;
     }
 
     public LocalDateTime getAdmitTime() {
