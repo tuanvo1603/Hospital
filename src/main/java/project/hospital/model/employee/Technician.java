@@ -1,13 +1,14 @@
 package project.hospital.model.employee;
 
-import jakarta.persistence.*;
-import project.hospital.model.employee.Employee;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "Doctor")
-public class Doctor extends Employee {
+@Table(name = "Technician")
+public class Technician extends Employee{
 
     @Column(name = "first_name")
     private String firstName;
@@ -24,7 +25,7 @@ public class Doctor extends Employee {
     @Column(name = "qualifications")
     private String qualifications;
 
-    public Doctor(String employeeId, String workingRoom, String firstName, String lastName, LocalDate dob, String department, String qualifications) {
+    public Technician(String employeeId, String workingRoom, String firstName, String lastName, LocalDate dob, String department, String qualifications) {
         this.employeeId = employeeId;
         this.workingRoom = workingRoom;
         this.firstName = firstName;
@@ -32,9 +33,6 @@ public class Doctor extends Employee {
         this.dob = dob;
         this.department = department;
         this.qualifications = qualifications;
-    }
-
-    public Doctor() {
     }
 
     public String getFirstName() {
