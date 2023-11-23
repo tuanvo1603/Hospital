@@ -13,7 +13,7 @@ public class PatientDTO {
     private int height;
     private int weight;
 
-    public PatientDTO(String patientId, String firstName, String lastName, LocalDateTime admitTime, String employeeId, String reasonSeeTheDoctor, String request, int height, int weight) {
+    public PatientDTO(String patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String reasonSeeTheDoctor, String request, int height, int weight) {
         this.patientId = patientId;
         this.firstName = firstName;
         this.lastName = lastName;

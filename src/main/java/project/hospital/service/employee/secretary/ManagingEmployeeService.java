@@ -9,6 +9,7 @@ import project.hospital.repository.secretary.SecretaryRepository;
 public class ManagingEmployeeService {
 
     private final SecretaryRepository secretaryRepository;
+
     @Autowired
     public ManagingEmployeeService(SecretaryRepository secretaryRepository) {
         this.secretaryRepository = secretaryRepository;
