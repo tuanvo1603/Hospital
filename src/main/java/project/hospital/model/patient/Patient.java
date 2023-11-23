@@ -7,9 +7,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Amitted_Patient")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Patient {
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String patientId;
     @Column(name = "first_name")
     private String firstName;
@@ -84,10 +84,6 @@ public class Patient {
         this.weight = weight;
     }
 
-    public void setEmployeeId(String employeeId) {
-        this.employeeId = employeeId;
-    }
-
     public void setDob(LocalDate dob) {
         this.dob = dob;
     }
@@ -154,10 +150,6 @@ public class Patient {
 
     public int getWeight() {
         return weight;
-    }
-
-    public String getEmployeeId() {
-        return employeeId;
     }
 
     public LocalDate getDob() {
