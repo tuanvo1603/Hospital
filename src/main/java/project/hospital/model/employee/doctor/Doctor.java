@@ -1,4 +1,4 @@
-package project.hospital.model.employee;
+package project.hospital.model.employee.doctor;
 
 import jakarta.persistence.*;
 import project.hospital.model.employee.Employee;
@@ -7,6 +7,7 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Doctor")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Doctor extends Employee {
 
     @Column(name = "first_name")

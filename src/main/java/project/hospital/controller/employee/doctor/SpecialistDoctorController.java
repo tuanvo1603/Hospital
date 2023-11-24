@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.model.patient.Inpatient;
-import project.hospital.service.employee.doctor.SpecialistDoctorService;
+import project.hospital.service.employee.doctor.specialistdoctor.SpecialistDoctorService;
 
 @RestController
 @RequestMapping("/specialist-doctor")

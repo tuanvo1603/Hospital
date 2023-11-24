@@ -3,6 +3,7 @@ package project.hospital.service.employee.secretary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.model.employee.*;
+import project.hospital.model.employee.doctor.Doctor;
 import project.hospital.repository.secretary.SecretaryRepository;
 
 @Service

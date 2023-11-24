@@ -13,9 +13,11 @@ import java.util.List;
 @Qualifier("PatientRepositoryDTO")
 public interface PatientRepositoryDTO extends JpaRepository<Patient, String> {
 
-    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.reasonSeeTheDoctor, p.request, p.height, p.weight) FROM Patient p")
+    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.reasonSeeTheDoctor, p.request, p.height, p.weight) " +
+            "FROM Patient p")
     List<PatientDTO> findPatients();
 
-    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.reasonSeeTheDoctor, p.request, p.height, p.weight) FROM Patient p WHERE p.employeeId = :employeeId")
+    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.reasonSeeTheDoctor, p.request, p.height, p.weight) " +
+            "FROM Patient p WHERE p.employeeId = :employeeId")
     List<PatientDTO> findManagedPatients(String employeeId);
 }

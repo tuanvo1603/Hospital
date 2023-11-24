@@ -1,4 +1,4 @@
-package project.hospital.service.employee.doctor;
+package project.hospital.service.employee.doctor.specialistdoctor;
 
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,11 @@ public class SpecialistDoctorService {
     @Transactional
     public void dispatchPatient(Inpatient inpatient) {
         this.deleteOutpatient(inpatient);
-        patientRepository.insertInpatient(inpatient.getPatientId(),
+        patientRepository.insertInpatient(
+                inpatient.getPatientId(),
                 inpatient.getDepartment(),
                 inpatient.getBedCell(),
-                inpatient.getRoom());
+                inpatient.getRoom()
+        );
     }
 }

@@ -20,7 +20,10 @@ public class EmployeeController {
     }
 
     @GetMapping("/patient-list")
-    public String findManagedPatients(@RequestBody String employeeId, Model model) {
+    public String findManagedPatients(
+            @RequestBody String employeeId,
+            Model model
+    ) {
         model.addAttribute("patients", employeeService.findManagedPatients(employeeId));
         return "patient-list";
     }

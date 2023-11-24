@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.model.employee.*;
+import project.hospital.model.employee.doctor.Doctor;
 import project.hospital.service.employee.secretary.ManagingEmployeeService;
 
 @RestController
