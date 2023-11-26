@@ -30,6 +30,4 @@ public enum HospitalDepartment {
     RESPIRATORY_THERAPY,
     ANESTHESIOLOGY,
     MICROBIOLOGY;
-
 }
-

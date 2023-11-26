@@ -8,68 +8,27 @@ import java.time.LocalDate;
 
 @Entity
 @Table(name = "Nurse")
-public class Nurse extends Employee{
-
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
-
-    @Column(name = "dob")
-    private LocalDate dob;
-
-    @Column(name = "department")
-    private String department;
+public class Nurse extends Employee {
 
     @Column(name = "qualifications")
     private String qualifications;
 
-    public Nurse(String employeeId, String workingRoom, String firstName, String lastName, LocalDate dob, String department, String qualifications) {
+    public Nurse(String employeeId, String workingRoom, String firstName, String lastName, LocalDate dob, String qualifications) {
         this.employeeId = employeeId;
         this.workingRoom = workingRoom;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dob = dob;
-        this.department = department;
         this.qualifications = qualifications;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public LocalDate getDob() {
-        return dob;
-    }
-
-    public String getDepartment() {
-        return department;
+    public Nurse() {
     }
 
     public String getQualifications() {
         return qualifications;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setDob(LocalDate dob) {
-        this.dob = dob;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department;
-    }
 
     public void setQualifications(String qualifications) {
         this.qualifications = qualifications;

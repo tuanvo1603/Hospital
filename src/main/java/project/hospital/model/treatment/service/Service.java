@@ -1,4 +1,4 @@
-package project.hospital.model.treatment;
+package project.hospital.model.treatment.service;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

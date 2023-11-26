@@ -14,16 +14,14 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
     @Query(
             value = "DELETE FROM Outpatient " +
                     "WHERE patient_id = :patientId",
-            nativeQuery = true
-    )
+            nativeQuery = true)
     void deleteOutpatient(@Param("patientId") String patientId);
 
     @Modifying
     @Query(
             value = "INSERT INTO Inpatient(patient_id, department, bed_cell, room) " +
                     "VALUES (:patientId, :department, :bedCell, :room)",
-            nativeQuery = true
-    )
+            nativeQuery = true)
     void insertInpatient(@Param("patientId") String patientId,
                          @Param("department") String department,
                          @Param("bedCell") Integer bedCell,
@@ -34,8 +32,9 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
             value = "UPDATE Inpatient " +
                     "SET department = :department " +
                     "WHERE patient_id = :patientId",
-            nativeQuery = true
-    )
+            nativeQuery = true)
     void changePatientDepartment(@Param("department") String department,
                                  @Param("patientId") String patientId);
+
+
 }

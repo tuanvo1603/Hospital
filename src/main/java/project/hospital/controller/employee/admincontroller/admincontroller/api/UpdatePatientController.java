@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import project.hospital.dto.PatientDTO;
+import project.hospital.dto.PatientList;
 import project.hospital.model.patient.Patient;
 import project.hospital.service.admin.UpdatePatientService;
 
@@ -24,8 +24,8 @@ public class UpdatePatientController {
     }
 
     @PostMapping("/discharge-patient")
-    public void dischargePatient(@RequestBody PatientDTO patientDTO) {
-        updatePatientService.deleteRecord(patientDTO);
+    public void dischargePatient(@RequestBody PatientList patientList) {
+        updatePatientService.deleteRecord(patientList);
     }
 }
 

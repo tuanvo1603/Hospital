@@ -1,10 +1,7 @@
 package project.hospital.model.patient;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import project.hospital.model.employee.HospitalDepartment;
-import project.hospital.model.employee.Interner;
+import jakarta.persistence.*;
+import project.hospital.model.schedule.MedicineDispensation;
 
 @Entity
 @Table(name = "Inpatient")
@@ -19,6 +16,11 @@ public class Inpatient extends Patient{
     @Column(name = "room")
     private String room;
 
+    @OneToOne(
+            mappedBy = "inpatient",
+            cascade = CascadeType.ALL)
+    private MedicineDispensation medicineDispensation;
+
     public String getDepartment() {
         return department;
     }
@@ -31,6 +33,10 @@ public class Inpatient extends Patient{
         return room;
     }
 
+    public MedicineDispensation getMedicineDispensation() {
+        return medicineDispensation;
+    }
+
     public void setDepartment(String department) {
         this.department = department;
     }
@@ -41,5 +47,9 @@ public class Inpatient extends Patient{
 
     public void setRoom(String room) {
         this.room = room;
+    }
+
+    public void setMedicineDispensation(MedicineDispensation medicineDispensation) {
+        this.medicineDispensation = medicineDispensation;
     }
 }

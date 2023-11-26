@@ -28,11 +28,10 @@ public class MedicineDispensation {
     @Column(name = "treatment_id")
     private String treatmentId;
 
+    @OneToOne
     @JoinColumn(
             name = "patient_id",
-            referencedColumnName = "patient_id"
-    )
-    @OneToOne
+            referencedColumnName = "patient_id")
     private Inpatient inpatient;
 
 }

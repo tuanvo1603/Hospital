@@ -1,4 +1,4 @@
-package project.hospital.model.treatment;
+package project.hospital.model.treatment.medication;
 
 import jakarta.persistence.*;
 
