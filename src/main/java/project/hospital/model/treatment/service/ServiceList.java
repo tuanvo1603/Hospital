@@ -27,10 +27,6 @@ public class ServiceList {
     @JoinColumn(name = "service_id", insertable = false, updatable = false)
     private Service service;
 
-    public String getTreatmentId() {
-        return treatmentId;
-    }
-
     public String getServiceId() {
         return serviceId;
     }

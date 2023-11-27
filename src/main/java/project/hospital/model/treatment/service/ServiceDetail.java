@@ -20,7 +20,7 @@ public class ServiceDetail {
     private Date timePerform;
 
     @OneToOne
-    @JoinColumn(name = "treatment_id")
+    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private Treatment treatment;
 
     @OneToMany(
@@ -38,9 +38,6 @@ public class ServiceDetail {
         return timePerform;
     }
 
-    public Treatment getTreatment() {
-        return treatment;
-    }
 
     public Set<ServiceList> getServiceLists() {
         return serviceLists;

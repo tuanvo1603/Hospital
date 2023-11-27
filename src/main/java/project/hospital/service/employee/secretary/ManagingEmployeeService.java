@@ -4,40 +4,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.model.employee.*;
 import project.hospital.model.employee.doctor.Doctor;
-import project.hospital.repository.secretary.SecretaryRepository;
+import project.hospital.repository.employee.EmployeeRepository;
 
 @Service
 public class ManagingEmployeeService {
 
-    private final SecretaryRepository secretaryRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public ManagingEmployeeService(SecretaryRepository secretaryRepository) {
-        this.secretaryRepository = secretaryRepository;
+    public ManagingEmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
     public void deleteEmployee(String employeeId) {
-        secretaryRepository.deleteById(employeeId);
+        employeeRepository.deleteById(employeeId);
     }
 
     public void insertDoctor(Doctor doctor) {
-        secretaryRepository.save(doctor);
+        employeeRepository.save(doctor);
     }
 
     public void insertTechnician(Technician technician) {
-        secretaryRepository.save(technician);
+        employeeRepository.save(technician);
     }
 
     public void insertNurse(Nurse nurse) {
-        secretaryRepository.save(nurse);
+        employeeRepository.save(nurse);
     }
 
     public void insertAdministrator(Administrator administrator) {
-        secretaryRepository.save(administrator);
+        employeeRepository.save(administrator);
     }
 
     public void insertInterner(Interner interner) {
-        secretaryRepository.save(interner);
+        employeeRepository.save(interner);
     }
 
 }

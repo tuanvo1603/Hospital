@@ -16,7 +16,7 @@ public interface PatientListRepository extends JpaRepository<Patient, String> {
             "FROM Patient p")
     List<PatientList> findPatients();
 
-    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
-            "FROM Patient p WHERE p.employeeId = :employeeId")
-    List<PatientList> findManagedPatients(String employeeId);
+//    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
+//            "FROM Patient p WHERE p.employeeId = :employeeId")
+//    List<PatientList> findManagedPatients(String employeeId);
 }

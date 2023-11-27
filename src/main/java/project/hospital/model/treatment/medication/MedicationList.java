@@ -3,7 +3,7 @@ package project.hospital.model.treatment.medication;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "medication_list")
+@Table(name = "medication_detail")
 public class MedicationList {
 
     @Id
@@ -23,10 +23,6 @@ public class MedicationList {
 
     public String getTreatmentId() {
         return treatmentId;
-    }
-
-    public PrescriptionDetail getPrescriptionDetail() {
-        return prescriptionDetail;
     }
 
     public Medication getMedication() {

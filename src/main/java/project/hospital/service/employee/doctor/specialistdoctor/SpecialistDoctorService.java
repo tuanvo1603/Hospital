@@ -16,13 +16,12 @@ public class SpecialistDoctorService {
         this.patientRepository = patientRepository;
     }
 
-    public void deleteOutpatient(Inpatient inpatient) {
-        String patientId = inpatient.getPatientId();
+    public void deleteOutpatient(String patientId) {
         patientRepository.deleteOutpatient(patientId);
     }
 
     public void dispatchPatient(Inpatient inpatient) {
-        this.deleteOutpatient(inpatient);
+        this.deleteOutpatient(inpatient.getPatientId());
         patientRepository.insertInpatient(
                 inpatient.getPatientId(),
                 inpatient.getDepartment(),

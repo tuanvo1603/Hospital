@@ -15,7 +15,7 @@ public class PrescriptionDetail {
     @Column(name = "treatment_id")
     private String treatmentId;
 
-    @Column(name = "prescribed_date")
+    @Column(name = "prescibed_date")
     private Date prescibedDate;
 
     @OneToMany(
@@ -40,9 +40,6 @@ public class PrescriptionDetail {
         return medicationLists;
     }
 
-    public Treatment getTreatment() {
-        return treatment;
-    }
 
     public void setPrescibedDate(Date prescibedDate) {
         this.prescibedDate = prescibedDate;

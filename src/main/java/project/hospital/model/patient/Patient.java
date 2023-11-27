@@ -11,11 +11,13 @@ import java.time.LocalDateTime;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Patient {
     @Id
+    @Column(name = "patient_id")
     private String patientId;
     @Column(name = "first_name")
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+
     @Column(name = "admit_time")
     private LocalDateTime admitTime;
     @Column(name = "symptom")

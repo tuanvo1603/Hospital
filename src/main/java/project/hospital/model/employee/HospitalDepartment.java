@@ -1,6 +1,7 @@
 package project.hospital.model.employee;
 
 public enum HospitalDepartment {
+    Department1,
     CARDIOLOGY,
     NEUROLOGY,
     GASTROENTEROLOGY,

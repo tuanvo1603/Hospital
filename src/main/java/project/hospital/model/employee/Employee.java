@@ -25,7 +25,7 @@ public abstract class Employee {
 
     @ManyToOne
     @JoinColumn(name = "department")
-    private Department departmentObject;
+    private Department department;
 
     @Column(name = "working_room")
     protected String workingRoom;
@@ -57,8 +57,8 @@ public abstract class Employee {
         return workingRoom;
     }
 
-    public Department getDepartmentObject() {
-        return departmentObject;
+    public WorkingSchedule getWorkingSchedule() {
+        return workingSchedule;
     }
 
     public void setEmployeeId(String employeeId) {
@@ -77,11 +77,11 @@ public abstract class Employee {
         this.dob = dob;
     }
 
-    public void setDepartmentObject(Department departmentObject) {
-        this.departmentObject = departmentObject;
-    }
-
     public void setWorkingRoom(String workingRoom) {
         this.workingRoom = workingRoom;
+    }
+
+    public void setWorkingSchedule(WorkingSchedule workingSchedule) {
+        this.workingSchedule = workingSchedule;
     }
 }
