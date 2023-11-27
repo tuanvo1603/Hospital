@@ -16,13 +16,11 @@ public class SpecialistDoctorService {
         this.patientRepository = patientRepository;
     }
 
-    @Transactional
     public void deleteOutpatient(Inpatient inpatient) {
         String patientId = inpatient.getPatientId();
         patientRepository.deleteOutpatient(patientId);
     }
 
-    @Transactional
     public void dispatchPatient(Inpatient inpatient) {
         this.deleteOutpatient(inpatient);
         patientRepository.insertInpatient(

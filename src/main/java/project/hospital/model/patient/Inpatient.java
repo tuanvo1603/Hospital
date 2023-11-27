@@ -18,7 +18,8 @@ public class Inpatient extends Patient{
 
     @OneToOne(
             mappedBy = "inpatient",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     private MedicineDispensation medicineDispensation;
 
     public String getDepartment() {

@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Amitted_Patient")
+@Table(name = "Admitted_Patient")
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Patient {
     @Id
@@ -17,8 +17,8 @@ public class Patient {
     private String lastName;
     @Column(name = "admit_time")
     private LocalDateTime admitTime;
-    @Column(name = "reason_see_the_doctor")
-    private String reasonSeeTheDoctor;
+    @Column(name = "symptom")
+    private String symptom;
     @Column(name = "request")
     private String request;
     @Column(name = "height")
@@ -48,8 +48,8 @@ public class Patient {
     private Gender gender;
 
     public enum Gender {
-        Nam,
-        Nữ
+        Female,
+        Male
     }
 
     public void setPatientId(String patientId) {
@@ -68,8 +68,8 @@ public class Patient {
         this.admitTime = admitTime;
     }
 
-    public void setReasonSeeTheDoctor(String reasonSeeTheDoctor) {
-        this.reasonSeeTheDoctor = reasonSeeTheDoctor;
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
     }
 
     public void setRequest(String request) {
@@ -136,8 +136,8 @@ public class Patient {
         return admitTime;
     }
 
-    public String getReasonSeeTheDoctor() {
-        return reasonSeeTheDoctor;
+    public String getSymptom() {
+        return symptom;
     }
 
     public String getRequest() {

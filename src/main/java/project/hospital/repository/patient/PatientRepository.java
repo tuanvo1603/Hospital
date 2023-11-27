@@ -1,5 +1,6 @@
 package project.hospital.repository.patient;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -11,6 +12,7 @@ import project.hospital.model.patient.Patient;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, String> {
     @Modifying
+    @Transactional
     @Query(
             value = "DELETE FROM Outpatient " +
                     "WHERE patient_id = :patientId",
@@ -18,6 +20,7 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
     void deleteOutpatient(@Param("patientId") String patientId);
 
     @Modifying
+    @Transactional
     @Query(
             value = "INSERT INTO Inpatient(patient_id, department, bed_cell, room) " +
                     "VALUES (:patientId, :department, :bedCell, :room)",
@@ -28,6 +31,7 @@ public interface PatientRepository extends JpaRepository<Patient, String> {
                          @Param("room") String room);
 
     @Modifying
+    @Transactional
     @Query(
             value = "UPDATE Inpatient " +
                     "SET department = :department " +

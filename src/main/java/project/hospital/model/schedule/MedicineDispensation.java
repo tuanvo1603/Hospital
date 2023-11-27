@@ -29,9 +29,39 @@ public class MedicineDispensation {
     private String treatmentId;
 
     @OneToOne
-    @JoinColumn(
-            name = "patient_id",
-            referencedColumnName = "patient_id")
+    @JoinColumn(name = "patient_id")
     private Inpatient inpatient;
+
+    public String getPatientId() {
+        return patientId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public HalfADay getHalfADay() {
+        return halfADay;
+    }
+
+    public String getTreatmentId() {
+        return treatmentId;
+    }
+
+    public void setPatientId(String patientId) {
+        this.patientId = patientId;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setHalfADay(HalfADay halfADay) {
+        this.halfADay = halfADay;
+    }
+
+    public void setTreatmentId(String treatmentId) {
+        this.treatmentId = treatmentId;
+    }
 
 }

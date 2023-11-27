@@ -14,7 +14,6 @@ public class DoctorService {
         this.patientRepository = patientRepository;
     }
 
-    @Transactional
     public void changePatientDepartment(
             String patientId,
             String department

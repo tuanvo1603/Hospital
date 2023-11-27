@@ -10,14 +10,13 @@ import project.hospital.model.patient.Patient;
 import java.util.List;
 
 @Repository
-@Qualifier("PatientRepositoryDTO")
 public interface PatientListRepository extends JpaRepository<Patient, String> {
 
-    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.reasonSeeTheDoctor, p.request, p.height, p.weight) " +
+    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
             "FROM Patient p")
     List<PatientList> findPatients();
 
-    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.reasonSeeTheDoctor, p.request, p.height, p.weight) " +
+    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
             "FROM Patient p WHERE p.employeeId = :employeeId")
     List<PatientList> findManagedPatients(String employeeId);
 }
