@@ -1,9 +1,8 @@
 package project.hospital.model.treatment.service;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
 
 @Entity
 @Table(name = "service")
@@ -22,8 +21,12 @@ public class Service {
     @Column(name = "room_perform")
     private String roomPerform;
 
-    @Column(name = "technician_id")
-    private String technicianId;
+    @OneToMany(
+            mappedBy = "service",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private ArrayList<ServiceList> serviceLists;
 
     public String getServiceId() {
         return serviceId;
@@ -39,10 +42,6 @@ public class Service {
 
     public String getRoomPerform() {
         return roomPerform;
-    }
-
-    public String getTechnicianId() {
-        return technicianId;
     }
 
     public void setServiceId(String serviceId) {
@@ -61,7 +60,4 @@ public class Service {
         this.roomPerform = roomPerform;
     }
 
-    public void setTechnicianId(String technicianId) {
-        this.technicianId = technicianId;
-    }
 }

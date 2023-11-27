@@ -1,9 +1,7 @@
 package project.hospital.model.treatment;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import project.hospital.model.patient.Patient;
 
 import java.sql.Date;
 
@@ -26,4 +24,40 @@ public class HospitalFee {
 
     @Column(name = "note")
     private String note;
+
+    @OneToOne
+    @JoinColumn(name = "patient_id")
+    private Patient patient;
+
+    public Integer getTotalMoney() {
+        return totalMoney;
+    }
+
+    public Integer getAdvancePayment() {
+        return advancePayment;
+    }
+
+    public Date getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setTotalMoney(Integer totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public void setAdvancePayment(Integer advancePayment) {
+        this.advancePayment = advancePayment;
+    }
+
+    public void setUpdatedTime(Date updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
 }

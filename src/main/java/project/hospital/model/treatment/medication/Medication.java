@@ -2,6 +2,8 @@ package project.hospital.model.treatment.medication;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+
 @Entity
 @Table(name = "medication_warehouse")
 public class Medication {
@@ -27,6 +29,13 @@ public class Medication {
 
     @Column(name = "html_link")
     private String htmlLink;
+
+    @OneToMany(
+            mappedBy = "medication",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private ArrayList<MedicationList> medicationLists;
 
     public String getMedicationId() {
         return medicationId;

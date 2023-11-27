@@ -1,6 +1,7 @@
 package project.hospital.model.patient;
 
 import jakarta.persistence.*;
+import project.hospital.model.treatment.HospitalFee;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -46,6 +47,12 @@ public class Patient {
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private Gender gender;
+
+    @OneToOne(
+            mappedBy = "patient",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private HospitalFee hospitalFee;
 
     public enum Gender {
         Female,
@@ -120,6 +127,14 @@ public class Patient {
         this.gender = gender;
     }
 
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setHospitalFee(HospitalFee hospitalFee) {
+        this.hospitalFee = hospitalFee;
+    }
+
     public String getPatientId() {
         return patientId;
     }
@@ -186,5 +201,13 @@ public class Patient {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
+    }
+
+    public HospitalFee getHospitalFee() {
+        return hospitalFee;
     }
 }

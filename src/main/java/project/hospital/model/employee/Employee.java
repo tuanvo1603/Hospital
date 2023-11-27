@@ -24,8 +24,7 @@ public abstract class Employee {
     protected LocalDate dob;
 
     @ManyToOne
-    @JoinColumn(
-            name = "department")
+    @JoinColumn(name = "department")
     private Department departmentObject;
 
     @Column(name = "working_room")
@@ -33,7 +32,8 @@ public abstract class Employee {
 
     @OneToOne(
             mappedBy = "employee",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
     private WorkingSchedule workingSchedule;
 
     public String getEmployeeId() {

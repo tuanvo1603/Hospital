@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.repository.patient.InpatientRepository;
-import project.hospital.repository.schedule.MedicineDispensationRepository;
 
 @Service
 public class InpatientService {

@@ -19,8 +19,14 @@ public class Inpatient extends Patient{
     @OneToOne(
             mappedBy = "inpatient",
             cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)
+            fetch = FetchType.LAZY)
     private MedicineDispensation medicineDispensation;
+
+    @OneToOne(
+            mappedBy = "inpatient",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Family family;
 
     public String getDepartment() {
         return department;
@@ -38,6 +44,10 @@ public class Inpatient extends Patient{
         return medicineDispensation;
     }
 
+    public Family getFamily() {
+        return family;
+    }
+
     public void setDepartment(String department) {
         this.department = department;
     }
@@ -52,5 +62,9 @@ public class Inpatient extends Patient{
 
     public void setMedicineDispensation(MedicineDispensation medicineDispensation) {
         this.medicineDispensation = medicineDispensation;
+    }
+
+    public void setFamily(Family family) {
+        this.family = family;
     }
 }
