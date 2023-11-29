@@ -13,21 +13,4 @@ import java.sql.Date;
 
 @Repository
 public interface WorkingScheduleRepository extends JpaRepository<WorkingSchedule, String> {
-//    @Modifying
-//    @Transactional
-//    @Query(value = "INSERT INTO working_schedule(emp_id, week_start_date, monday, tuesday, wednesday, thursday, friday, saturday, sunday)" +
-//                    "VALUES(:employeeId, :weekStartDate, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday, :sunday)",
-//            nativeQuery = true)
-//    void saveSchedule(
-//            @Param("employeeId") String employeeId,
-//            @Param("weekStartDate") Date weekStartDate,
-//            @Param("monday") WorkingTime monday,
-//            @Param("tuesday") WorkingTime tuesday,
-//            @Param("wednesday") WorkingTime wednesday,
-//            @Param("thursday") WorkingTime thursday,
-//            @Param("friday") WorkingTime friday,
-//            @Param("saturday") WorkingTime saturday,
-//            @Param("sunday") WorkingTime sunday
-//    );
-
 }

@@ -14,10 +14,7 @@ public class DoctorService {
         this.patientRepository = patientRepository;
     }
 
-    public void changePatientDepartment(
-            String patientId,
-            String department
-    ) {
+    public void changePatientDepartment(String patientId, String department) {
         patientRepository.changePatientDepartment(department, patientId);
     }
 }

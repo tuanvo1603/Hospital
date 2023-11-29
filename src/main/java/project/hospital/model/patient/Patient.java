@@ -212,4 +212,5 @@ public class Patient {
     public HospitalFee getHospitalFee() {
         return hospitalFee;
     }
+
 }

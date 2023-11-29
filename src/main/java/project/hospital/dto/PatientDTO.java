@@ -2,24 +2,24 @@ package project.hospital.dto;
 
 import java.time.LocalDateTime;
 
-public class PatientList {
+public class PatientDTO {
     private String patientId;
     private String firstName;
     private String lastName;
     private LocalDateTime admitTime;
     private String employeeId;
-    private String reasonSeeTheDoctor;
+    private String symptom;
     private String request;
     private int height;
     private int weight;
 
-    public PatientList(String patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String reasonSeeTheDoctor, String request, int height, int weight) {
+    public PatientDTO(String patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String symptom, String request, int height, int weight) {
         this.patientId = patientId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.admitTime = admitTime;
         this.employeeId = employeeId;
-        this.reasonSeeTheDoctor = reasonSeeTheDoctor;
+        this.symptom = symptom;
         this.request = request;
         this.height = height;
         this.weight = weight;
@@ -45,8 +45,8 @@ public class PatientList {
         this.admitTime = admitTime;
     }
 
-    public void setReasonSeeTheDoctor(String reasonSeeTheDoctor) {
-        this.reasonSeeTheDoctor = reasonSeeTheDoctor;
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
     }
 
     public void setRequest(String request) {
@@ -81,8 +81,8 @@ public class PatientList {
         return admitTime;
     }
 
-    public String getReasonSeeTheDoctor() {
-        return reasonSeeTheDoctor;
+    public String getSymptom() {
+        return symptom;
     }
 
     public String getRequest() {

@@ -1,4 +1,4 @@
-package project.hospital.controller.employee.secretarycontroller;
+package project.hospital.controller.employee.doctor.dean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.model.employee.*;
 import project.hospital.model.employee.doctor.Doctor;
-import project.hospital.service.employee.secretary.ManagingEmployeeService;
+import project.hospital.service.employee.doctor.dean.ManagingEmployeeService;
 
 @RestController
-@RequestMapping("/secretary")
+@RequestMapping("/dean/manage-employee")
 public class ManagingEmployeeController {
 
     private final ManagingEmployeeService managingEmployeeService;

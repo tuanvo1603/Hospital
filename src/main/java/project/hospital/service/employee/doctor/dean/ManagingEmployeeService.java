@@ -1,4 +1,4 @@
-package project.hospital.service.employee.secretary;
+package project.hospital.service.employee.doctor.dean;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

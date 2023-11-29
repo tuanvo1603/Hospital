@@ -2,6 +2,7 @@ package project.hospital.model.patient;
 
 import jakarta.persistence.*;
 import project.hospital.model.schedule.MedicineDispensation;
+import project.hospital.model.ternary.RTI;
 
 @Entity
 @Table(name = "Inpatient")
@@ -27,6 +28,13 @@ public class Inpatient extends Patient{
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private Family family;
+
+    @OneToOne(
+            mappedBy = "inpatient",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private RTI rti;
 
     public String getDepartment() {
         return department;

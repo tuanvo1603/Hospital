@@ -1,6 +1,7 @@
 package project.hospital.model.treatment;
 
 import jakarta.persistence.*;
+import project.hospital.model.ternary.RTI;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.model.treatment.service.ServiceDetail;
 
@@ -37,6 +38,13 @@ public class Treatment {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private ServiceDetail serviceDetail;
+
+    @OneToOne(
+            mappedBy = "treatment",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private RTI rti;
 
     public String getTreatmentId() {
         return treatmentId;

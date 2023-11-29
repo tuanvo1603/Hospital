@@ -2,7 +2,7 @@ package project.hospital.service.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.hospital.dto.PatientList;
+import project.hospital.dto.PatientDTO;
 import project.hospital.model.patient.Patient;
 import project.hospital.repository.patient.PatientRepository;
 
@@ -16,8 +16,8 @@ public class UpdatePatientService {
         this.patientRepository = patientRepository;
     }
 
-    public void deleteRecord(PatientList patientList) {
-        String id = patientList.getPatientId();
+    public void deletePatient(PatientDTO patientDTO) {
+        String id = patientDTO.getPatientId();
         patientRepository.deleteById(id);
     }
 

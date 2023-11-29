@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Patient;
 import project.hospital.service.patient.InpatientService;
 
 @RestController
@@ -21,7 +21,7 @@ public class InpatientController {
     }
 
     @GetMapping("/my-information")
-    public ResponseEntity<Inpatient> showInpatientInformation(@RequestBody String patientId) {
+    public ResponseEntity<Patient> showInpatientInformation(@RequestBody String patientId) {
         return ResponseEntity.ok(inpatientService.showInpatientInformation(patientId));
     }
 
