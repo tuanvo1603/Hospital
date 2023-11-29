@@ -1,6 +1,6 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+          
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
@@ -26,6 +26,7 @@
         }
     </style>
 
+
 </head>
 <body>
 <div class="container">
@@ -34,7 +35,12 @@
             <div class="row fixed-div">
                 <div class="col-sm-8"><h2>Patient <b>List</b></h2></div>
                 <div class="col-sm-4">
-                    <a href="add-patient" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+                    <a type="button" onclick="getPatientList()" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+                    <script>
+                        function getPatientList(){
+                            window.location.href = "add-patient";
+                        }
+                    </script>
                 </div>
             </div>
         </div>
@@ -46,13 +52,14 @@
                 <th>Last Name</th>
                 <th>Height</th>
                 <th>Weight</th>
+                <th>Symptom</th>
                 <th>Request</th>
                 <th>Admit Time</th>
                 <th>Employee Managing Id</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="patient : ${patients}">
+            <tr th:each="patient : ${patients}" data-patientId="${patient.patientId}" data-firstName="${patient.firstName}" data-lastName="${patient.lastName}" data-height="${patient.height}" data-weight="${patient.weight}" data-symptom="${patient.symptom}" data-request="${patient.request}" data-admitTime="${patient.admitTime}" data-employeeId="${patient.employeeId}">
                 <td><span th:text="${patient.patientId}"> </span></td>
                 <td><span th:text="${patient.firstName}"> </span></td>
                 <td><span th:text="${patient.lastName}"></span></td>
@@ -65,13 +72,75 @@
                 <td>
                     <a href="/add-patient" type="button" class="edit" title="Edit" data-toggle="tooltip"><i
                             class="material-icons"></i></a>
-                    <a href="/add-patient" type="button" class="delete" title="Discharge" data-toggle="tooltip"><i
+                    <a type="button" onclick="deletePatient(this)" class="delete" title="Discharge" data-toggle="tooltip"><i
                             class="material-icons"></i></a>
                 </td>
             </tr>
+            <script>
+            function deletePatient(row) {
+            var confirmation = confirm("Are you sure you want to discharge this patient?");
+            if (confirmation) {
+                // Lấy đối tượng <tr> chứa nút Discharge
+                var rowIndex = row.parentNode.parentNode.rowIndex;
+                var table = document.querySelector(".table-bordered");
+
+                // Kiểm tra xem hàng có tồn tại không
+                if (table.rows[rowIndex]) {
+                    // Lấy đối tượng patient từ data-attributes
+                    var patientList = {
+                        patientId: table.rows[rowIndex].getAttribute("data-patientId"),
+                        firstName: table.rows[rowIndex].getAttribute("data-firstName"),
+                        lastName: table.rows[rowIndex].getAttribute("data-lastName"),
+                        height: table.rows[rowIndex].getAttribute("data-height"),
+                        weight: table.rows[rowIndex].getAttribute("data-weight"),
+                        symptom: table.rows[rowIndex].getAttribute("data-symptom"),
+                        request: table.rows[rowIndex].getAttribute("data-request"),
+                        admitTime: table.rows[rowIndex].getAttribute("data-admitTime"),
+                        employeeId: table.rows[rowIndex].getAttribute("data-employeeId")
+                    };
+
+                    console.log(patientList);
+
+        
+
+                    // Gửi yêu cầu xóa bệnh nhân đến máy chủ
+                    deletePatientOnServer(patientList);
+
+                    // Xóa hàng tương ứng từ bảng trực tiếp trên trình duyệt
+                    table.deleteRow(rowIndex);
+
+                 
+                }
+            }
+            }
+
+            function deletePatientOnServer(patientList) {
+                fetch('/patient-list', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(patientList)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('Success:', response);
+                    } else {
+                        console.error('Error:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    // Handle network errors
+                    console.error('Network Error:', error);
+                });
+            }
+
+            </script>
+            
             </tbody>
         </table>
     </div>
 </div>
 </body>
 </html>
+

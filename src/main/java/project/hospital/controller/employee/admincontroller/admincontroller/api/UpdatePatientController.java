@@ -1,6 +1,7 @@
 package project.hospital.controller.employee.admincontroller.admincontroller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +18,13 @@ public class UpdatePatientController {
         this.updatePatientService = insertionService;
     }
 
-    @PostMapping("/admitPatient")
+    @PostMapping("/add-patient")
     public String approvePatient(@RequestBody Patient patient) {
         updatePatientService.insertPatient(patient);
-        return "login";
+        return "patient-list";
     }
 
-    @PostMapping("/discharge-patient")
+    @DeleteMapping("patient-list")
     public void dischargePatient(@RequestBody PatientList patientList) {
         updatePatientService.deleteRecord(patientList);
     }

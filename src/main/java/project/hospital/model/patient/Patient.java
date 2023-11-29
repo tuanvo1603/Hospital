@@ -57,8 +57,9 @@ public class Patient {
     private HospitalFee hospitalFee;
 
     public enum Gender {
+        Male,
         Female,
-        Male
+        Other
     }
 
     public void setPatientId(String patientId) {
