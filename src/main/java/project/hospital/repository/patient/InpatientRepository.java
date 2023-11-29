@@ -6,4 +6,5 @@ import project.hospital.model.patient.Inpatient;
 
 @Repository
 public interface InpatientRepository extends JpaRepository<Inpatient, String> {
+
 }
