@@ -29,11 +29,6 @@ public class ShowingPatientController {
         return "patient-list";
     }
 
-    @GetMapping("/approve-patient")
-    public String getApprovePatientForm() {
-        return "approve-patient-form";
-    }
-
     @GetMapping("/search-by-name")
     public String searchPatientByName(Model model, @RequestBody ArrayList<String> patientInfo) {
         model.addAttribute("patients", showingPatientService.searchPatientByFullName(patientInfo));

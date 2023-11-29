@@ -19,16 +19,22 @@ public class ServiceDetail {
     @Column(name = "time_perform")
     private Date timePerform;
 
-    @OneToOne
+    @Column(name = "service_id")
+    private String serviceId;
+
+    @Column(name = "technician_id")
+    private String technicianId;
+
+    @Column(name = "conclusion")
+    private String conclusion;
+
+    @ManyToOne
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private Treatment treatment;
 
-    @OneToMany(
-            mappedBy = "serviceDetail",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private Set<ServiceList> serviceLists = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "service_id", insertable = false, updatable = false)
+    private Service service;
 
     public String getTreatmentId() {
         return treatmentId;
@@ -38,17 +44,8 @@ public class ServiceDetail {
         return timePerform;
     }
 
-
-    public Set<ServiceList> getServiceLists() {
-        return serviceLists;
-    }
-
-
     public void setTimePerform(Date timePerform) {
         this.timePerform = timePerform;
     }
 
-    public void setServiceLists(Set<ServiceList> serviceLists) {
-        this.serviceLists = serviceLists;
-    }
 }

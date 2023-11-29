@@ -1,20 +1,18 @@
 package project.hospital.service.employee.doctor;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.hospital.repository.patient.PatientRepository;
+import project.hospital.repository.employee.EmployeeRepository;
 @Service
 public class DoctorService {
 
-    private  final PatientRepository patientRepository;
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public DoctorService(PatientRepository patientRepository) {
-        this.patientRepository = patientRepository;
+    public DoctorService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
-    public void changePatientDepartment(String patientId, String department) {
-        patientRepository.changePatientDepartment(department, patientId);
-    }
+
+
 }

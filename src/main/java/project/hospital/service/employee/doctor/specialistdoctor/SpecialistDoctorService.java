@@ -20,7 +20,7 @@ public class SpecialistDoctorService {
         patientRepository.deleteOutpatient(patientId);
     }
 
-    public void dispatchPatient(Inpatient inpatient) {
+    public void admissionPatient(Inpatient inpatient) {
         this.deleteOutpatient(inpatient.getPatientId());
         patientRepository.insertInpatient(
                 inpatient.getPatientId(),

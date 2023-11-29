@@ -6,7 +6,7 @@ import project.hospital.model.ternary.RTI;
 
 @Entity
 @Table(name = "Inpatient")
-public class Inpatient extends Patient{
+public class Inpatient extends Patient {
 
     @Column(name = "department")
     private String department;
@@ -28,13 +28,6 @@ public class Inpatient extends Patient{
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     private Family family;
-
-    @OneToOne(
-            mappedBy = "inpatient",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private RTI rti;
 
     public String getDepartment() {
         return department;
@@ -75,4 +68,5 @@ public class Inpatient extends Patient{
     public void setFamily(Family family) {
         this.family = family;
     }
+
 }

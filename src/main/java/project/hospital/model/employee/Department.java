@@ -10,8 +10,8 @@ public class Department {
 
     @Id
     @Column(name = "department")
-    @Enumerated(EnumType.STRING)
-    private HospitalDepartment department;
+//    @Enumerated(EnumType.STRING)
+    private String department;
 
     @Column(name = "office_location")
     private String officeLocation;
@@ -22,7 +22,7 @@ public class Department {
             cascade = CascadeType.ALL)
     private Set<Employee> Employees;
 
-    public HospitalDepartment getDepartment() {
+    public String getDepartment() {
         return department;
     }
 
@@ -34,7 +34,7 @@ public class Department {
         return Employees;
     }
 
-    public void setDepartment(HospitalDepartment department) {
+    public void setDepartment(String department) {
         this.department = department;
     }
 

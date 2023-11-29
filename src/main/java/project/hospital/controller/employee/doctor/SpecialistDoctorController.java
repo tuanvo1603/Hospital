@@ -20,7 +20,7 @@ public class SpecialistDoctorController {
     }
 
     @PostMapping("/dispatch-patient")
-    public void dispatchPatient(@RequestBody Inpatient inpatient) {
-        specialistDoctorService.dispatchPatient(inpatient);
+    public void admissionPatient(@RequestBody Inpatient inpatient) {
+        specialistDoctorService.admissionPatient(inpatient);
     }
 }

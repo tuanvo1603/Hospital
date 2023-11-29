@@ -7,17 +7,6 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "sto")
-public class STO {
+public class STO extends DPT{
 
-    @Id
-    @Column(name = "patient_id")
-    private String patientId;
-
-    @Id
-    @Column(name = "emp_id")
-    private String employeeId;
-
-    @Id
-    @Column(name = "treatment_id")
-    private String treatmentId;
 }

@@ -3,6 +3,7 @@ package project.hospital.model.treatment.service;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "service_warehouse")
@@ -26,7 +27,7 @@ public class Service {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    private ArrayList<ServiceList> serviceLists;
+    private List<ServiceDetail> serviceDetails;
 
     public String getServiceId() {
         return serviceId;

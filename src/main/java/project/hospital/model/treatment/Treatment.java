@@ -1,11 +1,13 @@
 package project.hospital.model.treatment;
 
 import jakarta.persistence.*;
+import project.hospital.model.ternary.DPT;
 import project.hospital.model.ternary.RTI;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.model.treatment.service.ServiceDetail;
 
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "treatment")
@@ -33,18 +35,18 @@ public class Treatment {
             fetch = FetchType.LAZY)
     private PrescriptionDetail prescriptionDetail;
 
-    @OneToOne(
+    @OneToMany(
             mappedBy = "treatment",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private ServiceDetail serviceDetail;
+    private List<ServiceDetail> serviceDetails;
 
     @OneToOne(
             mappedBy = "treatment",
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
-    private RTI rti;
+    private DPT dpt;
 
     public String getTreatmentId() {
         return treatmentId;
@@ -70,8 +72,8 @@ public class Treatment {
         return prescriptionDetail;
     }
 
-    public ServiceDetail getServiceDetail() {
-        return serviceDetail;
+    public List<ServiceDetail> getServiceDetails() {
+        return serviceDetails;
     }
 
     public void setTreatmentId(String treatmentId) {
@@ -98,7 +100,7 @@ public class Treatment {
         this.prescriptionDetail = prescriptionDetail;
     }
 
-    public void setServiceDetail(ServiceDetail serviceDetail) {
-        this.serviceDetail = serviceDetail;
+    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
+        this.serviceDetails = serviceDetails;
     }
 }
