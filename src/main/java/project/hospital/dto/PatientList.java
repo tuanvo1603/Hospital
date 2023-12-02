@@ -13,6 +13,16 @@ public class PatientList {
     private int height;
     private int weight;
 
+    private String symptom;
+
+    public String getSymptom() {
+        return symptom;
+    }
+
+    public void setSymptom(String symptom) {
+        this.symptom = symptom;
+    }
+
     public PatientList(String patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String reasonSeeTheDoctor, String request, int height, int weight) {
         this.patientId = patientId;
         this.firstName = firstName;

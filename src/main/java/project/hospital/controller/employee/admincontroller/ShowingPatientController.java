@@ -27,4 +27,9 @@ public class ShowingPatientController {
     public String getApprovePatientForm() {
         return "approve-patient-form";
     }
+
+    @GetMapping("/add-patient-form")
+    public String insertPatient(){
+        return "add-patient-form";
+    }
 }

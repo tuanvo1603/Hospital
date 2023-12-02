@@ -1,6 +1,6 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
@@ -13,10 +13,16 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+          
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var patients = /*[[${patients}]]*/ [];
+        console.log(patients);
+        /*]]>*/
+    </script>
     <style>
         .fixed-div {
           position: fixed;
@@ -24,19 +30,35 @@
           left: 0;
           background-color: #fff;
         }
+        .add-new{
+            text-align: left;
+        }
+       
     </style>
+
 
 </head>
 <body>
-<div class="container">
-    <div class="table-wrapper">
-        <div class="table-title">
-            <div class="row fixed-div">
-                <div class="col-sm-8"><h2>Patient <b>List</b></h2></div>
-                <div class="col-sm-4">
-                    <a href="add-patient" type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
-                </div>
+    <div class="fixed-div col-sm-40"></div>
+              
+                <a type="button" onclick="insetPatient()" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+                    
+                    <script>
+                        function insetPatient(){
+                            window.location.href = "add-patient-form";
+                        }
+                    </script>
+                
             </div>
+<div class="container">
+    
+    <div class="table-wrapper">
+        
+        <div class="table-title">
+
+        
+                <div class="col-sm-12 text-center"><h2>Patient <b>List</b></h2></div>
+        
         </div>
         <table class="table table-bordered">
             <thead>
@@ -53,26 +75,86 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="patient : ${patients}">
-                <td><span th:text="${patient.patientId}"> </span></td>
-                <td><span th:text="${patient.firstName}"> </span></td>
-                <td><span th:text="${patient.lastName}"></span></td>
-                <td><span th:text="${patient.height}"></span></td>
-                <td><span th:text="${patient.weight}"></span></td>
-                <td><span th:text="${patient.symptom}"></span></td>
-                <td><span th:text="${patient.request}"></span></td>
-                <td><span th:text="${patient.admitTime}"></span></td>
-                <td><span th:text="${patient.employeeId}"></span></td>
-                <td>
-                    <a href="/add-patient" type="button" class="edit" title="Edit" data-toggle="tooltip"><i
-                            class="material-icons"></i></a>
-                    <a href="/add-patient" type="button" class="delete" title="Discharge" data-toggle="tooltip"><i
-                            class="material-icons"></i></a>
-                </td>
-            </tr>
+                <script>
+                // Function to dynamically create patient rows
+                    function createPatientRows() {
+                        const tableBody = document.querySelector(".table-bordered tbody");
+                
+                        patients.forEach(patient => {
+                            const row = tableBody.insertRow();
+                            
+                            const keys = ["patientId", "firstName", "lastName", "height", "weight", "symptom", "request", "admitTime", "employeeId"];
+                
+                            keys.forEach(key => {
+                                const cell = row.insertCell();
+                                const text = document.createTextNode(patient[key]);
+                                cell.appendChild(text);
+                            });
+
+                            let actionsCell = row.insertCell();
+                
+                            // Create Edit button
+                            const editButton = document.createElement("a");
+                            editButton.href = "/add-patient-form";
+                            editButton.type = "button";
+                            editButton.className = "edit";
+                            editButton.title = "Edit";
+                            editButton.setAttribute("data-toggle", "tooltip");
+                            editButton.innerHTML = '<i class="material-icons"></i>';
+                            actionsCell.appendChild(editButton);
+
+                            // Create Delete button
+                            const deleteButton = document.createElement("a");
+                            deleteButton.type = "button";
+                            deleteButton.className = "delete";
+                            deleteButton.title = "Discharge";
+                            deleteButton.setAttribute("data-toggle", "tooltip");
+                            deleteButton.setAttribute("data-patient", JSON.stringify(patient));
+                            deleteButton.innerHTML = '<i class="material-icons"></i>';
+                            
+                            // Attach click event listener to the Delete button
+                            deleteButton.addEventListener("click", function() {
+                                deletePatientOnServer(row, patient);
+                            });
+
+                            actionsCell.appendChild(deleteButton);
+                            
+                        });
+
+                    function deletePatientOnServer(row, patientList) {
+                        console.log('Deleting patient:', patientList);
+
+                        fetch('/patient-list', {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(patientList)
+                        })
+                        .then(response => {
+                            console.log('Response:', response);
+                            if (response.ok) {
+                                console.log('Success:', response);
+                                row.remove();
+                            } else {
+                                console.error('Error:', response.statusText);
+                            }
+                        })
+                        .catch(error => {
+                            // Handle network errors
+                            console.error('Network Error:', error);
+                        });
+                    }
+                }
+                
+                    createPatientRows();
+
+                
+                </script>
             </tbody>
         </table>
     </div>
 </div>
 </body>
 </html>
+

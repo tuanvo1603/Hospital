@@ -16,7 +16,31 @@ public class Family {
     @Column(name = "emergency_contact")
     private String emergencyContact;
 
-//    @JoinColumn(name = "patient_id")
-//    @OneToOne
-//    private Inpatient inpatient;
+    @OneToOne
+    @JoinColumn(name = "patient_id")
+    private Inpatient inpatient;
+
+    public String getRelationship() {
+        return relationship;
+    }
+
+    public String getEmergencyContact() {
+        return emergencyContact;
+    }
+
+    public Inpatient getInpatient() {
+        return inpatient;
+    }
+
+    public void setRelationship(String relationship) {
+        this.relationship = relationship;
+    }
+
+    public void setEmergencyContact(String emergencyContact) {
+        this.emergencyContact = emergencyContact;
+    }
+
+    public void setInpatient(Inpatient inpatient) {
+        this.inpatient = inpatient;
+    }
 }

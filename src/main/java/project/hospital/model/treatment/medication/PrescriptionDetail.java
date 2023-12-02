@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import project.hospital.model.treatment.Treatment;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "prescription_detail")
@@ -13,18 +15,38 @@ public class PrescriptionDetail {
     @Column(name = "treatment_id")
     private String treatmentId;
 
-    @Column(name = "prescribed_date")
+    @Column(name = "prescibed_date")
     private Date prescibedDate;
 
-    @OneToOne(
+    @OneToMany(
             mappedBy = "prescriptionDetail",
-            cascade = CascadeType.ALL)
-    private MedicationList medicationList;
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY)
+    private Set<MedicationList> medicationLists = new HashSet<>();
 
     @OneToOne
-    @MapsId
-    @JoinColumn(
-            name = "treatment_id",
-            referencedColumnName = "treatment_id")
+    @JoinColumn(name = "treatment_id")
     private Treatment treatment;
+
+    public String getTreatmentId() {
+        return treatmentId;
+    }
+
+    public Date getPrescibedDate() {
+        return prescibedDate;
+    }
+
+    public Set<MedicationList> getMedicationLists() {
+        return medicationLists;
+    }
+
+
+    public void setPrescibedDate(Date prescibedDate) {
+        this.prescibedDate = prescibedDate;
+    }
+
+    public void setMedicationLists(Set<MedicationList> medicationLists) {
+        this.medicationLists = medicationLists;
+    }
+
 }

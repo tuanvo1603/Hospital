@@ -17,7 +17,7 @@ public class Department {
     private String officeLocation;
 
     @OneToMany(
-            mappedBy = "departmentObject",
+            mappedBy = "department",
             fetch = FetchType.LAZY,
             cascade = CascadeType.ALL)
     private Set<Employee> Employees;

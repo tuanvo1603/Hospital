@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.service.patient.InpatientService;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/inpatient")
 public class InpatientController {

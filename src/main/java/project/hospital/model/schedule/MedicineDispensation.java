@@ -2,6 +2,8 @@ package project.hospital.model.schedule;
 
 import jakarta.persistence.*;
 import project.hospital.model.patient.Inpatient;
+import project.hospital.model.treatment.medication.PrescriptionDetail;
+import project.hospital.model.treatment.service.ServiceDetail;
 
 import java.sql.Date;
 
@@ -32,9 +34,13 @@ public class MedicineDispensation {
     @JoinColumn(name = "patient_id")
     private Inpatient inpatient;
 
-    public String getPatientId() {
-        return patientId;
-    }
+    @OneToOne
+    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
+    private PrescriptionDetail prescriptionDetail;
+
+    @OneToOne
+    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
+    private ServiceDetail serviceDetail;
 
     public Date getDate() {
         return date;
@@ -48,8 +54,12 @@ public class MedicineDispensation {
         return treatmentId;
     }
 
-    public void setPatientId(String patientId) {
-        this.patientId = patientId;
+    public PrescriptionDetail getPrescriptionDetail() {
+        return prescriptionDetail;
+    }
+
+    public ServiceDetail getServiceDetail() {
+        return serviceDetail;
     }
 
     public void setDate(Date date) {
@@ -60,8 +70,11 @@ public class MedicineDispensation {
         this.halfADay = halfADay;
     }
 
-    public void setTreatmentId(String treatmentId) {
-        this.treatmentId = treatmentId;
+    public void setPrescriptionDetail(PrescriptionDetail prescriptionDetail) {
+        this.prescriptionDetail = prescriptionDetail;
     }
 
+    public void setServiceDetail(ServiceDetail serviceDetail) {
+        this.serviceDetail = serviceDetail;
+    }
 }
