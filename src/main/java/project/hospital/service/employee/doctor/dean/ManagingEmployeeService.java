@@ -6,6 +6,8 @@ import project.hospital.model.employee.*;
 import project.hospital.model.employee.doctor.Doctor;
 import project.hospital.repository.employee.EmployeeRepository;
 
+import java.util.List;
+
 @Service
 public class ManagingEmployeeService {
 
@@ -16,28 +18,16 @@ public class ManagingEmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
+    public List<Employee> showDepartmentEmployees(String department) {
+        return employeeRepository.showDepartmentEmployees(department);
+    }
+
     public void deleteEmployee(String employeeId) {
         employeeRepository.deleteById(employeeId);
     }
 
-    public void insertDoctor(Doctor doctor) {
-        employeeRepository.save(doctor);
-    }
-
-    public void insertTechnician(Technician technician) {
-        employeeRepository.save(technician);
-    }
-
-    public void insertNurse(Nurse nurse) {
-        employeeRepository.save(nurse);
-    }
-
-    public void insertAdministrator(Administrator administrator) {
-        employeeRepository.save(administrator);
-    }
-
-    public void insertInterner(Interner interner) {
-        employeeRepository.save(interner);
+    public void insertEmployee(Employee employee) {
+        employeeRepository.save(employee);
     }
 
 }

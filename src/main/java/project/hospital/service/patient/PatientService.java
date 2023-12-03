@@ -6,12 +6,12 @@ import project.hospital.model.patient.Patient;
 import project.hospital.repository.patient.PatientRepository;
 
 @Service
-public class InpatientService {
+public class PatientService {
 
     private final PatientRepository patientRepository;
 
     @Autowired
-    public InpatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }
 

@@ -10,7 +10,6 @@ public class Department {
 
     @Id
     @Column(name = "department")
-//    @Enumerated(EnumType.STRING)
     private String department;
 
     @Column(name = "office_location")

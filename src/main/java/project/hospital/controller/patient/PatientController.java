@@ -7,22 +7,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.model.patient.Patient;
-import project.hospital.service.patient.InpatientService;
+import project.hospital.service.patient.PatientService;
 
 @RestController
 @RequestMapping("/inpatient")
-public class InpatientController {
-
-    private final InpatientService inpatientService;
+public class PatientController {
+    /**
+     * Done
+     */
+    private final PatientService patientService;
 
     @Autowired
-    public InpatientController(InpatientService inpatientService) {
-        this.inpatientService = inpatientService;
+    public PatientController(PatientService patientService) {
+        this.patientService = patientService;
     }
 
     @GetMapping("/my-information")
-    public ResponseEntity<Patient> showInpatientInformation(@RequestBody String patientId) {
-        return ResponseEntity.ok(inpatientService.showInpatientInformation(patientId));
+    public ResponseEntity<Patient> showPatientInformation(@RequestBody String patientId) {
+        return ResponseEntity.ok(patientService.showInpatientInformation(patientId));
     }
 
 }

@@ -29,6 +29,13 @@ public class Inpatient extends Patient {
             fetch = FetchType.LAZY)
     private Family family;
 
+    @OneToOne(
+            mappedBy = "inpatient",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private RTI rti;
+
     public String getDepartment() {
         return department;
     }

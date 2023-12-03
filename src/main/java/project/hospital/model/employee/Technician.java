@@ -1,36 +1,28 @@
 package project.hospital.model.employee;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import project.hospital.model.treatment.service.ServiceDetail;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Technician")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Technician extends Employee {
 
-    @Column(name = "qualifications")
-    private String qualifications;
+    @OneToMany(
+            mappedBy = "technician",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<ServiceDetail> serviceDetails;
 
-    public Technician(
-            String employeeId, String workingRoom, String firstName, String lastName, LocalDate dob, String qualifications) {
-        this.employeeId = employeeId;
-        this.workingRoom = workingRoom;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.qualifications = qualifications;
+    public List<ServiceDetail> getServiceDetails() {
+        return serviceDetails;
     }
 
-    public Technician() {
-    }
-
-    public String getQualifications() {
-        return qualifications;
-    }
-
-    public void setQualifications(String qualifications) {
-        this.qualifications = qualifications;
+    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
+        this.serviceDetails = serviceDetails;
     }
 }

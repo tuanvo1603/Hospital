@@ -12,7 +12,9 @@ import project.hospital.service.employee.InternalWorkingService;
 @RestController
 @RequestMapping("/employee-internal-working")
 public class InternalWorkingController {
-
+    /**
+     * Done
+     */
     private final InternalWorkingService internalWorkingService;
 
     @Autowired

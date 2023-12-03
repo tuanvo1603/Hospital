@@ -1,6 +1,7 @@
 package project.hospital.model.treatment.service;
 
 import jakarta.persistence.*;
+import project.hospital.model.employee.Technician;
 import project.hospital.model.treatment.Treatment;
 
 import java.sql.Date;
@@ -36,16 +37,23 @@ public class ServiceDetail {
     @JoinColumn(name = "service_id", insertable = false, updatable = false)
     private Service service;
 
-    public String getTreatmentId() {
-        return treatmentId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "technician_id", insertable = false, updatable = false)
+    private Technician technician;
 
     public Date getTimePerform() {
         return timePerform;
+    }
+
+    public String getConclusion() {
+        return conclusion;
     }
 
     public void setTimePerform(Date timePerform) {
         this.timePerform = timePerform;
     }
 
+    public void setConclusion(String conclusion) {
+        this.conclusion = conclusion;
+    }
 }

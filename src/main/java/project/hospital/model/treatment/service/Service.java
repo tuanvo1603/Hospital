@@ -45,6 +45,10 @@ public class Service {
         return roomPerform;
     }
 
+    public List<ServiceDetail> getServiceDetails() {
+        return serviceDetails;
+    }
+
     public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
@@ -61,4 +65,7 @@ public class Service {
         this.roomPerform = roomPerform;
     }
 
+    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
+        this.serviceDetails = serviceDetails;
+    }
 }

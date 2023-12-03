@@ -1,6 +1,7 @@
 package project.hospital.model.schedule;
 
 import jakarta.persistence.*;
+import project.hospital.model.employee.Nurse;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.model.treatment.service.ServiceDetail;
@@ -17,6 +18,15 @@ public class MedicineDispensation {
 
     @Column(name = "date")
     private Date date;
+
+    @Column(name = "nurse_in_charge_id")
+    private String nurseId;
+
+    @Column(name = "start_time")
+    private Date startTime;
+
+    @Column(name = "end_time")
+    private Date endTime;
 
     @Column(name = "half_a_day")
     @Enumerated(EnumType.STRING)
@@ -41,6 +51,10 @@ public class MedicineDispensation {
     @OneToOne
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private ServiceDetail serviceDetail;
+
+    @ManyToOne
+    @JoinColumn(name = "nurse_in_charge_id", insertable = false, updatable = false)
+    private Nurse nurse;
 
     public Date getDate() {
         return date;
@@ -76,5 +90,9 @@ public class MedicineDispensation {
 
     public void setServiceDetail(ServiceDetail serviceDetail) {
         this.serviceDetail = serviceDetail;
+    }
+
+    public void setNurse(Nurse nurse) {
+        this.nurse = nurse;
     }
 }

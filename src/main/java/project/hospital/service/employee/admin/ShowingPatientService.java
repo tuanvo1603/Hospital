@@ -1,9 +1,10 @@
-package project.hospital.service.admin;
+package project.hospital.service.employee.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Patient;
 import project.hospital.repository.patient.PatientDTORepository;
 import project.hospital.repository.patient.PatientRepository;
 
@@ -27,11 +28,11 @@ public class ShowingPatientService {
         return patientDTORepository.findPatients();
     }
 
-    public List<PatientDTO> searchPatientByFullName(ArrayList<String> patientInfo) {
-        return patientDTORepository.searchPatientByFullName(patientInfo.get(INDEX_OF_FIRST_PARA), patientInfo.get(INDEX_OF_SECOND_PARA));
+    public List<Patient> searchPatientByFullName(List<String> patientInfo) {
+        return patientRepository.searchPatientByFullName(patientInfo.get(INDEX_OF_FIRST_PARA), patientInfo.get(INDEX_OF_SECOND_PARA));
     }
 
-    public List<Inpatient> searchPatientByDepartment(ArrayList<String> patientInfo) {
+    public List<Patient> searchPatientByDepartment(List<String> patientInfo) {
         return patientRepository.searchPatientByDepartment(patientInfo.get(INDEX_OF_FIRST_PARA), patientInfo.get(INDEX_OF_SECOND_PARA));
     }
 }

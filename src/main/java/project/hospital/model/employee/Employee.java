@@ -8,10 +8,11 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "emp")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Employee {
+public class Employee {
 
     @Id
     @Column(name = "emp_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected String employeeId;
 
     @Column(name = "first_name")
@@ -23,18 +24,24 @@ public abstract class Employee {
     @Column(name = "dob")
     protected LocalDate dob;
 
+    @Column(name = "department")
+    protected String departmentString;
+
     @ManyToOne
-    @JoinColumn(name = "department")
-    private Department department;
+    @JoinColumn(name = "department", insertable = false, updatable = false)
+    protected Department department;
 
     @Column(name = "working_room")
     protected String workingRoom;
+
+    @Column(name = "qualifications")
+    protected String qualifications;
 
     @OneToOne(
             mappedBy = "employee",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private WorkingSchedule workingSchedule;
+    protected WorkingSchedule workingSchedule;
 
     public String getEmployeeId() {
         return employeeId;
@@ -61,6 +68,14 @@ public abstract class Employee {
         return workingSchedule;
     }
 
+    public String getQualifications() {
+        return qualifications;
+    }
+
+    public String getDepartmentString() {
+        return departmentString;
+    }
+
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
     }
@@ -83,5 +98,13 @@ public abstract class Employee {
 
     public void setWorkingSchedule(WorkingSchedule workingSchedule) {
         this.workingSchedule = workingSchedule;
+    }
+
+    public void setQualifications(String qualifications) {
+        this.qualifications = qualifications;
+    }
+
+    public void setDepartmentString(String departmentString) {
+        this.departmentString = departmentString;
     }
 }

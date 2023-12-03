@@ -1,36 +1,28 @@
 package project.hospital.model.employee;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import project.hospital.model.schedule.MedicineDispensation;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Nurse")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Nurse extends Employee {
 
-    @Column(name = "qualifications")
-    private String qualifications;
+    @OneToMany(
+            mappedBy = "nurse",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private List<MedicineDispensation> medicineDispensations;
 
-    public Nurse(String employeeId, String workingRoom, String firstName, String lastName, LocalDate dob, String qualifications) {
-        this.employeeId = employeeId;
-        this.workingRoom = workingRoom;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.qualifications = qualifications;
+    public List<MedicineDispensation> getMedicineDispensations() {
+        return medicineDispensations;
     }
 
-    public Nurse() {
-    }
-
-    public String getQualifications() {
-        return qualifications;
-    }
-
-
-    public void setQualifications(String qualifications) {
-        this.qualifications = qualifications;
+    public void setMedicineDispensations(List<MedicineDispensation> medicineDispensations) {
+        this.medicineDispensations = medicineDispensations;
     }
 }

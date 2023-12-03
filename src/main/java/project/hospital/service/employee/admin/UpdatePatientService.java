@@ -1,4 +1,4 @@
-package project.hospital.service.admin;
+package project.hospital.service.employee.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class UpdatePatientService {
         this.patientRepository = patientRepository;
     }
 
-    public void deletePatient(PatientDTO patientDTO) {
+    public void dischargePatient(PatientDTO patientDTO) {
         String id = patientDTO.getPatientId();
         patientRepository.deleteById(id);
     }

@@ -1,4 +1,4 @@
-package project.hospital.controller.employee.admincontroller.admincontroller.api;
+package project.hospital.controller.employee.admincontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -7,11 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.patient.Patient;
-import project.hospital.service.admin.UpdatePatientService;
+import project.hospital.service.employee.admin.UpdatePatientService;
 
 @RestController
 @RequestMapping("/admin/update")
 public class UpdatePatientController {
+    /**
+     Done
+     */
     private final UpdatePatientService updatePatientService;
 
     @Autowired
@@ -19,7 +22,7 @@ public class UpdatePatientController {
         this.updatePatientService = insertionService;
     }
 
-    @PostMapping("/admitPatient")
+    @PostMapping("/admit-patient")
     public String approvePatient(@RequestBody Patient patient) {
         updatePatientService.insertPatient(patient);
         return "login";
@@ -27,8 +30,9 @@ public class UpdatePatientController {
 
     @PostMapping("/discharge-patient")
     public void dischargePatient(@RequestBody PatientDTO patientDTO) {
-        updatePatientService.deletePatient(patientDTO);
+        updatePatientService.dischargePatient(patientDTO);
     }
+
 }
 
 

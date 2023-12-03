@@ -13,7 +13,6 @@ import project.hospital.configuration.databaseconfig.DatabaseConfig;
 @EnableJpaRepositories(basePackages = "project.hospital.repository")
 @ComponentScan(basePackages = "project.hospital")
 @EntityScan(basePackages = "project.hospital.model")
-//@EnableConfigurationProperties(DatabaseConfig.class)
 public class HospitalApplication {
 
 	public static void main(String[] args) {

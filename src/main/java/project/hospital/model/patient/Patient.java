@@ -1,19 +1,18 @@
 package project.hospital.model.patient;
 
 import jakarta.persistence.*;
-import project.hospital.model.ternary.DPT;
-import project.hospital.model.ternary.RTI;
 import project.hospital.model.treatment.HospitalFee;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "Admitted_Patient")
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Patient {
+public class Patient {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "patient_id")
     private String patientId;
     @Column(name = "first_name")
@@ -58,13 +57,6 @@ public abstract class Patient {
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     protected HospitalFee hospitalFee;
-
-    @OneToOne(
-            mappedBy = "patient",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    protected DPT dpt;
 
     public enum Gender {
         Female,

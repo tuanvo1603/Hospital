@@ -1,8 +1,8 @@
 package project.hospital.model.treatment;
 
 import jakarta.persistence.*;
-import project.hospital.model.ternary.DPT;
 import project.hospital.model.ternary.RTI;
+import project.hospital.model.ternary.STO;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.model.treatment.service.ServiceDetail;
 
@@ -15,6 +15,7 @@ public class Treatment {
 
     @Id
     @Column(name = "treatment_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String treatmentId;
 
     @Column(name = "treatment_procedure")
@@ -22,12 +23,6 @@ public class Treatment {
 
     @Column(name = "description")
     private String description;
-
-    @Column(name = "start_time")
-    private Date startTime;
-
-    @Column(name = "end_time")
-    private Date endTime;
 
     @OneToOne(
             mappedBy = "treatment",
@@ -46,7 +41,14 @@ public class Treatment {
             cascade = CascadeType.PERSIST,
             fetch = FetchType.LAZY
     )
-    private DPT dpt;
+    private RTI rti;
+
+    @OneToOne(
+            mappedBy = "treatment",
+            cascade = CascadeType.PERSIST,
+            fetch = FetchType.LAZY
+    )
+    private STO sto;
 
     public String getTreatmentId() {
         return treatmentId;
@@ -58,14 +60,6 @@ public class Treatment {
 
     public String getDescription() {
         return description;
-    }
-
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
     }
 
     public PrescriptionDetail getPrescriptionDetail() {
@@ -86,14 +80,6 @@ public class Treatment {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
     }
 
     public void setPrescriptionDetail(PrescriptionDetail prescriptionDetail) {

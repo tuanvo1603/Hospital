@@ -16,12 +16,12 @@ public class SpecialistDoctorService {
         this.patientRepository = patientRepository;
     }
 
-    public void deleteOutpatient(String patientId) {
-        patientRepository.deleteOutpatient(patientId);
-    }
+//    public void deleteOutpatient(String patientId) {
+//        patientRepository.deleteOutpatient(patientId);
+//    }
 
     public void admissionPatient(Inpatient inpatient) {
-        this.deleteOutpatient(inpatient.getPatientId());
+//        this.deleteOutpatient(inpatient.getPatientId());
         patientRepository.insertInpatient(
                 inpatient.getPatientId(),
                 inpatient.getDepartment(),

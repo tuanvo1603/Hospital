@@ -11,7 +11,9 @@ import project.hospital.service.employee.doctor.specialistdoctor.SpecialistDocto
 @RestController
 @RequestMapping("/specialist-doctor")
 public class SpecialistDoctorController {
-
+    /**
+     * Done
+     */
     private final SpecialistDoctorService specialistDoctorService;
 
     @Autowired
@@ -19,7 +21,7 @@ public class SpecialistDoctorController {
         this.specialistDoctorService = specialistDoctorService;
     }
 
-    @PostMapping("/dispatch-patient")
+    @PostMapping("/admission-patient")
     public void admissionPatient(@RequestBody Inpatient inpatient) {
         specialistDoctorService.admissionPatient(inpatient);
     }

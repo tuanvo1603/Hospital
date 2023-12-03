@@ -17,17 +17,6 @@ public interface PatientDTORepository extends JpaRepository<Patient, String> {
     )
     List<PatientDTO> findPatients();
 
-    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
-            "FROM Patient p " +
-            "WHERE p.firstName = :patientFirstName " +
-            "AND p.lastName = :patientLastName"
-    )
-    List<PatientDTO> searchPatientByFullName(
-            @Param("patientFirstName") String patientFirstName,
-            @Param("patientLastName") String patientLastName
-    );
-
-
 
 //    @Query("SELECT new project.hospital.dto.PatientList(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
 //            "FROM Patient p WHERE p.employeeId = :employeeId")

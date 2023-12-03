@@ -26,7 +26,7 @@ public class HospitalFee {
     private String note;
 
     @OneToOne
-    @JoinColumn(name = "patient_id")
+    @JoinColumn(name = "patient_id", insertable = false, updatable = false)
     private Patient patient;
 
     public Integer getTotalMoney() {
