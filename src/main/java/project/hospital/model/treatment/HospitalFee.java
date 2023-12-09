@@ -1,6 +1,8 @@
 package project.hospital.model.treatment;
 
 import jakarta.persistence.*;
+import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
 
 import java.sql.Date;
@@ -10,8 +12,8 @@ import java.sql.Date;
 public class HospitalFee {
 
     @Id
-    @Column(name = "patient_id")
-    private String patientId;
+    @Column(name = "treatment_id")
+    private Long treatmentId;
 
     @Column(name = "total_money")
     private Integer totalMoney;
@@ -26,8 +28,8 @@ public class HospitalFee {
     private String note;
 
     @OneToOne
-    @JoinColumn(name = "patient_id", insertable = false, updatable = false)
-    private Patient patient;
+    @JoinColumn(name = "treatment_id")
+    private Treatment treatment;
 
     public Integer getTotalMoney() {
         return totalMoney;
@@ -45,6 +47,14 @@ public class HospitalFee {
         return note;
     }
 
+    public Long getTreatmentId() {
+        return treatmentId;
+    }
+
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
     public void setTotalMoney(Integer totalMoney) {
         this.totalMoney = totalMoney;
     }
@@ -59,5 +69,13 @@ public class HospitalFee {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public void setTreatmentId(Long treatmentId) {
+        this.treatmentId = treatmentId;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 }

@@ -1,15 +1,15 @@
 package project.hospital.controller.employee.doctor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.hospital.exception.IncorrectIdException;
+import project.hospital.exception.PatientCanNotBeFoundException;
 import project.hospital.model.patient.Inpatient;
-import project.hospital.repository.employee.EmployeeRepository;
 import project.hospital.service.employee.doctor.residentdoctor.ResidentDoctorService;
 
 @RestController
-@RequestMapping("/resident-doctor")
+@RequestMapping("/resident-doctor/{employeeId}")
 public class ResidentDoctorController {
 
     private final ResidentDoctorService residentDoctorService;
@@ -19,18 +19,14 @@ public class ResidentDoctorController {
         this.residentDoctorService = residentDoctorService;
     }
 
-    @PatchMapping("/update-inpatient")
-    public ResponseEntity<Void> updateInpatient(Inpatient inpatient) {
-        residentDoctorService.updateInpatient(inpatient);
+    @PutMapping("/update-inpatient")
+    public ResponseEntity<Void> updateInpatient(
+            @RequestBody Inpatient inpatient,
+            @PathVariable Long employeeId) throws PatientCanNotBeFoundException,
+                                                                    IncorrectIdException
+    {
+        residentDoctorService.updateInpatient(inpatient, employeeId);
         return ResponseEntity.ok().build();
     }
 
-//    @PostMapping("/change-patient-department")
-//    public ResponseEntity<Void> changePatientDepartment(
-//            @RequestBody String patientId,
-//            @RequestBody String department
-//    ) {
-//        residentDoctorService.changePatientDepartment(patientId, department);
-//        return ResponseEntity.status(HttpStatus.OK).build();
-//    }
 }

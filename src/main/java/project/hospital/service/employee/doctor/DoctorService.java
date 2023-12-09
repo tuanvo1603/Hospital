@@ -12,7 +12,4 @@ public class DoctorService {
     public DoctorService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-
-
-
 }

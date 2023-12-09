@@ -10,7 +10,7 @@ import project.hospital.model.patient.Patient;
 import java.util.List;
 
 @Repository
-public interface PatientDTORepository extends JpaRepository<Patient, String> {
+public interface PatientDTORepository extends JpaRepository<Patient, Long> {
 
     @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
             "FROM Patient p"

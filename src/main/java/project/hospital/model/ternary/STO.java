@@ -11,24 +11,31 @@ public class STO{
 
     @Id
     @Column(name = "patient_id")
-    protected String patientId;
+    private Long patientId;
 
     @Column(name = "emp_id")
-    protected String employeeId;
+    private Long employeeId;
 
     @Column(name = "treatment_id")
-    protected String treatmentId;
+    private Long treatmentId;
 
     @OneToOne
-    @JoinColumn(name = "patient_id", insertable = false, updatable = false)
+    @JoinColumn(name = "patient_id",
+            insertable = false,
+            updatable = false)
     private Outpatient outpatient;
 
     @ManyToOne
-    @JoinColumn(name = "emp_id", insertable = false, updatable = false)
+    @JoinColumn(name = "emp_id",
+            insertable = false,
+            updatable = false)
     private SpecialistDoctor specialistDoctor;
 
     @OneToOne
-    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
+    @JoinColumn(
+            name = "treatment_id",
+            insertable = false,
+            updatable = false)
     private Treatment treatment;
 
     public Outpatient getOutpatient() {
@@ -43,6 +50,18 @@ public class STO{
         return treatment;
     }
 
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public Long getTreatmentId() {
+        return treatmentId;
+    }
+
     public void setOutpatient(Outpatient outpatient) {
         this.outpatient = outpatient;
     }
@@ -53,5 +72,17 @@ public class STO{
 
     public void setTreatment(Treatment treatment) {
         this.treatment = treatment;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setTreatmentId(Long treatmentId) {
+        this.treatmentId = treatmentId;
     }
 }

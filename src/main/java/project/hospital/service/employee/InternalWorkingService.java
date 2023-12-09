@@ -16,11 +16,11 @@ public class InternalWorkingService {
         this.employeeRepository = employeeRepository;
     }
 
-    public WorkingSchedule checkWorkingSchedule(String employeeId) {
+    public WorkingSchedule checkWorkingSchedule(Long employeeId) {
         return employeeRepository.findById(employeeId).get().getWorkingSchedule();
     }
 
-    public Employee checkMyInformation(String employeeId) {
+    public Employee checkMyInformation(Long employeeId) {
         return employeeRepository.findById(employeeId).get();
     }
 }

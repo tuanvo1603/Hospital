@@ -15,13 +15,13 @@ public class RTI {
 
     @Id
     @Column(name = "patient_id")
-    protected String patientId;
+    protected Long patientId;
 
     @Column(name = "emp_id")
-    protected String employeeId;
+    protected Long employeeId;
 
     @Column(name = "treatment_id")
-    protected String treatmentId;
+    protected Long treatmentId;
 
     @OneToOne
     @JoinColumn(name = "patient_id", insertable = false, updatable = false)
@@ -31,7 +31,7 @@ public class RTI {
     @JoinColumn(name = "emp_id", insertable = false, updatable = false)
     private ResidentDoctor residentDoctor;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private Treatment treatment;
 
@@ -47,6 +47,18 @@ public class RTI {
         return treatment;
     }
 
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public Long getEmployeeId() {
+        return employeeId;
+    }
+
+    public Long getTreatmentId() {
+        return treatmentId;
+    }
+
     public void setInpatient(Inpatient inpatient) {
         this.inpatient = inpatient;
     }
@@ -57,5 +69,17 @@ public class RTI {
 
     public void setTreatment(Treatment treatment) {
         this.treatment = treatment;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setTreatmentId(Long treatmentId) {
+        this.treatmentId = treatmentId;
     }
 }

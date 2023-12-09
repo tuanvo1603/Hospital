@@ -15,25 +15,25 @@ public class ServiceDetail {
 
     @Id
     @Column(name = "treatment_id")
-    private String treatmentId;
+    private Long treatmentId;
 
     @Column(name = "time_perform")
     private Date timePerform;
 
     @Column(name = "service_id")
-    private String serviceId;
+    private Long serviceId;
 
     @Column(name = "technician_id")
-    private String technicianId;
+    private Long technicianId;
 
     @Column(name = "conclusion")
     private String conclusion;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private Treatment treatment;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "service_id", insertable = false, updatable = false)
     private Service service;
 

@@ -20,7 +20,7 @@ public class ResidentDoctor extends Doctor {
     public List<RTI> getRtis() {
         rtis.forEach(rti -> {
             rti.setResidentDoctor(null);
-            rti.getInpatient().setHospitalFee(null);
+//            rti.getInpatient().setHospitalFee(null);
         });
         return rtis;
     }

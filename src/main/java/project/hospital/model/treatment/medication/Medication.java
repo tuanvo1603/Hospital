@@ -10,7 +10,9 @@ public class Medication {
 
     @Id
     @Column(name = "medication_id")
-    private String medicationId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_sequence_generator")
+    @SequenceGenerator(name = "medication_sequence_generator", sequenceName = "medication_sequence", allocationSize = 1)
+    private Long medicationId;
 
     @Column(name = "medication_name")
     private String medicationName;
@@ -37,7 +39,7 @@ public class Medication {
     )
     private ArrayList<MedicationList> medicationLists;
 
-    public String getMedicationId() {
+    public Long getMedicationId() {
         return medicationId;
     }
 
@@ -65,7 +67,7 @@ public class Medication {
         return htmlLink;
     }
 
-    public void setMedicationId(String medicationId) {
+    public void setMedicationId(Long medicationId) {
         this.medicationId = medicationId;
     }
 

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import project.hospital.exception.PatientCanNotBeFoundException;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.service.employee.doctor.specialistdoctor.SpecialistDoctorService;
 
@@ -22,7 +23,7 @@ public class SpecialistDoctorController {
     }
 
     @PostMapping("/admission-patient")
-    public void admissionPatient(@RequestBody Inpatient inpatient) {
+    public void admissionPatient(@RequestBody Inpatient inpatient) throws PatientCanNotBeFoundException {
         specialistDoctorService.admissionPatient(inpatient);
     }
 }

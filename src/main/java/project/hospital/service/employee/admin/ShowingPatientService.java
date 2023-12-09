@@ -3,24 +3,21 @@ package project.hospital.service.employee.admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.dto.PatientDTO;
-import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Patient;
+import project.hospital.repository.patient.InpatientRepository;
 import project.hospital.repository.patient.PatientDTORepository;
-import project.hospital.repository.patient.PatientRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ShowingPatientService {
-    private static final int INDEX_OF_FIRST_PARA = 0;
-    private static final int INDEX_OF_SECOND_PARA = 1;
+    private final int FIRSTNAME = 0;
     private final PatientDTORepository patientDTORepository;
-    private final PatientRepository patientRepository;
-
-    public ShowingPatientService(PatientDTORepository patientDTORepository, PatientRepository patientRepository) {
+    private final InpatientRepository inpatientRepository;
+    @Autowired
+    public ShowingPatientService(PatientDTORepository patientDTORepository, InpatientRepository inpatientRepository) {
         this.patientDTORepository = patientDTORepository;
-        this.patientRepository = patientRepository;
+        this.inpatientRepository = inpatientRepository;
     }
 
     @Autowired
@@ -29,10 +26,12 @@ public class ShowingPatientService {
     }
 
     public List<Patient> searchPatientByFullName(List<String> patientInfo) {
-        return patientRepository.searchPatientByFullName(patientInfo.get(INDEX_OF_FIRST_PARA), patientInfo.get(INDEX_OF_SECOND_PARA));
+        int LASTNAME = 1;
+        return inpatientRepository.searchPatientByFullName(patientInfo.get(FIRSTNAME), patientInfo.get(LASTNAME));
     }
 
     public List<Patient> searchPatientByDepartment(List<String> patientInfo) {
-        return patientRepository.searchPatientByDepartment(patientInfo.get(INDEX_OF_FIRST_PARA), patientInfo.get(INDEX_OF_SECOND_PARA));
+        int DEPARTMENT = 1;
+        return inpatientRepository.searchPatientByDepartment(patientInfo.get(FIRSTNAME), patientInfo.get(DEPARTMENT));
     }
 }

@@ -8,62 +8,56 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Admitted_Patient")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Patient {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "patient_id")
-    private String patientId;
+//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_sequence_generator")
+    @SequenceGenerator(name = "patient_sequence_generator", sequenceName = "patient_sequence", allocationSize = 1)
+    @Column(name = "patient_id", nullable = false, unique = true)
+    protected Long patientId;
     @Column(name = "first_name")
-    private String firstName;
+    protected String firstName;
     @Column(name = "last_name")
-    private String lastName;
-
+    protected String lastName;
     @Column(name = "admit_time")
-    private LocalDateTime admitTime;
+    protected LocalDateTime admitTime;
     @Column(name = "symptom")
-    private String symptom;
+    protected String symptom;
     @Column(name = "request")
-    private String request;
+    protected String request;
     @Column(name = "height")
-    private int height;
+    protected int height;
     @Column(name = "weight")
-    private int weight;
+    protected int weight;
     @Column(name = "emp_id")
-    private String employeeId;
+    protected String employeeId;
     @Column(name = "dob")
-    private LocalDate dob;
+    protected LocalDate dob;
     @Column(name = "address")
-    private String address;
+    protected String address;
     @Column(name = "nation")
-    private String nation;
+    protected String nation;
     @Column(name = "ethnic")
-    private String ethnic;
+    protected String ethnic;
     @Column(name = "occupation")
-    private String occupation;
+    protected String occupation;
     @Column(name = "citizen_id")
-    private String citizenId;
+    protected String citizenId;
     @Column(name = "insurance_id")
-    private String insuranceId;
+    protected String insuranceId;
     @Column(name = "emergency_cell")
-    private String emergencyCell;
+    protected String emergencyCell;
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
-    private Gender gender;
-
-    @OneToOne(
-            mappedBy = "patient",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    protected HospitalFee hospitalFee;
+    protected Gender gender;
 
     public enum Gender {
         Female,
         Male
     }
 
-    public void setPatientId(String patientId) {
+    public void setPatientId(Long patientId) {
         this.patientId = patientId;
     }
 
@@ -135,11 +129,7 @@ public class Patient {
         this.employeeId = employeeId;
     }
 
-    public void setHospitalFee(HospitalFee hospitalFee) {
-        this.hospitalFee = hospitalFee;
-    }
-
-    public String getPatientId() {
+    public Long getPatientId() {
         return patientId;
     }
 
@@ -209,10 +199,6 @@ public class Patient {
 
     public String getEmployeeId() {
         return employeeId;
-    }
-
-    public HospitalFee getHospitalFee() {
-        return hospitalFee;
     }
 
 }

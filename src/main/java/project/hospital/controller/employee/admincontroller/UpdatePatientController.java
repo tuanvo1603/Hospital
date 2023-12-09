@@ -1,12 +1,13 @@
 package project.hospital.controller.employee.admincontroller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.dto.PatientDTO;
-import project.hospital.model.patient.Patient;
+import project.hospital.model.patient.Outpatient;
 import project.hospital.service.employee.admin.UpdatePatientService;
 
 @RestController
@@ -23,14 +24,15 @@ public class UpdatePatientController {
     }
 
     @PostMapping("/admit-patient")
-    public String approvePatient(@RequestBody Patient patient) {
-        updatePatientService.insertPatient(patient);
-        return "login";
+    public ResponseEntity<String> approvePatient(@RequestBody Outpatient outpatient) {
+        updatePatientService.insertPatient(outpatient);
+        return ResponseEntity.ok("Insert successfully");
     }
 
     @PostMapping("/discharge-patient")
-    public void dischargePatient(@RequestBody PatientDTO patientDTO) {
+    public ResponseEntity<String> dischargePatient(@RequestBody PatientDTO patientDTO) {
         updatePatientService.dischargePatient(patientDTO);
+        return ResponseEntity.ok("Discharge successfully");
     }
 
 }

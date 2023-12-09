@@ -14,13 +14,13 @@ public class MedicineDispensation {
 
     @Id
     @Column(name = "patient_id")
-    private String patientId;
+    private Long patientId;
 
     @Column(name = "date")
     private Date date;
 
     @Column(name = "nurse_in_charge_id")
-    private String nurseId;
+    private Long nurseId;
 
     @Column(name = "start_time")
     private Date startTime;
@@ -38,7 +38,7 @@ public class MedicineDispensation {
     }
 
     @Column(name = "treatment_id")
-    private String treatmentId;
+    private Long treatmentId;
 
     @OneToOne
     @JoinColumn(name = "patient_id")
@@ -64,7 +64,7 @@ public class MedicineDispensation {
         return halfADay;
     }
 
-    public String getTreatmentId() {
+    public Long getTreatmentId() {
         return treatmentId;
     }
 

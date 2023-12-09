@@ -8,7 +8,7 @@ public class MedicationList {
 
     @Id
     @Column(name = "treatment_id")
-    private String treatmentId;
+    private Long treatmentId;
 
     @ManyToOne
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
@@ -21,7 +21,7 @@ public class MedicationList {
     @Column(name = "quantity")
     private Integer quantity;
 
-    public String getTreatmentId() {
+    public Long getTreatmentId() {
         return treatmentId;
     }
 

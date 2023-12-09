@@ -23,12 +23,12 @@ public class InternalWorkingController {
     }
 
     @GetMapping("/check-schedule")
-    public WorkingSchedule checkWorkingSchedule(@RequestBody String employeeId) {
+    public WorkingSchedule checkWorkingSchedule(@RequestBody Long employeeId) {
         return internalWorkingService.checkWorkingSchedule(employeeId);
     }
 
     @GetMapping("/check-my-information")
-    public Employee checkMyInformation(@RequestBody String employeeId) {
+    public Employee checkMyInformation(@RequestBody Long employeeId) {
         return internalWorkingService.checkMyInformation(employeeId);
     }
 }

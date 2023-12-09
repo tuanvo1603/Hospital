@@ -11,7 +11,9 @@ public class Service {
 
     @Id
     @Column(name = "service_id")
-    private String serviceId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "service_sequence_generator")
+    @SequenceGenerator(name = "service_sequence_generator", sequenceName = "service_sequence", allocationSize = 1)
+    private Long serviceId;
 
     @Column(name = "department")
     private String department;
@@ -24,12 +26,11 @@ public class Service {
 
     @OneToMany(
             mappedBy = "service",
-            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private List<ServiceDetail> serviceDetails;
 
-    public String getServiceId() {
+    public Long getServiceId() {
         return serviceId;
     }
 
@@ -49,7 +50,7 @@ public class Service {
         return serviceDetails;
     }
 
-    public void setServiceId(String serviceId) {
+    public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
     }
 

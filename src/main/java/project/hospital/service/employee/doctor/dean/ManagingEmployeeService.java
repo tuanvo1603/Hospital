@@ -22,7 +22,7 @@ public class ManagingEmployeeService {
         return employeeRepository.showDepartmentEmployees(department);
     }
 
-    public void deleteEmployee(String employeeId) {
+    public void deleteEmployee(Long employeeId) {
         employeeRepository.deleteById(employeeId);
     }
 

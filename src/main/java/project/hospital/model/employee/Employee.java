@@ -13,7 +13,7 @@ public class Employee {
     @Id
     @Column(name = "emp_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected String employeeId;
+    protected Long employeeId;
 
     @Column(name = "first_name")
     protected String firstName;
@@ -43,7 +43,7 @@ public class Employee {
             fetch = FetchType.LAZY)
     protected WorkingSchedule workingSchedule;
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
@@ -76,7 +76,7 @@ public class Employee {
         return departmentString;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 

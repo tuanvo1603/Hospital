@@ -12,5 +12,5 @@ import project.hospital.model.schedule.WorkingTime;
 import java.sql.Date;
 
 @Repository
-public interface WorkingScheduleRepository extends JpaRepository<WorkingSchedule, String> {
+public interface WorkingScheduleRepository extends JpaRepository<WorkingSchedule, Long> {
 }

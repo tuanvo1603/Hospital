@@ -15,8 +15,9 @@ public class Treatment {
 
     @Id
     @Column(name = "treatment_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String treatmentId;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "treatment_sequence_generator")
+    @SequenceGenerator(name = "treatment_sequence_generator", sequenceName = "treatment_sequence", allocationSize = 1)
+    private Long treatmentId;
 
     @Column(name = "treatment_procedure")
     private String treatmentProcedure;
@@ -38,19 +39,26 @@ public class Treatment {
 
     @OneToOne(
             mappedBy = "treatment",
-            cascade = CascadeType.PERSIST,
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private RTI rti;
 
     @OneToOne(
             mappedBy = "treatment",
-            cascade = CascadeType.PERSIST,
+            cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
     private STO sto;
 
-    public String getTreatmentId() {
+    @OneToOne(
+            mappedBy = "treatment",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private HospitalFee hospitalFee;
+
+    public Long getTreatmentId() {
         return treatmentId;
     }
 
@@ -70,7 +78,15 @@ public class Treatment {
         return serviceDetails;
     }
 
-    public void setTreatmentId(String treatmentId) {
+    public STO getSto() {
+        return sto;
+    }
+
+    public HospitalFee getHospitalFee() {
+        return hospitalFee;
+    }
+
+    public void setTreatmentId(Long treatmentId) {
         this.treatmentId = treatmentId;
     }
 
@@ -88,5 +104,17 @@ public class Treatment {
 
     public void setServiceDetails(List<ServiceDetail> serviceDetails) {
         this.serviceDetails = serviceDetails;
+    }
+
+    public void setRti(RTI rti) {
+        this.rti = rti;
+    }
+
+    public void setSto(STO sto) {
+        this.sto = sto;
+    }
+
+    public void setHospitalFee(HospitalFee hospitalFee) {
+        this.hospitalFee = hospitalFee;
     }
 }

@@ -3,7 +3,7 @@ package project.hospital.dto;
 import java.time.LocalDateTime;
 
 public class PatientDTO {
-    private String patientId;
+    private Long patientId;
     private String firstName;
     private String lastName;
     private LocalDateTime admitTime;
@@ -13,7 +13,7 @@ public class PatientDTO {
     private int height;
     private int weight;
 
-    public PatientDTO(String patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String symptom, String request, int height, int weight) {
+    public PatientDTO(Long patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String symptom, String request, int height, int weight) {
         this.patientId = patientId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,7 +25,7 @@ public class PatientDTO {
         this.weight = weight;
     }
 
-    public void setPatientId(String patientId) {
+    public void setPatientId(Long patientId) {
         this.patientId = patientId;
     }
 
@@ -73,7 +73,7 @@ public class PatientDTO {
         return lastName;
     }
 
-    public String getPatientId() {
+    public Long getPatientId() {
         return patientId;
     }
 

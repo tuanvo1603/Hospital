@@ -2,6 +2,7 @@ package project.hospital.model.patient;
 
 import jakarta.persistence.*;
 import project.hospital.model.ternary.STO;
+import project.hospital.model.treatment.HospitalFee;
 
 @Entity
 @Table(name = "outpatient")
@@ -21,4 +22,5 @@ public class Outpatient extends Patient {
     public void setSto(STO sto) {
         this.sto = sto;
     }
+
 }

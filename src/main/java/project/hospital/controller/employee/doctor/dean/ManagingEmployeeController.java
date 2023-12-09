@@ -31,7 +31,7 @@ public class ManagingEmployeeController {
     }
 
     @PostMapping("/delete-employee")
-    public ResponseEntity<Void> deleteEmployee(@RequestBody String employeeId) {
+    public ResponseEntity<Void> deleteEmployee(@RequestBody Long employeeId) {
         managingEmployeeService.deleteEmployee(employeeId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

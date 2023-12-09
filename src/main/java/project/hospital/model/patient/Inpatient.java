@@ -3,6 +3,7 @@ package project.hospital.model.patient;
 import jakarta.persistence.*;
 import project.hospital.model.schedule.MedicineDispensation;
 import project.hospital.model.ternary.RTI;
+import project.hospital.model.treatment.HospitalFee;
 
 @Entity
 @Table(name = "Inpatient")
@@ -56,6 +57,10 @@ public class Inpatient extends Patient {
         return family;
     }
 
+    public RTI getRti() {
+        return rti;
+    }
+
     public void setDepartment(String department) {
         this.department = department;
     }
@@ -72,8 +77,14 @@ public class Inpatient extends Patient {
         this.medicineDispensation = medicineDispensation;
     }
 
+    public void setRti(RTI rti) {
+        this.rti = rti;
+    }
+
     public void setFamily(Family family) {
         this.family = family;
     }
+
+
 
 }

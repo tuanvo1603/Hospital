@@ -13,10 +13,10 @@ public class PrescriptionDetail {
 
     @Id
     @Column(name = "treatment_id")
-    private String treatmentId;
+    private Long treatmentId;
 
     @Column(name = "prescibed_date")
-    private Date prescibedDate;
+    private Date prescribedDate;
 
     @OneToMany(
             mappedBy = "prescriptionDetail",
@@ -24,16 +24,16 @@ public class PrescriptionDetail {
             fetch = FetchType.LAZY)
     private Set<MedicationList> medicationLists = new HashSet<>();
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "treatment_id")
     private Treatment treatment;
 
-    public String getTreatmentId() {
+    public Long getTreatmentId() {
         return treatmentId;
     }
 
-    public Date getPrescibedDate() {
-        return prescibedDate;
+    public Date getPrescribedDate() {
+        return prescribedDate;
     }
 
     public Set<MedicationList> getMedicationLists() {
@@ -41,8 +41,8 @@ public class PrescriptionDetail {
     }
 
 
-    public void setPrescibedDate(Date prescibedDate) {
-        this.prescibedDate = prescibedDate;
+    public void setPrescribedDate(Date prescribedDate) {
+        this.prescribedDate = prescribedDate;
     }
 
     public void setMedicationLists(Set<MedicationList> medicationLists) {

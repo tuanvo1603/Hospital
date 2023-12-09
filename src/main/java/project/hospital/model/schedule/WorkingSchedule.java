@@ -11,7 +11,7 @@ public class WorkingSchedule {
 
     @Id
     @Column(name = "emp_id")
-    private String employeeId;
+    private Long employeeId;
 
     @Column(name = "week_start_date")
     private Date weekStartDate;
@@ -41,7 +41,7 @@ public class WorkingSchedule {
     @JoinColumn(name = "emp_id")
     private Employee employee;
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
     }
 
@@ -77,7 +77,7 @@ public class WorkingSchedule {
         return sunday;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 

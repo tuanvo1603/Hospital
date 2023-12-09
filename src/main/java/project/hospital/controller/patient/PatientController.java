@@ -23,7 +23,7 @@ public class PatientController {
     }
 
     @GetMapping("/my-information")
-    public ResponseEntity<Patient> showPatientInformation(@RequestBody String patientId) {
+    public ResponseEntity<Patient> showPatientInformation(@RequestBody Long patientId) {
         return ResponseEntity.ok(patientService.showInpatientInformation(patientId));
     }
 

@@ -8,7 +8,7 @@ public class Family {
 
     @Id
     @Column(name = "patient_id")
-    private String patientId;
+    private Long patientId;
 
     @Column(name = "relationship")
     private String relationship;

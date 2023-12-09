@@ -9,7 +9,7 @@ import project.hospital.model.employee.Employee;
 import java.util.List;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, String> {
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Query("SELECT e FROM Employee e WHERE e.departmentString = :department")
     List<Employee> showDepartmentEmployees(@Param("department") String department);
