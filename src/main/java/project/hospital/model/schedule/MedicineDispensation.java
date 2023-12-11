@@ -76,6 +76,18 @@ public class MedicineDispensation {
         return serviceDetail;
     }
 
+    public Nurse getNurse() {
+        return nurse;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public Date getEndTime() {
+        return endTime;
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }

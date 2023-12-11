@@ -49,11 +49,19 @@ public class ServiceDetail {
         return conclusion;
     }
 
+    public Service getService() {
+        return service;
+    }
+
     public void setTimePerform(Date timePerform) {
         this.timePerform = timePerform;
     }
 
     public void setConclusion(String conclusion) {
         this.conclusion = conclusion;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 }

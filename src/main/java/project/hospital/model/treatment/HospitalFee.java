@@ -51,10 +51,6 @@ public class HospitalFee {
         return treatmentId;
     }
 
-    public Treatment getTreatment() {
-        return treatment;
-    }
-
     public void setTotalMoney(Integer totalMoney) {
         this.totalMoney = totalMoney;
     }
@@ -75,7 +71,4 @@ public class HospitalFee {
         this.treatmentId = treatmentId;
     }
 
-    public void setTreatment(Treatment treatment) {
-        this.treatment = treatment;
-    }
 }

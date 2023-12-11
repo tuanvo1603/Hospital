@@ -78,10 +78,6 @@ public class Treatment {
         return serviceDetails;
     }
 
-    public STO getSto() {
-        return sto;
-    }
-
     public HospitalFee getHospitalFee() {
         return hospitalFee;
     }
@@ -104,14 +100,6 @@ public class Treatment {
 
     public void setServiceDetails(List<ServiceDetail> serviceDetails) {
         this.serviceDetails = serviceDetails;
-    }
-
-    public void setRti(RTI rti) {
-        this.rti = rti;
-    }
-
-    public void setSto(STO sto) {
-        this.sto = sto;
     }
 
     public void setHospitalFee(HospitalFee hospitalFee) {

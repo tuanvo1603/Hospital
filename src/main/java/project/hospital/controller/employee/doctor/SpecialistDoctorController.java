@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.hospital.exception.PatientCanNotBeFoundException;
 import project.hospital.model.patient.Inpatient;
-import project.hospital.service.employee.doctor.specialistdoctor.SpecialistDoctorService;
+import project.hospital.service.employee.doctor.SpecialistDoctorService;
 
 @RestController
 @RequestMapping("/specialist-doctor")

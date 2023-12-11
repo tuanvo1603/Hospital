@@ -11,11 +11,16 @@ import project.hospital.model.ternary.STO;
 @Repository
 public interface STORepository extends JpaRepository<STO, Long> {
 
+//    @Modifying
+//    @Transactional
+//    @Query(
+//            value = "DELETE FROM sto " +
+//                    "WHERE patient_id = :patientId",
+//            nativeQuery = true)
+//    void deleteStoInDB(@Param("patientId") Long patientId);
     @Modifying
     @Transactional
-    @Query(
-            value = "DELETE FROM sto " +
-                    "WHERE patient_id = :patientId",
-            nativeQuery = true)
-    void deleteSto(@Param("patientId") Long patientId);
+    @Query("DELETE FROM STO s " +
+            "WHERE s.patientId = :patientId")
+    void deleteSTOInDB(@Param("patientId") Long patientId);
 }

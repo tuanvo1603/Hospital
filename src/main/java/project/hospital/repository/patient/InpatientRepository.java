@@ -32,17 +32,6 @@ public interface InpatientRepository extends JpaRepository<Inpatient, Long> {
             @Param("patientLastName") String patientLastName
     );
 
-//    @Modifying
-//    @Transactional
-//    @Query(
-//            value = "INSERT INTO Inpatient(patient_id, department, bed_cell, room) " +
-//            "VALUES (:patientId, :department, :bedCell, :room)",
-//            nativeQuery = true
-//    ) void insertInpatient(@Param("patientId") Long patientId,
-//                           @Param("department") String department,
-//                           @Param("bedCell") Integer bedCell,
-//                           @Param("room") String room);
-
     @Modifying(flushAutomatically = true)
     @Transactional
     @Query(
@@ -100,12 +89,4 @@ public interface InpatientRepository extends JpaRepository<Inpatient, Long> {
             nativeQuery = true
     )
     void copyOutpatientInfo(@Param("patientId") Long patientId);
-
-//    @Query(
-//            value = "SELECT * " +
-//                    "FROM Inpatient " +
-//                    "WHERE patient_id = :patientId",
-//            nativeQuery = true
-//    )
-//    Inpatient findInpatient(@Param("patientId") Long patientId);
 }

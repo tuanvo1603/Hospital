@@ -46,9 +46,9 @@ public class Service {
         return roomPerform;
     }
 
-    public List<ServiceDetail> getServiceDetails() {
-        return serviceDetails;
-    }
+//    public List<ServiceDetail> getServiceDetails() {
+//        return serviceDetails;
+//    }
 
     public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
@@ -66,7 +66,7 @@ public class Service {
         this.roomPerform = roomPerform;
     }
 
-    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
-        this.serviceDetails = serviceDetails;
-    }
+//    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
+//        this.serviceDetails = serviceDetails;
+//    }
 }

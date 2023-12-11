@@ -1,5 +1,6 @@
-package project.hospital.service.employee.doctor.residentdoctor;
+package project.hospital.service.employee.doctor;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.exception.IncorrectIdException;
@@ -8,23 +9,25 @@ import project.hospital.model.employee.doctor.ResidentDoctor;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.repository.employee.ResidentDoctorRepository;
 import project.hospital.repository.patient.InpatientRepository;
+import project.hospital.service.patient.InpatientService;
 
 @Service
 public class ResidentDoctorService {
 
     private final ResidentDoctorRepository residentDoctorRepository;
 
-    private final InpatientRepository inpatientRepository;
+    private final InpatientService inpatientService;
 
     @Autowired
-    public ResidentDoctorService(ResidentDoctorRepository residentDoctorRepository, InpatientRepository inpatientRepository) {
+    public ResidentDoctorService(ResidentDoctorRepository residentDoctorRepository, InpatientService inpatientService) {
         this.residentDoctorRepository = residentDoctorRepository;
-        this.inpatientRepository = inpatientRepository;
+        this.inpatientService = inpatientService;
     }
 
+    @Transactional
     public void updateInpatient(Inpatient inpatient, Long employeeId) throws PatientCanNotBeFoundException, IncorrectIdException {
         if(checkPatientInDBByDoctor(inpatient, employeeId))
-            inpatientRepository.save(inpatient);
+            inpatientService.saveInpatient(inpatient);
         else
             throw new PatientCanNotBeFoundException();
     }
@@ -35,13 +38,12 @@ public class ResidentDoctorService {
 
     private boolean checkPatientInDBByDoctor(Inpatient inpatient, Long employeeId) throws IncorrectIdException {
         return this.getManagingDoctorById(employeeId)
-                .getRtis()
-                .stream()
-                .anyMatch(rti -> rti
-                        .getInpatient()
-                        .getPatientId()
-                        .equals(inpatient.getPatientId())
-                );
+                    .getRtis()
+                    .stream()
+                    .anyMatch(rti -> rti
+                                    .getPatientId()
+                                    .equals(inpatient.getPatientId())
+                    );
     }
 
 }

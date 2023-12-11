@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public abstract class Patient {
 
     @Id
-//    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_sequence_generator")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_sequence_generator")
     @SequenceGenerator(name = "patient_sequence_generator", sequenceName = "patient_sequence", allocationSize = 1)
     @Column(name = "patient_id", nullable = false, unique = true)
     protected Long patientId;
