@@ -1,7 +1,6 @@
 package project.hospital.model.patient;
 
 import jakarta.persistence.*;
-import project.hospital.model.treatment.HospitalFee;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,38 +15,55 @@ public abstract class Patient {
     @SequenceGenerator(name = "patient_sequence_generator", sequenceName = "patient_sequence", allocationSize = 1)
     @Column(name = "patient_id", nullable = false, unique = true)
     protected Long patientId;
+
     @Column(name = "first_name")
     protected String firstName;
+
     @Column(name = "last_name")
     protected String lastName;
+
     @Column(name = "admit_time")
     protected LocalDateTime admitTime;
+
     @Column(name = "symptom")
     protected String symptom;
+
     @Column(name = "request")
     protected String request;
+
     @Column(name = "height")
     protected int height;
+
     @Column(name = "weight")
     protected int weight;
+
     @Column(name = "emp_id")
     protected String employeeId;
+
     @Column(name = "dob")
     protected LocalDate dob;
+
     @Column(name = "address")
     protected String address;
+
     @Column(name = "nation")
     protected String nation;
+
     @Column(name = "ethnic")
     protected String ethnic;
+
     @Column(name = "occupation")
     protected String occupation;
+
     @Column(name = "citizen_id")
     protected String citizenId;
+
     @Column(name = "insurance_id")
     protected String insuranceId;
+
     @Column(name = "emergency_cell")
     protected String emergencyCell;
+
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     protected Gender gender;

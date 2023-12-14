@@ -13,16 +13,16 @@ import java.util.List;
 @RestController
 @RequestMapping("/nurse")
 public class NurseController {
-
-    private final NurseService nurseService;
-    @Autowired
-    public NurseController(NurseService nurseService) {
-        this.nurseService = nurseService;
-    }
-
-    @GetMapping("/list-medicine-dispensation")
-    public List<MedicineDispensation> getListMedicineDispensation(Nurse nurse) {
-        return nurseService.getListMedicineDispensation(nurse);
-    }
+//
+//    private final NurseService nurseService;
+//    @Autowired
+//    public NurseController(NurseService nurseService) {
+//        this.nurseService = nurseService;
+//    }
+//
+//    @GetMapping("/list-medicine-dispensation")
+//    public List<MedicineDispensation> getListMedicineDispensation(Nurse nurse) {
+//        return nurseService.getListMedicineDispensation(nurse);
+//    }
 
 }

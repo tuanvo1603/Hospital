@@ -21,10 +21,6 @@ public class MedicationList {
     @Column(name = "quantity")
     private Integer quantity;
 
-//    public Long getTreatmentId() {
-//        return treatmentId;
-//    }
-
     public Medication getMedication() {
         return medication;
     }

@@ -19,10 +19,7 @@ public class SpecialistDoctor extends Doctor {
     private List<STO> stos;
 
     public List<STO> getStos() {
-        stos.forEach(sto -> {
-            sto.setSpecialistDoctor(null);
-            sto.setOutpatient(null);
-        });
+        stos.forEach(sto -> sto.setSpecialistDoctor(null));
         return stos;
     }
 

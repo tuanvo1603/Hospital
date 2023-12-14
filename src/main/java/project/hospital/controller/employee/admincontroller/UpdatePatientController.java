@@ -26,9 +26,9 @@ public class UpdatePatientController {
         return ResponseEntity.ok("Insert successfully");
     }
 
-    @DeleteMapping("/discharge-patient")
-    public ResponseEntity<String> dischargePatient(@RequestBody PatientDTO patientDTO) {
-        updatePatientService.dischargePatient(patientDTO);
+    @DeleteMapping("/discharge-patient/{patientId}")
+    public ResponseEntity<String> dischargePatient(@PathVariable Long patientId) {
+        updatePatientService.dischargePatient(patientId);
         return ResponseEntity.ok("Discharge successfully");
     }
 

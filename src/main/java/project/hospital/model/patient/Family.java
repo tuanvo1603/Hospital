@@ -28,10 +28,6 @@ public class Family {
         return emergencyContact;
     }
 
-//    public Inpatient getInpatient() {
-//        return inpatient;
-//    }
-
     public void setRelationship(String relationship) {
         this.relationship = relationship;
     }
@@ -40,7 +36,4 @@ public class Family {
         this.emergencyContact = emergencyContact;
     }
 
-//    public void setInpatient(Inpatient inpatient) {
-//        this.inpatient = inpatient;
-//    }
 }

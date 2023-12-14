@@ -3,14 +3,14 @@ package project.hospital.controller.employee.admincontroller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import project.hospital.dto.PatientDTO;
+import project.hospital.model.patient.Patient;
 import project.hospital.service.employee.admin.ShowingPatientService;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/admin/show")
 public class ShowingPatientController {
     /**
@@ -25,28 +25,25 @@ public class ShowingPatientController {
     }
 
     @GetMapping("/patient-list")
-    public String listPatients(Model model) {
-        model.addAttribute("patients", showingPatientService.findPatients());
-        return "patient-list";
+    public List<PatientDTO> listPatients() {
+        return showingPatientService.getPatientList();
     }
 
     /**
      *
-     * @param patientInfo contains firstName and lastName
+     * @PathVariable  contains firstName and lastName
      */
-    @GetMapping("/search-by-name")
-    public String searchPatientByName(Model model, @RequestBody List<String> patientInfo) {
-        model.addAttribute("patients", showingPatientService.searchPatientByFullName(patientInfo));
-        return "patient-list";
+    @GetMapping("/search-by-name/{firstName}/{lastName}")
+    public List<Patient> searchPatientByName(@PathVariable String firstName, @PathVariable String lastName) {
+        return showingPatientService.getPatientByFullName(firstName, lastName);
     }
 
     /**
      *
-     * @param patientInfo contains firsName and department
+     * @PathVariable  contains firsName and department
      */
-    @GetMapping("search-by-department")
-    public String searchPatientByDepartment(Model model, @RequestBody List<String> patientInfo) {
-        model.addAttribute("patients", showingPatientService.searchPatientByDepartment(patientInfo));
-        return "patient-list";
+    @GetMapping("search-by-department/{firstName}/{department}")
+    public List<Patient> searchPatientByDepartment(@PathVariable String firstName, @PathVariable String department) {
+        return showingPatientService.getPatientByDepartment(firstName, department);
     }
 }

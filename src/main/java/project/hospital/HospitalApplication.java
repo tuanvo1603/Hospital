@@ -11,7 +11,6 @@ import project.hospital.configuration.databaseconfig.DatabaseConfig;
 
 @SpringBootApplication
 @EnableJpaRepositories(basePackages = "project.hospital.repository")
-@ComponentScan(basePackages = "project.hospital")
 @EntityScan(basePackages = "project.hospital.model")
 public class HospitalApplication {
 

@@ -24,8 +24,8 @@ public class PrescriptionDetail {
             fetch = FetchType.LAZY)
     private Set<MedicationList> medicationLists = new HashSet<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "treatment_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private Treatment treatment;
 
     public Long getTreatmentId() {

@@ -1,11 +1,14 @@
 package project.hospital.controller.employee.doctor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.exception.IncorrectIdException;
 import project.hospital.exception.PatientCanNotBeFoundException;
 import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Patient;
+import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.service.employee.doctor.ResidentDoctorService;
 
 @RestController
@@ -19,13 +22,18 @@ public class ResidentDoctorController {
         this.residentDoctorService = residentDoctorService;
     }
 
-    @PutMapping("/update-inpatient")
+    @PutMapping("/add-prescription-detail/{patientId}")
     public ResponseEntity<Void> updateInpatient(
-            @RequestBody Inpatient inpatient,
-            @PathVariable Long employeeId) throws PatientCanNotBeFoundException, IncorrectIdException
+            @RequestBody PrescriptionDetail prescriptionDetail,
+            @PathVariable Long employeeId,
+            @PathVariable Long patientId) throws PatientCanNotBeFoundException, IncorrectIdException
     {
-        residentDoctorService.updateInpatient(inpatient, employeeId);
+        residentDoctorService.addPrescriptionDetail(prescriptionDetail, employeeId, patientId);
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/get-patient/{citizenId}")
+    public Patient getManagedPatient(@PathVariable String citizenId) {
+        return residentDoctorService.searchInpatientByCitizenId(citizenId);
+    }
 }

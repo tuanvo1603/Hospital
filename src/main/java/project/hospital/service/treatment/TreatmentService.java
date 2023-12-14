@@ -2,7 +2,6 @@ package project.hospital.service.treatment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.hospital.model.treatment.HospitalFee;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.treatment.TreatmentRepository;
 
@@ -16,10 +15,8 @@ public class TreatmentService {
         this.treatmentRepository = treatmentRepository;
     }
 
-    public void initHospitalFee(Treatment treatment) {
-        HospitalFee hospitalFee = new HospitalFee();
-        treatment.setHospitalFee(hospitalFee);
-        hospitalFee.setTreatmentId(treatment.getTreatmentId());
+
+    public void saveTreatment(Treatment treatment) {
         treatmentRepository.save(treatment);
     }
 

@@ -10,10 +10,4 @@ import project.hospital.model.ternary.RTI;
 
 @Repository
 public interface RTIRepository extends JpaRepository<RTI, Long> {
-
-    @Modifying
-    @Transactional
-    @Query("DELETE FROM RTI r " +
-            "WHERE r.patientId = :patientId")
-    void deleteRTIInDB(@Param("patientId") Long patientId);
 }

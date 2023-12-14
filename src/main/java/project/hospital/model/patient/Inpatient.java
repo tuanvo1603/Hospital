@@ -85,6 +85,4 @@ public class Inpatient extends Patient {
         this.family = family;
     }
 
-
-
 }

@@ -1,16 +1,13 @@
 package project.hospital.service.employee.doctor;
 
-import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientCanNotBeFoundException;
-import project.hospital.model.patient.Inpatient;
-import project.hospital.model.patient.Outpatient;
+import project.hospital.model.patient.Patient;
 import project.hospital.model.ternary.STO;
-import project.hospital.repository.patient.InpatientRepository;
-import project.hospital.repository.ternary.STORepository;
 import project.hospital.service.patient.OutpatientService;
+import project.hospital.service.patient.PatientService;
 import project.hospital.service.ternary.RTIService;
 import project.hospital.service.ternary.STOService;
 
@@ -18,7 +15,9 @@ import project.hospital.service.ternary.STOService;
 public class SpecialistDoctorService {
 
     private final OutpatientService outpatientService;
+
     private final STOService stoService;
+
     private final RTIService rtiService;
 
     @Autowired
@@ -32,11 +31,12 @@ public class SpecialistDoctorService {
     }
 
     @Transactional
-    public void admissionPatient(Inpatient inpatient) throws PatientCanNotBeFoundException {
-        Outpatient outpatient = outpatientService.copyPatientInfo(inpatient);
-        STO oldSto = stoService.getPatientSTO(outpatient);
+    public void admitInpatient(Long patientId) throws PatientCanNotBeFoundException {
+        STO oldSto = stoService.getPatientFromSTO(patientId);
+        outpatientService.copyPatientInfo(patientId);
         rtiService.initRTIFromSTO(oldSto);
-        stoService.deleteSTOInDB(oldSto.getPatientId());
-        outpatientService.deleteOutpatient(outpatient);
+        stoService.deleteSTOById(patientId);
+        outpatientService.deletePatientById(patientId);
     }
+
 }

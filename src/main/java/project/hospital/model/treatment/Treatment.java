@@ -25,11 +25,11 @@ public class Treatment {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(
+    @OneToMany(
             mappedBy = "treatment",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
-    private PrescriptionDetail prescriptionDetail;
+    private List<PrescriptionDetail> prescriptionDetails;
 
     @OneToMany(
             mappedBy = "treatment",
@@ -70,8 +70,8 @@ public class Treatment {
         return description;
     }
 
-    public PrescriptionDetail getPrescriptionDetail() {
-        return prescriptionDetail;
+    public List<PrescriptionDetail> getPrescriptionDetails() {
+        return prescriptionDetails;
     }
 
     public List<ServiceDetail> getServiceDetails() {
@@ -94,8 +94,12 @@ public class Treatment {
         this.description = description;
     }
 
-    public void setPrescriptionDetail(PrescriptionDetail prescriptionDetail) {
-        this.prescriptionDetail = prescriptionDetail;
+    public void setPrescriptionDetails(List<PrescriptionDetail> prescriptionDetails) {
+        this.prescriptionDetails = prescriptionDetails;
+    }
+
+    public void addPrescriptionDetail(PrescriptionDetail prescriptionDetail) {
+        this.prescriptionDetails.add(prescriptionDetail);
     }
 
     public void setServiceDetails(List<ServiceDetail> serviceDetails) {
@@ -105,4 +109,5 @@ public class Treatment {
     public void setHospitalFee(HospitalFee hospitalFee) {
         this.hospitalFee = hospitalFee;
     }
+
 }

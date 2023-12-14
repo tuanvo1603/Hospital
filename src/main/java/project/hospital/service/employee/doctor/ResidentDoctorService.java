@@ -6,44 +6,55 @@ import org.springframework.stereotype.Service;
 import project.hospital.exception.IncorrectIdException;
 import project.hospital.exception.PatientCanNotBeFoundException;
 import project.hospital.model.employee.doctor.ResidentDoctor;
-import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Patient;
+import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.repository.employee.ResidentDoctorRepository;
-import project.hospital.repository.patient.InpatientRepository;
 import project.hospital.service.patient.InpatientService;
+import project.hospital.service.patient.PatientService;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ResidentDoctorService {
 
     private final ResidentDoctorRepository residentDoctorRepository;
 
-    private final InpatientService inpatientService;
+    private final PatientService patientService;
 
     @Autowired
     public ResidentDoctorService(ResidentDoctorRepository residentDoctorRepository, InpatientService inpatientService) {
         this.residentDoctorRepository = residentDoctorRepository;
-        this.inpatientService = inpatientService;
+        this.patientService = inpatientService;
+    }
+
+    private ResidentDoctor getManagingDoctorById(Long employeeId) throws IncorrectIdException {
+        return residentDoctorRepository
+                .findById(employeeId)
+                .orElseThrow(IncorrectIdException::new);
+    }
+
+    private boolean isPatientManagedByDoctor(Long employeeId, Long patientId) throws IncorrectIdException {
+        return this.getManagingDoctorById(employeeId)
+                    .getRtis()
+                    .stream()
+                    .anyMatch(rti -> Objects.equals(rti
+                            .getPatientId(), patientId)
+                    );
     }
 
     @Transactional
-    public void updateInpatient(Inpatient inpatient, Long employeeId) throws PatientCanNotBeFoundException, IncorrectIdException {
-        if(checkPatientInDBByDoctor(inpatient, employeeId))
-            inpatientService.saveInpatient(inpatient);
+    public void addPrescriptionDetail(PrescriptionDetail prescriptionDetail,
+                                      Long employeeId,
+                                      Long patientId) throws PatientCanNotBeFoundException, IncorrectIdException {
+        if(isPatientManagedByDoctor(employeeId, patientId)){
+            patientService.addPrescriptionDetail(patientId, prescriptionDetail);
+        }
         else
             throw new PatientCanNotBeFoundException();
     }
 
-    private ResidentDoctor getManagingDoctorById(Long employeeId) throws IncorrectIdException {
-        return residentDoctorRepository.findById(employeeId).orElseThrow(IncorrectIdException::new);
+    public Patient searchInpatientByCitizenId(String citizenId) {
+        return patientService.searchPatientByCitizenId(citizenId);
     }
-
-    private boolean checkPatientInDBByDoctor(Inpatient inpatient, Long employeeId) throws IncorrectIdException {
-        return this.getManagingDoctorById(employeeId)
-                    .getRtis()
-                    .stream()
-                    .anyMatch(rti -> rti
-                                    .getPatientId()
-                                    .equals(inpatient.getPatientId())
-                    );
-    }
-
 }
