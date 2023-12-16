@@ -38,9 +38,9 @@ public class Employee {
     protected String qualifications;
 
     @OneToOne(
-            mappedBy = "employee",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "emp_id")
     protected WorkingSchedule workingSchedule;
 
     public Long getEmployeeId() {

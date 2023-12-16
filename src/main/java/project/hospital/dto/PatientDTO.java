@@ -10,10 +10,10 @@ public class PatientDTO {
     private String employeeId;
     private String symptom;
     private String request;
-    private int height;
-    private int weight;
+    private Integer height;
+    private Integer weight;
 
-    public PatientDTO(Long patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String symptom, String request, int height, int weight) {
+    public PatientDTO(Long patientId, String firstName, String lastName, String employeeId, LocalDateTime admitTime, String symptom, String request, Integer height, Integer weight) {
         this.patientId = patientId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,11 +53,11 @@ public class PatientDTO {
         this.request = request;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(Integer height) {
         this.height = height;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 
@@ -89,11 +89,11 @@ public class PatientDTO {
         return request;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 }

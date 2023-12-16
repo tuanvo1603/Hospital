@@ -30,16 +30,8 @@ public class ServiceDetail {
     private String conclusion;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
-    private Treatment treatment;
-
-    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "service_id", insertable = false, updatable = false)
     private Service service;
-
-    @ManyToOne
-    @JoinColumn(name = "technician_id", insertable = false, updatable = false)
-    private Technician technician;
 
     public Date getTimePerform() {
         return timePerform;
@@ -63,5 +55,29 @@ public class ServiceDetail {
 
     public void setService(Service service) {
         this.service = service;
+    }
+
+    public Long getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(Long serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    public Long getTechnicianId() {
+        return technicianId;
+    }
+
+    public void setTechnicianId(Long technicianId) {
+        this.technicianId = technicianId;
+    }
+
+    public Long getTreatmentId() {
+        return treatmentId;
+    }
+
+    public void setTreatmentId(Long treatmentId) {
+        this.treatmentId = treatmentId;
     }
 }

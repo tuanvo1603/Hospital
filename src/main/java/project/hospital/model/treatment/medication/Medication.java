@@ -32,13 +32,6 @@ public class Medication {
     @Column(name = "html_link")
     private String htmlLink;
 
-    @OneToMany(
-            mappedBy = "medication",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private ArrayList<MedicationList> medicationLists;
-
     public Long getMedicationId() {
         return medicationId;
     }

@@ -15,7 +15,6 @@ public class TreatmentService {
         this.treatmentRepository = treatmentRepository;
     }
 
-
     public void saveTreatment(Treatment treatment) {
         treatmentRepository.save(treatment);
     }

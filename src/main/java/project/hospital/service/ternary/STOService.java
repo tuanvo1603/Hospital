@@ -1,18 +1,11 @@
 package project.hospital.service.ternary;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.PersistenceContextType;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.exception.PatientCanNotBeFoundException;
-import project.hospital.model.employee.doctor.Doctor;
-import project.hospital.model.employee.doctor.SpecialistDoctor;
-import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
 import project.hospital.model.ternary.STO;
-import project.hospital.model.ternary.Ternary;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.ternary.STORepository;
 @Service
@@ -30,6 +23,10 @@ public class STOService {
         stoRepository.deleteById(patientId);
     }
 
+    public void deleteSTO(STO sto) {
+        stoRepository.delete(sto);
+    }
+
     @Transactional
     public void initSTO(Patient outpatient, Treatment treatment) {
         STO sto = new STO();
@@ -38,7 +35,7 @@ public class STOService {
         stoRepository.save(sto);
     }
 
-    public STO getPatientFromSTO(Long patientId) throws PatientCanNotBeFoundException {
+    public STO getSTOById(Long patientId) throws PatientCanNotBeFoundException {
         return stoRepository
                 .findById(patientId)
                 .orElseThrow(PatientCanNotBeFoundException::new);

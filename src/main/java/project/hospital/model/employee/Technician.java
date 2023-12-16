@@ -12,10 +12,10 @@ import java.util.List;
 public class Technician extends Employee {
 
     @OneToMany(
-            mappedBy = "technician",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
+    @JoinColumn(name = "technician_id")
     private List<ServiceDetail> serviceDetails;
 
     public List<ServiceDetail> getServiceDetails() {

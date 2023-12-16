@@ -19,14 +19,10 @@ public class PrescriptionDetail {
     private Date prescribedDate;
 
     @OneToMany(
-            mappedBy = "prescriptionDetail",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id")
     private Set<MedicationList> medicationLists = new HashSet<>();
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
-    private Treatment treatment;
 
     public Long getTreatmentId() {
         return treatmentId;

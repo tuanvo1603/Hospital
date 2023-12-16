@@ -41,20 +41,12 @@ public class MedicineDispensation {
     private Long treatmentId;
 
     @OneToOne
-    @JoinColumn(name = "patient_id")
-    private Inpatient inpatient;
-
-    @OneToOne
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private PrescriptionDetail prescriptionDetail;
 
     @OneToOne
     @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
     private ServiceDetail serviceDetail;
-
-    @ManyToOne
-    @JoinColumn(name = "nurse_in_charge_id", insertable = false, updatable = false)
-    private Nurse nurse;
 
     public Date getDate() {
         return date;
@@ -74,10 +66,6 @@ public class MedicineDispensation {
 
     public ServiceDetail getServiceDetail() {
         return serviceDetail;
-    }
-
-    public Nurse getNurse() {
-        return nurse;
     }
 
     public Date getStartTime() {
@@ -104,7 +92,19 @@ public class MedicineDispensation {
         this.serviceDetail = serviceDetail;
     }
 
-    public void setNurse(Nurse nurse) {
-        this.nurse = nurse;
+    public Long getNurseId() {
+        return nurseId;
+    }
+
+    public void setNurseId(Long nurseId) {
+        this.nurseId = nurseId;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
     }
 }

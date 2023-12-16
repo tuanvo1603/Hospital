@@ -104,7 +104,7 @@ CREATE TABLE Technician (
 	PRIMARY KEY (emp_ID)
 );
 
-CREATE TABLE DTO_ternary( -- ternary relationship, out patients and doctor, treatments should be enforced
+CREATE TABLE DTO_ternary( -- DTP relationship, out patients and doctor, treatments should be enforced
 	treatment_ID char(5),
 	emp_ID char(5) NOT NULL, -- a patient must have a doctor
     patient_ID char(5),
@@ -114,7 +114,7 @@ CREATE TABLE DTO_ternary( -- ternary relationship, out patients and doctor, trea
     FOREIGN KEY (treatment_ID) REFERENCES treatment(treatment_ID)
 );
 
-CREATE TABLE ATI_ternary( -- ternary relationship, inpatients and doctor, treatments should be enforced
+CREATE TABLE ATI_ternary( -- DTP relationship, inpatients and doctor, treatments should be enforced
 	treatment_ID char(5),
 	emp_ID char(5) NOT NULL,
     patient_ID char(5),

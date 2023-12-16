@@ -26,36 +26,22 @@ public class Treatment {
     private String description;
 
     @OneToMany(
-            mappedBy = "treatment",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id")
     private List<PrescriptionDetail> prescriptionDetails;
 
     @OneToMany(
-            mappedBy = "treatment",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "treatment_id")
     private List<ServiceDetail> serviceDetails;
 
     @OneToOne(
-            mappedBy = "treatment",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
     )
-    private RTI rti;
-
-    @OneToOne(
-            mappedBy = "treatment",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-    private STO sto;
-
-    @OneToOne(
-            mappedBy = "treatment",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
+    @JoinColumn(name = "treatment_id")
     private HospitalFee hospitalFee;
 
     public Long getTreatmentId() {

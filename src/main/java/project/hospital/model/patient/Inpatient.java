@@ -19,15 +19,15 @@ public class Inpatient extends Patient {
     private String room;
 
     @OneToOne(
-            mappedBy = "inpatient",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
     private MedicineDispensation medicineDispensation;
 
     @OneToOne(
-            mappedBy = "inpatient",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
+    @JoinColumn(name = "patient_id")
     private Family family;
 
     @OneToOne(

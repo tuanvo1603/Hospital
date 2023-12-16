@@ -20,7 +20,7 @@ public class HospitalFeeService {
     public void initHospitalFee(Treatment treatment) {
         HospitalFee hospitalFee = new HospitalFee();
         treatment.setHospitalFee(hospitalFee);
-//        hospitalFee.setTreatmentId(treatment.getTreatmentId());
+        hospitalFee.setTreatmentId(treatment.getTreatmentId());
         treatmentService.saveTreatment(treatment);
     }
 }

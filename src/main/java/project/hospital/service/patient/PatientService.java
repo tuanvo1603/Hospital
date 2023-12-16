@@ -25,16 +25,16 @@ public abstract class PatientService{
         return patientRepository.getPatientList();
     }
 
-    public List<Patient> searchPatientByFullName(String firstName, String lastName) {
+    public List<PatientDTO> searchPatientByFullName(String firstName, String lastName) {
         return patientRepository.searchPatientByFullName(firstName, lastName);
     }
 
-    public List<Patient> searchPatientByDepartment(String firstName, String department) {
+    public List<PatientDTO> searchPatientByDepartment(String firstName, String department) {
         return patientRepository.searchPatientByDepartment(firstName, department);
     }
 
-    public Patient searchPatientByCitizenId(String citizenId) {
-        return patientRepository.searchPatientByCitizenId(citizenId);
+    public Patient getPatientByCitizenId(String citizenId) {
+        return patientRepository.getPatientByCitizenId(citizenId);
     }
 
     public abstract void addPrescriptionDetail(Long patientId, PrescriptionDetail prescriptionDetail) throws PatientCanNotBeFoundException;

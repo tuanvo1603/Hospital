@@ -24,12 +24,6 @@ public class Service {
     @Column(name = "room_perform")
     private String roomPerform;
 
-    @OneToMany(
-            mappedBy = "service",
-            fetch = FetchType.LAZY
-    )
-    private List<ServiceDetail> serviceDetails;
-
     public Long getServiceId() {
         return serviceId;
     }
@@ -45,10 +39,6 @@ public class Service {
     public String getRoomPerform() {
         return roomPerform;
     }
-
-//    public List<ServiceDetail> getServiceDetails() {
-//        return serviceDetails;
-//    }
 
     public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
@@ -66,7 +56,4 @@ public class Service {
         this.roomPerform = roomPerform;
     }
 
-//    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
-//        this.serviceDetails = serviceDetails;
-//    }
 }

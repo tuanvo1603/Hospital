@@ -34,6 +34,6 @@ public class ResidentDoctorController {
 
     @GetMapping("/get-patient/{citizenId}")
     public Patient getManagedPatient(@PathVariable String citizenId) {
-        return residentDoctorService.searchInpatientByCitizenId(citizenId);
+        return residentDoctorService.getManagedPatientByCitizenId(citizenId);
     }
 }

@@ -23,11 +23,11 @@ public class ShowingPatientService {
         return outpatientService.getPatientList();
     }
 
-    public List<Patient> getPatientByFullName(String firstName, String lastName) {
+    public List<PatientDTO> getPatientByFullName(String firstName, String lastName) {
         return outpatientService.searchPatientByFullName(firstName, lastName);
     }
 
-    public List<Patient> getPatientByDepartment(String firstName, String department) {
+    public List<PatientDTO> getPatientByDepartment(String firstName, String department) {
         return outpatientService.searchPatientByDepartment(firstName, department);
     }
 }

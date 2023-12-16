@@ -11,10 +11,6 @@ public class MedicationList {
     private Long treatmentId;
 
     @ManyToOne
-    @JoinColumn(name = "treatment_id", insertable = false, updatable = false)
-    private PrescriptionDetail prescriptionDetail;
-
-    @ManyToOne
     @JoinColumn(name = "medication_id")
     private Medication medication;
 
@@ -35,5 +31,13 @@ public class MedicationList {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Long getTreatmentId() {
+        return treatmentId;
+    }
+
+    public void setTreatmentId(Long treatmentId) {
+        this.treatmentId = treatmentId;
     }
 }

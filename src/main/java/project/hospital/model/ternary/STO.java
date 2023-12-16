@@ -7,7 +7,7 @@ import project.hospital.model.treatment.Treatment;
 
 @Entity
 @Table(name = "sto")
-public class STO extends Ternary{
+public class STO extends DTP {
 
     @OneToOne
     @JoinColumn(name = "patient_id",

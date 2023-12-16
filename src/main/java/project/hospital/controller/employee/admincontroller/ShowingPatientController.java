@@ -34,7 +34,7 @@ public class ShowingPatientController {
      * @PathVariable  contains firstName and lastName
      */
     @GetMapping("/search-by-name/{firstName}/{lastName}")
-    public List<Patient> searchPatientByName(@PathVariable String firstName, @PathVariable String lastName) {
+    public List<PatientDTO> searchPatientByName(@PathVariable String firstName, @PathVariable String lastName) {
         return showingPatientService.getPatientByFullName(firstName, lastName);
     }
 
@@ -43,7 +43,7 @@ public class ShowingPatientController {
      * @PathVariable  contains firsName and department
      */
     @GetMapping("search-by-department/{firstName}/{department}")
-    public List<Patient> searchPatientByDepartment(@PathVariable String firstName, @PathVariable String department) {
+    public List<PatientDTO> searchPatientByDepartment(@PathVariable String firstName, @PathVariable String department) {
         return showingPatientService.getPatientByDepartment(firstName, department);
     }
 }

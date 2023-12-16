@@ -54,7 +54,7 @@ public class ResidentDoctorService {
             throw new PatientCanNotBeFoundException();
     }
 
-    public Patient searchInpatientByCitizenId(String citizenId) {
-        return patientService.searchPatientByCitizenId(citizenId);
+    public Patient getManagedPatientByCitizenId(String citizenId) {
+        return patientService.getPatientByCitizenId(citizenId);
     }
 }

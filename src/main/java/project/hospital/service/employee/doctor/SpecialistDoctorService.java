@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientCanNotBeFoundException;
-import project.hospital.model.patient.Patient;
 import project.hospital.model.ternary.STO;
 import project.hospital.service.patient.OutpatientService;
-import project.hospital.service.patient.PatientService;
 import project.hospital.service.ternary.RTIService;
 import project.hospital.service.ternary.STOService;
 
@@ -32,10 +30,10 @@ public class SpecialistDoctorService {
 
     @Transactional
     public void admitInpatient(Long patientId) throws PatientCanNotBeFoundException {
-        STO oldSto = stoService.getPatientFromSTO(patientId);
+        STO oldSto = stoService.getSTOById(patientId);
         outpatientService.copyPatientInfo(patientId);
         rtiService.initRTIFromSTO(oldSto);
-        stoService.deleteSTOById(patientId);
+        stoService.deleteSTO(oldSto);
         outpatientService.deletePatientById(patientId);
     }
 

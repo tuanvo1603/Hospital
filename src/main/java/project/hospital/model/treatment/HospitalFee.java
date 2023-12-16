@@ -27,10 +27,6 @@ public class HospitalFee {
     @Column(name = "note")
     private String note;
 
-    @OneToOne
-    @JoinColumn(name = "treatment_id")
-    private Treatment treatment;
-
     public Integer getTotalMoney() {
         return totalMoney;
     }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import project.hospital.exception.PatientCanNotBeFoundException;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Patient;
+import project.hospital.model.ternary.RTI;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.model.treatment.service.ServiceDetail;
 import project.hospital.repository.patient.InpatientRepository;
@@ -61,5 +62,14 @@ public class InpatientService extends PatientService{
         inpatient.getRti().getTreatment().setServiceDetails(null);
         return inpatient;
     }
+
+//    @Transactional
+//    public void test(){
+//        Inpatient inpatient = inpatientRepository.saveAndFlush(new Inpatient());
+//        RTI rti = new RTI();
+//        rti.setPatientId(inpatient.getPatientId());
+//        inpatient.setRti(rti);
+//        inpatientRepository.save(inpatient);
+//    }
 
 }

@@ -37,10 +37,6 @@ public class WorkingSchedule {
     @Column(name = "sunday")
     private String sunday;
 
-    @OneToOne
-    @JoinColumn(name = "emp_id")
-    private Employee employee;
-
     public Long getEmployeeId() {
         return employeeId;
     }

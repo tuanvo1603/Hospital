@@ -19,21 +19,21 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     )
     List<PatientDTO> getPatientList();
 
-    @Query("SELECT p " +
+    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
             "FROM Patient p " +
             "WHERE p.department = :department " +
             "AND p.firstName = :patientFirstName"
     )
-    List<Patient> searchPatientByDepartment(
+    List<PatientDTO> searchPatientByDepartment(
             @Param("patientFirstName") String patientFirstName,
             @Param("department") String department
     );
 
-    @Query("SELECT p " +
+    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.admitTime, p.symptom, p.request, p.height, p.weight) " +
             "FROM Patient p " +
             "WHERE p.firstName = :patientFirstName " +
             "AND p.lastName = :patientLastName"
-    ) List<Patient> searchPatientByFullName(
+    ) List<PatientDTO> searchPatientByFullName(
             @Param("patientFirstName") String patientFirstName,
             @Param("patientLastName") String patientLastName
     );
@@ -41,7 +41,7 @@ public interface PatientRepository extends JpaRepository<Patient, Long> {
     @Query("SELECT p " +
             "FROM Patient p " +
             "WHERE p.citizenId = :citizenId ")
-    Patient searchPatientByCitizenId(@Param("citizenId") String citizenId);
+    Patient getPatientByCitizenId(@Param("citizenId") String citizenId);
 
     @Modifying(flushAutomatically = true)
     @Transactional

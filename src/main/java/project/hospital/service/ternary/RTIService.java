@@ -26,9 +26,13 @@ public class RTIService extends TernaryService{
 
     @Transactional
     public void initRTIFromSTO(STO sto) {
+        rtiRepository.initRTI(sto.getPatientId(), sto.getTreatmentId());
+    }
+
+    public void test(){
+
         RTI rti = new RTI();
-        rti.setTreatmentId(sto.getTreatmentId());
-        rti.setPatientId(sto.getPatientId());
-        rtiRepository.saveAndFlush(rti);
+        rti.setPatientId(5L);
+        rtiRepository.save(rti);
     }
 }

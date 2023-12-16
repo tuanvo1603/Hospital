@@ -16,10 +16,6 @@ public class Family {
     @Column(name = "emergency_contact")
     private String emergencyContact;
 
-    @OneToOne
-    @JoinColumn(name = "patient_id")
-    private Inpatient inpatient;
-
     public String getRelationship() {
         return relationship;
     }
