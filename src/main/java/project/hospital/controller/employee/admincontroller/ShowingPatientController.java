@@ -10,7 +10,7 @@ import project.hospital.service.employee.admin.ShowingPatientService;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/admin/show")
 public class ShowingPatientController {
     /**
@@ -25,8 +25,9 @@ public class ShowingPatientController {
     }
 
     @GetMapping("/patient-list")
-    public List<PatientDTO> listPatients() {
-        return showingPatientService.getPatientList();
+    public String listPatients(Model model) {
+        model.addAttribute("patients", showingPatientService.getPatientList());
+        return "patient-list";
     }
 
     /**
