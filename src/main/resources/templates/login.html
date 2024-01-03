@@ -244,7 +244,7 @@
                 await new Promise(resolve => {
                         setTimeout(() => {
                             resolve();
-                        }, 4000);
+                        }, 2000);
                     });
 
                 var response = await fetch("http://localhost:8090/admin/update/login", {
@@ -254,9 +254,9 @@
 
                 if (response.ok) {
                     alert("Đăng nhập thành công!");
-                    window.location.href = "http://localhost:8090/admin/show/patient-list";
+                    window.location.href = "http://localhost:8090/admin/show/user-menu";
                 } else {
-                    window.location.href = "http://localhost:8090/admin/show/patient-list";
+                    window.location.href = "http://localhost:8090/admin/show/user-menu";
                     // alert("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }
             } catch (error) {

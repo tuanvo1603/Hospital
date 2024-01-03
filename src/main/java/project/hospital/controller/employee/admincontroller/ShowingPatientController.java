@@ -47,4 +47,8 @@ public class ShowingPatientController {
     public List<PatientDTO> searchPatientByDepartment(@PathVariable String firstName, @PathVariable String department) {
         return showingPatientService.getPatientByDepartment(firstName, department);
     }
+    @GetMapping("user-menu")
+    public String getAdminMenu(){
+        return "user-menu";
+    }
 }

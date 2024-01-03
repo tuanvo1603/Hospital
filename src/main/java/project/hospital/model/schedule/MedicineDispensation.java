@@ -10,7 +10,7 @@ import java.sql.Date;
 
 @Entity
 @Table(name = "medicine_dispensation")
-public class MedicineDispensation {
+public class  MedicineDispensation {
 
     @Id
     @Column(name = "patient_id")
