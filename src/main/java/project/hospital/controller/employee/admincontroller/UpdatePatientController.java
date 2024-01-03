@@ -27,6 +27,7 @@ public class UpdatePatientController {
         return "patient-list";
     }
 
+    @CrossOrigin
     @DeleteMapping("/patient-list/{patientId}")
     public ResponseEntity<String> dischargePatient(@PathVariable Long patientId) {
         updatePatientService.dischargePatient(patientId);
@@ -37,7 +38,6 @@ public class UpdatePatientController {
     public String getAddPatientPage(){
         return "add-patient-form";
     }
-
 }
 
 

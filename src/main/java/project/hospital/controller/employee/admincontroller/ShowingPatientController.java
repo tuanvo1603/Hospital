@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.patient.Patient;
 import project.hospital.service.employee.admin.ShowingPatientService;
+import project.hospital.service.employee.admin.UpdatePatientService;
 
 import java.util.List;
 
@@ -18,7 +19,6 @@ public class ShowingPatientController {
      */
 
     private final ShowingPatientService showingPatientService;
-
     @Autowired
     public ShowingPatientController(ShowingPatientService showingPatientService) {
         this.showingPatientService = showingPatientService;
@@ -46,5 +46,9 @@ public class ShowingPatientController {
     @GetMapping("search-by-department/{firstName}/{department}")
     public List<PatientDTO> searchPatientByDepartment(@PathVariable String firstName, @PathVariable String department) {
         return showingPatientService.getPatientByDepartment(firstName, department);
+    }
+    @GetMapping("user-menu")
+    public String getAdminMenu(){
+        return "user-menu";
     }
 }

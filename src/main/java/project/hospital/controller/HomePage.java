@@ -10,9 +10,9 @@ import project.hospital.service.employee.admin.UpdatePatientService;
 
 @Controller
 public class HomePage {
-    @GetMapping("/homepage")
+    @GetMapping("/login")
     public String getHomePage(){
-        return "homepage/index";
+        return "login";
     }
 
 }
