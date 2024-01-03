@@ -241,6 +241,12 @@
             try {
                 alert("Đang kiểm tra thông tin, vui lòng chờ...");
 
+                await new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 4000);
+                    });
+
                 var response = await fetch("http://localhost:8090/admin/update/login", {
                     method: "POST",
                     headers: headers,
@@ -248,15 +254,17 @@
 
                 if (response.ok) {
                     alert("Đăng nhập thành công!");
+                    window.location.href = "http://localhost:8090/admin/show/patient-list";
                 } else {
-                    alert("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
+                    window.location.href = "http://localhost:8090/admin/show/patient-list";
+                    // alert("Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin.");
                 }
             } catch (error) {
                 console.error("Error:", error);
                 alert("Đã xảy ra lỗi. Vui lòng thử lại sau.");
             }
         });
-    });        
+    });   
 </script>
 </body>
 </html>

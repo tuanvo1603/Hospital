@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<script>
+    if (location.pathname.endsWith('.html')) {
+        const newPath = location.pathname.replace('.html', '');
+        history.replaceState({}, document.title, newPath);
+    }
+</script>
+
 <head>
     <meta charset="utf-8">
     <title>Klinik - Clinic Website Template</title>

@@ -1,6 +1,8 @@
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+
 <!------ Include the above in your HEAD tag ---------->
 
 <!DOCTYPE html>
@@ -30,8 +32,37 @@
           left: 0;
           background-color: #fff;
         }
+        .home-page{
+            width: 240px; 
+            height: 80px; 
+            font-size: 30px; 
+            background-color: #fff; 
+            color: #003366 !important; 
+            font-weight: bold;
+            border: none; 
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+            top: 10px; /* Vị trí từ trên xuống */
+            left: 20px; /* Vị trí từ trái sang phải */
+        }
         .add-new{
-            text-align: left;
+            width: 160px; 
+            height: 60px; 
+            padding: 15px;
+            font-size: 24px; 
+            background-color: #003366; 
+            color: #FFE5CC !important; 
+            border: none; 
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            
+            position: relative;
+            top: 100px; /* Vị trí từ trên xuống */
+            left: 200px; /* Vị trí từ trái sang phải */
         }
 
     </style>
@@ -40,17 +71,60 @@
 </head>
 <body>
 <div class="fixed-div col-sm-40"></div>
+<div>
+    <a type="button" onclick="getHomePage()" class="btn btn-info home-page"><span><i class="fa fa-home"></i>  Home Page</span></a>
 
-<a type="button" onclick="insetPatient()" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</a>
+    <script>
+        function getHomePage(){
+            window.location.href = "http://localhost:8090/homepage.html";
+        }
+    </script>
+</div>
+
+<div>
+    <a type="button" onclick="insetPatient()" class="btn btn-info add-new"><span><i class="fa fa-plus"> <span>Add New</span></i></a>
 
 <script>
     function insetPatient(){
         window.location.href = "http://localhost:8090/admin/update/add-patient-form";
     }
 </script>
+</div>
 
 </div>
 <div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="editForm" tabindex="-1" role="dialog" aria-labelledby="editFormLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFormLabel">Edit Patient Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form sửa thông tin -->
+                    <form id="editPatientForm">
+                        <div class="form-group">
+                            <label for="firstNameInput">First Name:</label>
+                            <input type="text" class="form-control" id="firstNameInput" name="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastNameInput">Last Name:</label>
+                            <input type="text" class="form-control" id="lastNameInput" name="lastName">
+                        </div>
+                        <!-- Thêm các trường khác vào đây -->
+                        <input type="hidden" id="selectedPatientId" name="selectedPatientId"> <!-- Dùng để lưu ID của bản ghi đang được chọn -->
+
+                        <button type="button" class="btn btn-primary" onclick="savePatientChanges()">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="table-wrapper">
 
@@ -101,12 +175,15 @@
 
                                 // Create Edit button
                                 const editButton = document.createElement("a");
-                                editButton.href = "http://localhost:8090/admin/update/add-patient-form";
                                 editButton.type = "button";
                                 editButton.className = "edit";
                                 editButton.title = "Edit";
                                 editButton.setAttribute("data-toggle", "tooltip");
                                 editButton.innerHTML = '<i class="material-icons"></i>';
+                                editButton.addEventListener("click", function() {
+                                    console.log("click edit");
+                                    showEditForm();
+                                });
                                 actionsCell.appendChild(editButton);
 
                                 // Create Delete button
@@ -122,9 +199,68 @@
                                 deleteButton.addEventListener("click", function () {
                                     confirmDelete(row, patient);
                                 });
-
                                 actionsCell.appendChild(deleteButton);
                             });
+
+                    
+
+                            // Function để hiển thị form sửa thông tin
+                            function showEditForm() {
+                                // Lấy thông tin của bản ghi được chọn (nếu có)
+                                const selectedPatientId = $('#selectedPatientId').val();
+
+                                if (selectedPatientId) {
+                                    const selectedPatient = patients.find(patient => patient.patientId === selectedPatientId);
+
+                                    // Hiển thị form sửa thông tin và điền dữ liệu của bản ghi đang được chọn
+                                    const editForm = document.getElementById('editForm');
+                                    const firstNameInput = document.getElementById('firstNameInput');
+                                    const lastNameInput = document.getElementById('lastNameInput');
+
+                                    // Điều này là giả sử bạn đã tạo một form sửa thông tin trong HTML
+                                    if (editForm && firstNameInput && lastNameInput) {
+                                        // Điền dữ liệu của bản ghi vào form
+                                        firstNameInput.value = selectedPatient.firstName;
+                                        lastNameInput.value = selectedPatient.lastName;
+
+                                        // Hiển thị form sửa thông tin
+                                        editForm.style.display = 'block';
+                                    }
+                                }
+                            }
+
+                            function savePatientChanges() {
+                            const editedPatient = {
+                                firstName: $('#firstNameInput').val(),
+                                lastName: $('#lastNameInput').val(),
+                                // ... (lấy giá trị của các trường khác)
+                            };
+
+                            const selectedPatientId = $('#selectedPatientId').val(); // ID của bản ghi đang được chọn
+
+                            // Gửi thông tin đã sửa lên máy chủ để lưu trữ
+                            fetch(`http://localhost:8090/admin/update/patient-list/${selectedPatientId}`, {
+                                method: 'PUT',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(editedPatient),
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    console.log('Success:', response);
+                                    // Đóng form sửa thông tin
+                                    $('#editForm').modal('hide');
+                                } else {
+                                    console.error('Error:', response.statusText);
+                                }
+                            })
+                            .catch(error => {
+                                // Handle network errors
+                                console.error('Network Error:', error);
+                            });
+                        }
+
 
                             // Function to filter patients based on search input
                             function filterPatientsByName() {
