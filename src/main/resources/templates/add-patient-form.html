@@ -1,4 +1,7 @@
 <html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<i id="loadingMessage" style="display: none;">Loading...</i>
+<i id="statusMessage" style="display: none;"></i>
 <head>
     <title>Patient Information Form</title>
     <style>
@@ -57,6 +60,7 @@
 </head>
 <body>
 <div class="form-container">
+    <i id="loadingIcon" class="fas fa-spinner fa-spin" style="display: none;"></i>
     <h2 style="text-align: center; color: #4CAF50;">Patient Information Form</h2>
     <form>
         <div class="form-group">
@@ -135,75 +139,106 @@
             <button type="button" onclick="submitForm()">Submit</button>
         </div>
     </form>
-</div>
+        <script>
+            async function submitForm() {
+                // Display the loading icon and message
+                showLoading(true);
+                alert("Đang kiểm tra thông tin, vui lòng chờ...");
+                var firstName = document.getElementById('firstName').value;
+                var lastName = document.getElementById('lastName').value;
+                var admitTime = document.getElementById('admitTime').value;
+                var symptom = document.getElementById('symptom').value;
+                var request = document.getElementById('request').value;
+                var height = document.getElementById('height').value;
+                var weight = document.getElementById('weight').value;
+                var employeeId = document.getElementById('employeeId').value;
+                var dob = document.getElementById('dob').value;
+                var address = document.getElementById('address').value;
+                var nation = document.getElementById('nation').value;
+                var ethnic = document.getElementById('ethnic').value;
+                var occupation = document.getElementById('occupation').value;
+                var citizenId = document.getElementById('citizenId').value;
+                var insuranceId = document.getElementById('insuranceId').value;
+                var emergencyCell = document.getElementById('emergencyCell').value;
+                var gender = document.getElementById('gender').value;
 
-<script>
-    function submitForm() {
-        console.log("Submitting form...");
+                var formData = {
+                    firstName: firstName,
+                    lastName: lastName,
+                    admitTime: admitTime,
+                    symptom: symptom,
+                    request: request,
+                    height: height,
+                    weight: weight,
+                    employeeId: employeeId,
+                    dob: dob,
+                    address: address,
+                    nation: nation,
+                    ethnic: ethnic,
+                    occupation: occupation,
+                    citizenId: citizenId,
+                    insuranceId: insuranceId,
+                    emergencyCell: emergencyCell,
+                    gender: gender
+                };
 
-        var firstName = document.getElementById('firstName').value;
-        var lastName = document.getElementById('lastName').value;
-        var admitTime = document.getElementById('admitTime').value;
-        var symptom = document.getElementById('symptom').value;
-        var request = document.getElementById('request').value;
-        var height = document.getElementById('height').value;
-        var weight = document.getElementById('weight').value;
-        var employeeId = document.getElementById('employeeId').value;
-        var dob = document.getElementById('dob').value;
-        var address = document.getElementById('address').value;
-        var nation = document.getElementById('nation').value;
-        var ethnic = document.getElementById('ethnic').value;
-        var occupation = document.getElementById('occupation').value;
-        var citizenId = document.getElementById('citizenId').value;
-        var insuranceId = document.getElementById('insuranceId').value;
-        var emergencyCell = document.getElementById('emergencyCell').value;
-        var gender = document.getElementById('gender').value;
+                try {
+                    // Giả lập chờ đợi trong 2 giây
+                    await new Promise(resolve => {
+                        setTimeout(() => {
+                            resolve();
+                        }, 4000);
+                    });
 
-        var formData = {
-            firstName: firstName,
-            lastName: lastName,
-            admitTime: admitTime,
-            symptom: symptom,
-            request: request,
-            height: height,
-            weight: weight,
-            employeeId: employeeId,
-            dob: dob,
-            address: address,
-            nation: nation,
-            ethnic: ethnic,
-            occupation: occupation,
-            citizenId: citizenId,
-            insuranceId: insuranceId,
-            emergencyCell: emergencyCell,
-            gender: gender
-        };
+                    // Thực hiện yêu cầu fetch
+                    const response = await fetch('http://localhost:8090/admin/update/add-patient-form', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(formData)
+                    });
 
-         console.log("Form data:", formData);
+                    if (response.ok) {
+                        console.log('Success:', response);
+                        // Chuyển hướng sau khi hoàn thành
+                        window.location.href = "http://localhost:8090/admin/show/patient-list";
+                    } else {
+                        console.error('Error:', response.statusText);
+                    }
 
-        fetch('http://localhost:8090/admin/update/add-patient-form', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('Success:', response);
-            } else {
-                console.error('Error:', response.statusText);
+                } catch (error) {
+                    // Simulate an error
+                    showStatusMessage('Error submitting the form. Please try again.', true);
+                } finally {
+                    // Hide the loading icon and message
+                    showLoading(false);
+                }
             }
-        })
-        .catch(error => {
-            // Handle network errors
-            console.error('Network Error:', error);
-        });
-        window.location.href = "http://localhost:8090/admin/show/patient-list";
 
-    }
-</script>
+            function showLoading(isLoading) {
+                var loadingIconElement = document.getElementById('loadingIcon');
 
+                if (isLoading) {
+                    loadingIconElement.style.display = 'inline-block';
+                } else {
+                    loadingIconElement.style.display = 'none';
+                }
+            }
 
+            function showStatusMessage(message, isError = false) {
+                var statusMessageElement = document.getElementById('statusMessage');
+
+                // Set the message and style
+                statusMessageElement.innerHTML = message;
+                statusMessageElement.className = isError ? 'status-message error-message' : 'status-message';
+
+                // Clear the message after a delay (you can adjust the delay)
+                setTimeout(() => {
+                    statusMessageElement.innerHTML = '';
+                }, 5000);
+            }
+        </script>
+</div>
 </body>
 </html>
