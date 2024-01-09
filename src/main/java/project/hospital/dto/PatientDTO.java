@@ -11,6 +11,8 @@ public class PatientDTO {
 
     private Integer bedCell;
 
+    private String citizenId;
+
     public void setPatientId(Long patientId) {
         this.patientId = patientId;
     }
@@ -49,5 +51,13 @@ public class PatientDTO {
 
     public void setBedCell(Integer bedCell) {
         this.bedCell = bedCell;
+    }
+
+    public String getCitizenId() {
+        return citizenId;
+    }
+
+    public void setCitizenId(String citizenId) {
+        this.citizenId = citizenId;
     }
 }

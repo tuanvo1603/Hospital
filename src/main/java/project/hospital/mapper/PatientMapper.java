@@ -7,9 +7,7 @@ import project.hospital.dto.PatientDTO;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
-import project.hospital.model.treatment.Treatment;
 import project.hospital.service.patient.OutpatientService;
-import project.hospital.service.treatment.TreatmentService;
 
 import java.util.ArrayList;
 import java.util.List;
