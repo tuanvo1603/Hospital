@@ -1,5 +1,6 @@
 package project.hospital.controller.employee.doctor;
 
+import ch.qos.logback.core.model.Model;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
@@ -36,7 +37,7 @@ public class ResidentDoctorController {
     }
 
     @GetMapping("/get-managed-patient-list")
-    public List<PatientDTO> getManagedPatientList(@PathVariable Long doctorId) {
+    public List<PatientDTO> getManagedPatientList(@PathVariable Long doctorId, Model model) {
         return getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
     }
 
@@ -45,4 +46,6 @@ public class ResidentDoctorController {
                                                    @PathVariable String citizenId) {
         return getManagedPatientByCitizenIdApi.getManagedPatientByCitizenId(doctorId, citizenId);
     }
+
+
 }
