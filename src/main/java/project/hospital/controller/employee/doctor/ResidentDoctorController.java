@@ -2,6 +2,7 @@ package project.hospital.controller.employee.doctor;
 
 import ch.qos.logback.core.model.Model;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
 import project.hospital.api.patient.inpatient.GetManagedPatientListForResidentDoctorApi;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/resident-doctor/{doctorId}")
+@PreAuthorize("hasRole('RESIDENT_DOCTOR')")
 public class ResidentDoctorController {
 
     private final GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi;

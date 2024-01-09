@@ -1,5 +1,6 @@
 package project.hospital.controller.employee;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.employee.GetEmployeeInfoApi;
 import project.hospital.api.workingschedule.GetWorkingScheduleInfoApi;
@@ -8,6 +9,7 @@ import project.hospital.model.schedule.WorkingSchedule;
 
 @RestController
 @RequestMapping("/employee")
+@PreAuthorize("hasRole('EMPLOYEE')")
 public class EmployeeController {
 
     private final GetEmployeeInfoApi getEmployeeInfoApi;

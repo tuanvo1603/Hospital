@@ -1,6 +1,7 @@
 package project.hospital.controller.employee;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.outpatient.AdmitOutpatientApi;
 import project.hospital.api.patient.DischargePatientApi;
@@ -13,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin/{administratorId}")
+@PreAuthorize("hasRole('ADMINISTRATOR')")
 public class AdministratorController {
 
     private final SearchByFullNameApi searchByFullNameApi;
@@ -32,7 +34,6 @@ public class AdministratorController {
         this.updateAdvancePaymentApi = updateAdvancePaymentApi;
         this.dischargePatientApi = dischargePatientApi;
     }
-
 
     @GetMapping("/search-by-name/{firstName}/{lastName}")
     public List<PatientDTO> searchPatientByName(@PathVariable Long administratorId,

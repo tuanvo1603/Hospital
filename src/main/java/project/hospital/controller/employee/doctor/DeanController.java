@@ -2,6 +2,7 @@ package project.hospital.controller.employee.doctor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.model.employee.Administrator;
 import project.hospital.model.employee.Employee;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dean/manage-employee")
+@PreAuthorize("hasRole('DEAN')")
 public class DeanController {
 
     private final AdministratorService administratorService;
