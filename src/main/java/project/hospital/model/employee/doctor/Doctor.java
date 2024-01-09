@@ -5,6 +5,6 @@ import project.hospital.model.employee.Employee;
 
 @Entity
 @Table(name = "Doctor")
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Doctor extends Employee {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class Doctor extends Employee {
 }

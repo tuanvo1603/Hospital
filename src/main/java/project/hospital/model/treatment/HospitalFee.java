@@ -1,19 +1,16 @@
 package project.hospital.model.treatment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import project.hospital.model.patient.Inpatient;
-import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
-
-import java.sql.Date;
 
 @Entity
 @Table(name = "hospital_fee")
 public class HospitalFee {
 
     @Id
-    @Column(name = "treatment_id")
-    private Long treatmentId;
+    @Column(name = "patient_id")
+    private Long patientId;
 
     @Column(name = "total_money")
     private Integer totalMoney;
@@ -21,11 +18,11 @@ public class HospitalFee {
     @Column(name = "advance_payment")
     private Integer advancePayment;
 
-    @Column(name = "updated_time")
-    private Date updatedTime;
-
-    @Column(name = "note")
-    private String note;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patient_id", referencedColumnName = "patient_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
+    @MapsId
+    @JsonIgnore
+    private Treatment treatment;
 
     public Integer getTotalMoney() {
         return totalMoney;
@@ -35,17 +32,6 @@ public class HospitalFee {
         return advancePayment;
     }
 
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public Long getTreatmentId() {
-        return treatmentId;
-    }
 
     public void setTotalMoney(Integer totalMoney) {
         this.totalMoney = totalMoney;
@@ -55,16 +41,19 @@ public class HospitalFee {
         this.advancePayment = advancePayment;
     }
 
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
+    public Long getPatientId() {
+        return patientId;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
     }
 
-    public void setTreatmentId(Long treatmentId) {
-        this.treatmentId = treatmentId;
+    public Treatment getTreatment() {
+        return treatment;
     }
 
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
 }

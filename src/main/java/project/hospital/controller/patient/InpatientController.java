@@ -1,41 +1,45 @@
 package project.hospital.controller.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.hospital.exception.PatientCanNotBeFoundException;
-import project.hospital.model.patient.Inpatient;
+import project.hospital.api.patient.inpatient.GetInpatientInfoApi;
+import project.hospital.api.treatment.GetTreatmentInfoApi;
+import project.hospital.api.treatment.hospitalfee.GetHospitalFeeInfoApi;
 import project.hospital.model.patient.Patient;
-import project.hospital.service.patient.InpatientService;
-import project.hospital.service.patient.PatientService;
-import project.hospital.service.ternary.RTIService;
-
-import java.util.List;
+import project.hospital.model.treatment.HospitalFee;
+import project.hospital.model.treatment.Treatment;
 
 @RestController
-@RequestMapping("/inpatient")
+@RequestMapping("/inpatient/{patientId}")
 public class InpatientController {
-    /**
-     * Done
-     */
-    private final InpatientService inpatientService;
 
-    private final RTIService rtiService;
+    private final GetInpatientInfoApi getInpatientInfoApi;
+
+    private final GetHospitalFeeInfoApi getHospitalFeeInfoApi;
+
+    private final GetTreatmentInfoApi getTreatmentInfoApi;
 
     @Autowired
-    public InpatientController(InpatientService inpatientService, RTIService rtiService) {
-        this.inpatientService = inpatientService;
-        this.rtiService = rtiService;
+    public InpatientController(GetInpatientInfoApi getInpatientInfoApi,
+                               GetHospitalFeeInfoApi getHospitalFeeInfoApi,
+                               GetTreatmentInfoApi getTreatmentInfoApi) {
+        this.getInpatientInfoApi = getInpatientInfoApi;
+        this.getHospitalFeeInfoApi = getHospitalFeeInfoApi;
+        this.getTreatmentInfoApi = getTreatmentInfoApi;
     }
 
-    @GetMapping("/my-information/{patientId}")
-    public ResponseEntity<Patient> showPatientInformation(@PathVariable Long patientId) throws PatientCanNotBeFoundException {
-        System.out.println(patientId);
-        return ResponseEntity.ok(inpatientService.showPatientInfo(patientId));
+    @GetMapping("/show-my-information")
+    public Patient showPatientInformation(@PathVariable Long patientId) {
+        return getInpatientInfoApi.getInpatientInfo(patientId);
     }
 
-    @PostMapping("/test")
-    public void test(){
-        rtiService.test();
+    @GetMapping("/show-hospital-fee")
+    public HospitalFee showHospitalFee(@PathVariable Long patientId) {
+        return getHospitalFeeInfoApi.getHospitalFeeInfo(patientId);
+    }
+
+    @GetMapping("/show-treatment")
+    public Treatment showTreatment(@PathVariable Long patientId) {
+        return getTreatmentInfoApi.getTreatmentInfo(patientId);
     }
 }

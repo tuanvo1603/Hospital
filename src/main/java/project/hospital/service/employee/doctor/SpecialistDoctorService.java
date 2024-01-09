@@ -2,39 +2,45 @@ package project.hospital.service.employee.doctor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import project.hospital.exception.PatientCanNotBeFoundException;
-import project.hospital.model.ternary.STO;
-import project.hospital.service.patient.OutpatientService;
-import project.hospital.service.ternary.RTIService;
-import project.hospital.service.ternary.STOService;
+import project.hospital.exception.EmployeeNotFoundException;
+import project.hospital.model.employee.doctor.SpecialistDoctor;
+import project.hospital.repository.employee.EmployeeRepository;
+import project.hospital.repository.employee.SpecialistDoctorRepository;
+import project.hospital.service.employee.CommonEmployeeService;
+import project.hospital.service.employee.IEmployeeService;
 
 @Service
-public class SpecialistDoctorService {
+public class SpecialistDoctorService extends CommonEmployeeService implements IEmployeeService<SpecialistDoctor> {
 
-    private final OutpatientService outpatientService;
-
-    private final STOService stoService;
-
-    private final RTIService rtiService;
+    private final SpecialistDoctorRepository specialistDoctorRepository;
 
     @Autowired
-    public SpecialistDoctorService(
-            OutpatientService outpatientService,
-            STOService stoService,
-            RTIService rtiService) {
-        this.outpatientService = outpatientService;
-        this.stoService = stoService;
-        this.rtiService = rtiService;
+    public SpecialistDoctorService(EmployeeRepository employeeRepository, SpecialistDoctorRepository specialistDoctorRepository) {
+        super(employeeRepository);
+        this.specialistDoctorRepository = specialistDoctorRepository;
     }
 
-    @Transactional
-    public void admitInpatient(Long patientId) throws PatientCanNotBeFoundException {
-        STO oldSto = stoService.getSTOById(patientId);
-        outpatientService.copyPatientInfo(patientId);
-        rtiService.initRTIFromSTO(oldSto);
-        stoService.deleteSTO(oldSto);
-        outpatientService.deletePatientById(patientId);
+    @Override
+    public SpecialistDoctor createEmployee(SpecialistDoctor specialistDoctor) {
+        return specialistDoctorRepository.save(specialistDoctor);
     }
 
+    @Override
+    public SpecialistDoctor getEmployeeById(Long employeeId) throws EmployeeNotFoundException {
+        return specialistDoctorRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
+    }
+
+    @Override
+    public void updateEmployee(Long employeeId, SpecialistDoctor specialistDoctor) {
+        if(specialistDoctorRepository.existsById(employeeId))
+            specialistDoctorRepository.save(specialistDoctor);
+        else
+            throw new EmployeeNotFoundException();
+    }
+
+    @Override
+    public void checkExistenceOfEmployee(Long employeeId) {
+        if(!specialistDoctorRepository.existsById(employeeId))
+            throw new EmployeeNotFoundException();
+    }
 }

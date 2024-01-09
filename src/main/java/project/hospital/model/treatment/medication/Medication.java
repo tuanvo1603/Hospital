@@ -2,16 +2,13 @@ package project.hospital.model.treatment.medication;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-
 @Entity
 @Table(name = "medication_warehouse")
 public class Medication {
 
     @Id
     @Column(name = "medication_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "medication_sequence_generator")
-    @SequenceGenerator(name = "medication_sequence_generator", sequenceName = "medication_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long medicationId;
 
     @Column(name = "medication_name")

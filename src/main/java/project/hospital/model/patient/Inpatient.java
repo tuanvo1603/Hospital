@@ -1,9 +1,8 @@
 package project.hospital.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import project.hospital.model.schedule.MedicineDispensation;
-import project.hospital.model.ternary.RTI;
-import project.hospital.model.treatment.HospitalFee;
+import project.hospital.model.managingpatient.ManagingInpatient;
 
 @Entity
 @Table(name = "Inpatient")
@@ -12,77 +11,43 @@ public class Inpatient extends Patient {
     @Column(name = "department")
     private String department;
 
-    @Column(name = "bed_cell")
-    private Integer bedCell;
-
-    @Column(name = "room")
-    private String room;
-
     @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
-    private MedicineDispensation medicineDispensation;
-
-    @OneToOne(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id")
-    private Family family;
+            mappedBy = "inpatient",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    private ManagingInpatient managingInpatient;
 
     @OneToOne(
             mappedBy = "inpatient",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
-    private RTI rti;
+    @JsonIgnore
+    private Family family;
 
     public String getDepartment() {
         return department;
-    }
-
-    public Integer getBedCell() {
-        return bedCell;
-    }
-
-    public String getRoom() {
-        return room;
-    }
-
-    public MedicineDispensation getMedicineDispensation() {
-        return medicineDispensation;
-    }
-
-    public Family getFamily() {
-        return family;
-    }
-
-    public RTI getRti() {
-        return rti;
     }
 
     public void setDepartment(String department) {
         this.department = department;
     }
 
-    public void setBedCell(Integer bedCell) {
-        this.bedCell = bedCell;
+    public ManagingInpatient getManagingInpatient() {
+        return managingInpatient;
     }
 
-    public void setRoom(String room) {
-        this.room = room;
+    public void setManagingInpatient(ManagingInpatient managingInpatient) {
+        this.managingInpatient = managingInpatient;
     }
 
-    public void setMedicineDispensation(MedicineDispensation medicineDispensation) {
-        this.medicineDispensation = medicineDispensation;
-    }
-
-    public void setRti(RTI rti) {
-        this.rti = rti;
+    public Family getFamily() {
+        return family;
     }
 
     public void setFamily(Family family) {
         this.family = family;
     }
-
 }

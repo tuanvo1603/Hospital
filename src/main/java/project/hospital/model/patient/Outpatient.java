@@ -1,8 +1,8 @@
 package project.hospital.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import project.hospital.model.ternary.STO;
-import project.hospital.model.treatment.HospitalFee;
+import project.hospital.model.managingpatient.Appointment;
 
 @Entity
 @Table(name = "outpatient")
@@ -10,17 +10,17 @@ public class Outpatient extends Patient {
 
     @OneToOne(
             mappedBy = "outpatient",
-            cascade = CascadeType.ALL,
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
-    private STO sto;
+    @JsonIgnore
+    private Appointment appointment;
 
-    public STO getSto() {
-        return sto;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setSto(STO sto) {
-        this.sto = sto;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
-
 }

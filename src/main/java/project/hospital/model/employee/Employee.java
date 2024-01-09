@@ -1,5 +1,6 @@
 package project.hospital.model.employee;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import project.hospital.model.schedule.WorkingSchedule;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "emp")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Employee {
+public abstract class Employee {
 
     @Id
     @Column(name = "emp_id")
@@ -25,11 +26,7 @@ public class Employee {
     protected LocalDate dob;
 
     @Column(name = "department")
-    protected String departmentString;
-
-    @ManyToOne
-    @JoinColumn(name = "department", insertable = false, updatable = false)
-    protected Department department;
+    protected String department;
 
     @Column(name = "working_room")
     protected String workingRoom;
@@ -38,10 +35,17 @@ public class Employee {
     protected String qualifications;
 
     @OneToOne(
-            cascade = CascadeType.ALL,
+            mappedBy = "employee",
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "emp_id")
+    @JsonIgnore
     protected WorkingSchedule workingSchedule;
+
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "department", insertable=false, updatable=false)
+    @JsonIgnore
+    private Department departmentEntity;
 
     public Long getEmployeeId() {
         return employeeId;
@@ -72,10 +76,6 @@ public class Employee {
         return qualifications;
     }
 
-    public String getDepartmentString() {
-        return departmentString;
-    }
-
     public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
@@ -104,7 +104,19 @@ public class Employee {
         this.qualifications = qualifications;
     }
 
-    public void setDepartmentString(String departmentString) {
-        this.departmentString = departmentString;
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public Department getDepartmentEntity() {
+        return departmentEntity;
+    }
+
+    public void setDepartmentEntity(Department departmentEntity) {
+        this.departmentEntity = departmentEntity;
     }
 }

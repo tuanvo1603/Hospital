@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import project.hospital.model.treatment.Treatment;
 
 @Repository
-public interface TreatmentRepository extends JpaRepository<Treatment, String> {
+public interface TreatmentRepository extends JpaRepository<Treatment, Long> {
 }

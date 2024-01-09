@@ -1,19 +1,20 @@
 package project.hospital.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import project.hospital.model.treatment.Treatment;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 @Entity
-@Table(name = "Admitted_Patient")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Patient {
+@Table(name = "patient")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_sequence_generator")
-    @SequenceGenerator(name = "patient_sequence_generator", sequenceName = "patient_sequence", allocationSize = 1)
-    @Column(name = "patient_id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "patient_sequence")
+    @SequenceGenerator(name = "patient_sequence", sequenceName = "patient_sequence", allocationSize = 1)
+    @Column(name = "patient_id")
     protected Long patientId;
 
     @Column(name = "first_name")
@@ -23,7 +24,7 @@ public abstract class Patient {
     protected String lastName;
 
     @Column(name = "admit_time")
-    protected LocalDateTime admitTime;
+    protected Date admitTime;
 
     @Column(name = "symptom")
     protected String symptom;
@@ -32,16 +33,16 @@ public abstract class Patient {
     protected String request;
 
     @Column(name = "height")
-    protected int height;
+    protected Integer height;
 
     @Column(name = "weight")
-    protected int weight;
+    protected Integer weight;
 
     @Column(name = "emp_id")
-    protected String employeeId;
+    protected Long employeeId;
 
     @Column(name = "dob")
-    protected LocalDate dob;
+    protected Date dob;
 
     @Column(name = "address")
     protected String address;
@@ -68,6 +69,19 @@ public abstract class Patient {
     @Enumerated(EnumType.STRING)
     protected Gender gender;
 
+    @Column(name = "bed_cell")
+    protected Integer bedCell;
+
+    @Column(name = "room")
+    protected String room;
+
+    @OneToOne(
+            mappedBy = "patient",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY)
+    @JsonIgnore
+    private Treatment treatment;
+
     public enum Gender {
         Female,
         Male
@@ -85,7 +99,7 @@ public abstract class Patient {
         this.lastName = lastname;
     }
 
-    public void setAdmitTime(LocalDateTime admitTime) {
+    public void setAdmitTime(Date admitTime) {
         this.admitTime = admitTime;
     }
 
@@ -105,7 +119,7 @@ public abstract class Patient {
         this.weight = weight;
     }
 
-    public void setDob(LocalDate dob) {
+    public void setDob(Date dob) {
         this.dob = dob;
     }
 
@@ -141,7 +155,7 @@ public abstract class Patient {
         this.gender = gender;
     }
 
-    public void setEmployeeId(String employeeId) {
+    public void setEmployeeId(Long employeeId) {
         this.employeeId = employeeId;
     }
 
@@ -157,7 +171,7 @@ public abstract class Patient {
         return lastName;
     }
 
-    public LocalDateTime getAdmitTime() {
+    public Date getAdmitTime() {
         return admitTime;
     }
 
@@ -169,15 +183,15 @@ public abstract class Patient {
         return request;
     }
 
-    public int getHeight() {
+    public Integer getHeight() {
         return height;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public LocalDate getDob() {
+    public Date getDob() {
         return dob;
     }
 
@@ -213,8 +227,40 @@ public abstract class Patient {
         return gender;
     }
 
-    public String getEmployeeId() {
+    public Long getEmployeeId() {
         return employeeId;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
+    }
+
+    public Integer getBedCell() {
+        return bedCell;
+    }
+
+    public void setBedCell(Integer bedCell) {
+        this.bedCell = bedCell;
+    }
+
+    public String getRoom() {
+        return room;
+    }
+
+    public void setRoom(String room) {
+        this.room = room;
     }
 
 }

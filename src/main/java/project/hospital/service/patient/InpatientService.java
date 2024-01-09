@@ -1,75 +1,64 @@
 package project.hospital.service.patient;
 
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import project.hospital.exception.PatientCanNotBeFoundException;
+import org.springframework.transaction.annotation.Transactional;
+import project.hospital.exception.PatientNotFoundException;
+import project.hospital.mapper.PatientMapper;
+import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.patient.Inpatient;
-import project.hospital.model.patient.Patient;
-import project.hospital.model.ternary.RTI;
-import project.hospital.model.treatment.medication.PrescriptionDetail;
-import project.hospital.model.treatment.service.ServiceDetail;
+import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.patient.InpatientRepository;
 import project.hospital.repository.patient.PatientRepository;
-
-import java.util.List;
+import project.hospital.repository.treatment.HospitalFeeRepository;
+import project.hospital.repository.treatment.TreatmentRepository;
+import project.hospital.service.treatment.HospitalFeeService;
 
 @Service
-public class InpatientService extends PatientService{
+public class InpatientService extends CommonPatientService implements IPatientService<Inpatient> {
+
     private final InpatientRepository inpatientRepository;
 
+    private final TreatmentRepository treatmentRepository;
+
+    private final TreatmentMapper treatmentMapper;
+
+    private final HospitalFeeService hospitalFeeService;
+
     @Autowired
-    public InpatientService(PatientRepository patientRepository, InpatientRepository inpatientRepository) {
+    public InpatientService(PatientRepository patientRepository,
+                            InpatientRepository inpatientRepository,
+                            TreatmentRepository treatmentRepository,
+                            TreatmentMapper treatmentMapper,
+                            HospitalFeeService hospitalFeeService) {
         super(patientRepository);
         this.inpatientRepository = inpatientRepository;
+        this.treatmentRepository = treatmentRepository;
+        this.treatmentMapper = treatmentMapper;
+        this.hospitalFeeService = hospitalFeeService;
     }
 
+    @Override
+    public Inpatient getPatientById(Long patientId) {
+        return inpatientRepository.findById(patientId).orElseThrow(PatientNotFoundException::new);
+    }
 
     @Override
+    public void checkExistenceOfPatient(Long patientId) {
+        if(!inpatientRepository.existsById(patientId))
+            throw new PatientNotFoundException();
+    }
+
+    @Override
+    public Inpatient admitPatient(Inpatient inpatient) {
+        return inpatientRepository.save(inpatient);
+    }
+
     @Transactional
-    public void addPrescriptionDetail(Long patientId, PrescriptionDetail prescriptionDetail) throws PatientCanNotBeFoundException {
-        Inpatient inpatient = this.findPatientById(patientId);
-        inpatient.getRti()
-                .getTreatment()
-                .getPrescriptionDetails()
-                .add(prescriptionDetail);
-        inpatientRepository.save(inpatient);
+    public Inpatient admitPatient(Inpatient inpatient, Long outpatientId) {
+        Inpatient admittedPatient = inpatientRepository.save(inpatient);
+        Treatment treatment = treatmentRepository.save(treatmentMapper.mapTreatmentOutpatientToInpatient(outpatientId, admittedPatient));
+        hospitalFeeService.createHospitalFee(treatment);
+        return admittedPatient;
     }
-
-    @Override
-    @Transactional
-    public void addServiceDetail(Long patientId, ServiceDetail serviceDetail) throws PatientCanNotBeFoundException {
-        Inpatient inpatient = this.findPatientById(patientId);
-        inpatient.getRti()
-                .getTreatment()
-                .getServiceDetails()
-                .add(serviceDetail);
-        inpatientRepository.save(inpatient);
-    }
-
-    public Inpatient findPatientById(Long patientId) throws PatientCanNotBeFoundException {
-        return inpatientRepository
-                .findById(patientId)
-                .orElseThrow(PatientCanNotBeFoundException::new);
-    }
-
-    @Override
-    public Patient showPatientInfo(Long patientId) throws PatientCanNotBeFoundException {
-        Inpatient inpatient = inpatientRepository
-                                .findById(patientId)
-                                .orElseThrow(PatientCanNotBeFoundException::new);
-        inpatient.getRti().getTreatment().setPrescriptionDetails(null);
-        inpatient.getRti().getTreatment().setServiceDetails(null);
-        return inpatient;
-    }
-
-//    @Transactional
-//    public void test(){
-//        Inpatient inpatient = inpatientRepository.saveAndFlush(new Inpatient());
-//        RTI rti = new RTI();
-//        rti.setPatientId(inpatient.getPatientId());
-//        inpatient.setRti(rti);
-//        inpatientRepository.save(inpatient);
-//    }
-
 }

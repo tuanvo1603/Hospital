@@ -1,21 +1,24 @@
 package project.hospital.model.treatment.service;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.*;
-import project.hospital.model.employee.Technician;
 import project.hospital.model.treatment.Treatment;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "service_detail")
 public class ServiceDetail {
 
     @Id
-    @Column(name = "treatment_id")
-    private Long treatmentId;
+    @Column(name = "service_detail_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long serviceDetailId;
+
+    @Column(name = "patient_id")
+    private Long patientId;
 
     @Column(name = "time_perform")
     private Date timePerform;
@@ -24,37 +27,45 @@ public class ServiceDetail {
     private Long serviceId;
 
     @Column(name = "technician_id")
+    @Nonnull
     private Long technicianId;
 
     @Column(name = "conclusion")
+    @Nonnull
     private String conclusion;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "service_id", insertable = false, updatable = false)
-    private Service service;
+    @JsonIgnore
+    private HospitalServiceEntity hospitalServiceEntity;
+
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patient_id", insertable = false, updatable = false)
+    @JsonBackReference
+    private Treatment treatment;
+
+    public Long getServiceDetailId() {
+        return serviceDetailId;
+    }
+
+    public void setServiceDetailId(Long serviceDetailId) {
+        this.serviceDetailId = serviceDetailId;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
 
     public Date getTimePerform() {
         return timePerform;
     }
 
-    public String getConclusion() {
-        return conclusion;
-    }
-
-    public Service getService() {
-        return service;
-    }
-
     public void setTimePerform(Date timePerform) {
         this.timePerform = timePerform;
-    }
-
-    public void setConclusion(String conclusion) {
-        this.conclusion = conclusion;
-    }
-
-    public void setService(Service service) {
-        this.service = service;
     }
 
     public Long getServiceId() {
@@ -65,19 +76,37 @@ public class ServiceDetail {
         this.serviceId = serviceId;
     }
 
+    @Nonnull
     public Long getTechnicianId() {
         return technicianId;
     }
 
-    public void setTechnicianId(Long technicianId) {
+    public void setTechnicianId(@Nonnull Long technicianId) {
         this.technicianId = technicianId;
     }
 
-    public Long getTreatmentId() {
-        return treatmentId;
+    @Nonnull
+    public String getConclusion() {
+        return conclusion;
     }
 
-    public void setTreatmentId(Long treatmentId) {
-        this.treatmentId = treatmentId;
+    public void setConclusion(@Nonnull String conclusion) {
+        this.conclusion = conclusion;
+    }
+
+    public HospitalServiceEntity getHospitalServiceEntity() {
+        return hospitalServiceEntity;
+    }
+
+    public void setHospitalServiceEntity(HospitalServiceEntity hospitalServiceEntity) {
+        this.hospitalServiceEntity = hospitalServiceEntity;
+    }
+
+    public Treatment getTreatment() {
+        return treatment;
+    }
+
+    public void setTreatment(Treatment treatment) {
+        this.treatment = treatment;
     }
 }

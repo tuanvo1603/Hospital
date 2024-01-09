@@ -1,12 +1,12 @@
 package project.hospital.model.treatment;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import project.hospital.model.ternary.RTI;
-import project.hospital.model.ternary.STO;
+import project.hospital.model.patient.Patient;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.model.treatment.service.ServiceDetail;
 
-import java.sql.Date;
 import java.util.List;
 
 @Entity
@@ -14,10 +14,11 @@ import java.util.List;
 public class Treatment {
 
     @Id
-    @Column(name = "treatment_id")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "treatment_sequence_generator")
-    @SequenceGenerator(name = "treatment_sequence_generator", sequenceName = "treatment_sequence", allocationSize = 1)
-    private Long treatmentId;
+    @Column(name = "patient_id")
+    private Long patientId;
+
+    @Column(name = "diagnostic")
+    private String diagnostic;
 
     @Column(name = "treatment_procedure")
     private String treatmentProcedure;
@@ -25,28 +26,33 @@ public class Treatment {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    @JoinColumn(name = "treatment_id")
-    private List<PrescriptionDetail> prescriptionDetails;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patient_id", referencedColumnName = "patient_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
+    @MapsId
+    @JsonIgnore
+    private Patient patient;
 
     @OneToMany(
-            cascade = CascadeType.ALL,
+            mappedBy = "treatment",
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
-    @JoinColumn(name = "treatment_id")
-    private List<ServiceDetail> serviceDetails;
+    @JsonManagedReference
+    private List<PrescriptionDetail> prescriptionDetailList;
+
+    @OneToMany(
+            mappedBy = "treatment",
+            cascade = CascadeType.REMOVE,
+            fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ServiceDetail> serviceDetailList;
 
     @OneToOne(
-            cascade = CascadeType.ALL,
+            mappedBy = "treatment",
+            cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY
     )
-    @JoinColumn(name = "treatment_id")
+    @JsonIgnore
     private HospitalFee hospitalFee;
-
-    public Long getTreatmentId() {
-        return treatmentId;
-    }
 
     public String getTreatmentProcedure() {
         return treatmentProcedure;
@@ -54,22 +60,6 @@ public class Treatment {
 
     public String getDescription() {
         return description;
-    }
-
-    public List<PrescriptionDetail> getPrescriptionDetails() {
-        return prescriptionDetails;
-    }
-
-    public List<ServiceDetail> getServiceDetails() {
-        return serviceDetails;
-    }
-
-    public HospitalFee getHospitalFee() {
-        return hospitalFee;
-    }
-
-    public void setTreatmentId(Long treatmentId) {
-        this.treatmentId = treatmentId;
     }
 
     public void setTreatmentProcedure(String treatmentProcedure) {
@@ -80,20 +70,51 @@ public class Treatment {
         this.description = description;
     }
 
-    public void setPrescriptionDetails(List<PrescriptionDetail> prescriptionDetails) {
-        this.prescriptionDetails = prescriptionDetails;
+    public String getDiagnostic() {
+        return diagnostic;
     }
 
-    public void addPrescriptionDetail(PrescriptionDetail prescriptionDetail) {
-        this.prescriptionDetails.add(prescriptionDetail);
+    public void setDiagnostic(String diagnostic) {
+        this.diagnostic = diagnostic;
     }
 
-    public void setServiceDetails(List<ServiceDetail> serviceDetails) {
-        this.serviceDetails = serviceDetails;
+    public List<PrescriptionDetail> getPrescriptionDetailList() {
+        return prescriptionDetailList;
+    }
+
+    public void setPrescriptionDetailList(List<PrescriptionDetail> prescriptionDetailList) {
+        this.prescriptionDetailList = prescriptionDetailList;
+    }
+
+    public List<ServiceDetail> getServiceDetailList() {
+        return serviceDetailList;
+    }
+
+    public void setServiceDetailList(List<ServiceDetail> serviceDetailList) {
+        this.serviceDetailList = serviceDetailList;
+    }
+
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public Patient getPatient() {
+        return patient;
+    }
+
+    public void setPatient(Patient patient) {
+        this.patient = patient;
+    }
+
+    public HospitalFee getHospitalFee() {
+        return hospitalFee;
     }
 
     public void setHospitalFee(HospitalFee hospitalFee) {
         this.hospitalFee = hospitalFee;
     }
-
 }

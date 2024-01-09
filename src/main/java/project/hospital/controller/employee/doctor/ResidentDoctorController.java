@@ -1,39 +1,48 @@
 package project.hospital.controller.employee.doctor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import project.hospital.exception.IncorrectIdException;
-import project.hospital.exception.PatientCanNotBeFoundException;
-import project.hospital.model.patient.Inpatient;
-import project.hospital.model.patient.Patient;
+import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
+import project.hospital.api.patient.inpatient.GetManagedPatientListForResidentDoctorApi;
+import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForInpatientApi;
+import project.hospital.dto.PatientDTO;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
-import project.hospital.service.employee.doctor.ResidentDoctorService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/resident-doctor/{employeeId}")
+@RequestMapping("/resident-doctor/{doctorId}")
 public class ResidentDoctorController {
 
-    private final ResidentDoctorService residentDoctorService;
+    private final GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi;
 
-    @Autowired
-    public ResidentDoctorController(ResidentDoctorService residentDoctorService) {
-        this.residentDoctorService = residentDoctorService;
+    private final GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi;
+
+    private final AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi;
+
+    public ResidentDoctorController(GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi,
+                                    GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi,
+                                    AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi) {
+        this.getManagedPatientByCitizenIdApi = getManagedPatientByCitizenIdApi;
+        this.getManagedPatientListForResidentDoctorApi = getManagedPatientListForResidentDoctorApi;
+        this.addPrescriptionDetailForInpatientApi = addPrescriptionDetailForInpatientApi;
     }
 
     @PutMapping("/add-prescription-detail/{patientId}")
-    public ResponseEntity<Void> updateInpatient(
-            @RequestBody PrescriptionDetail prescriptionDetail,
-            @PathVariable Long employeeId,
-            @PathVariable Long patientId) throws PatientCanNotBeFoundException, IncorrectIdException
-    {
-        residentDoctorService.addPrescriptionDetail(prescriptionDetail, employeeId, patientId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> addPrescriptionDetail(@RequestBody PrescriptionDetail prescriptionDetail,
+                                                        @PathVariable Long doctorId,
+                                                        @PathVariable Long patientId) {
+        return addPrescriptionDetailForInpatientApi.addPrescriptionDetail(prescriptionDetail, doctorId, patientId);
+    }
+
+    @GetMapping("/get-managed-patient-list")
+    public List<PatientDTO> getManagedPatientList(@PathVariable Long doctorId) {
+        return getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
     }
 
     @GetMapping("/get-patient/{citizenId}")
-    public Patient getManagedPatient(@PathVariable String citizenId) {
-        return residentDoctorService.getManagedPatientByCitizenId(citizenId);
+    public PatientDTO getManagedPatientByCitizenId(@PathVariable Long doctorId,
+                                                   @PathVariable String citizenId) {
+        return getManagedPatientByCitizenIdApi.getManagedPatientByCitizenId(doctorId, citizenId);
     }
 }

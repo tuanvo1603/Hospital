@@ -1,5 +1,6 @@
 package project.hospital.model.patient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,6 +16,12 @@ public class Family {
 
     @Column(name = "emergency_contact")
     private String emergencyContact;
+
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "patient_id", referencedColumnName = "patient_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
+    @MapsId
+    @JsonIgnore
+    private Inpatient inpatient;
 
     public String getRelationship() {
         return relationship;
@@ -32,4 +39,19 @@ public class Family {
         this.emergencyContact = emergencyContact;
     }
 
+    public Long getPatientId() {
+        return patientId;
+    }
+
+    public void setPatientId(Long patientId) {
+        this.patientId = patientId;
+    }
+
+    public Inpatient getInpatient() {
+        return inpatient;
+    }
+
+    public void setInpatient(Inpatient inpatient) {
+        this.inpatient = inpatient;
+    }
 }
