@@ -32,6 +32,7 @@ public class AdmitOutpatientApi {
 
     public ResponseEntity<String> admitOutpatient(Long administratorId, Outpatient outpatient) {
         administratorService.checkExistenceOfEmployee(administratorId);
+        outpatient.setEmployeeId(administratorId);
         Outpatient admitOutpatient = outpatientService.admitPatient(outpatient);
         Treatment treatment = treatmentService.createTreatment(admitOutpatient);
         hospitalFeeService.createHospitalFee(treatment);

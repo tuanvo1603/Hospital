@@ -11,10 +11,7 @@ import java.util.List;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient, Long> {
 
-    @Query("SELECT new project.hospital.dto.PatientDTO(p.patientId, p.firstName, p.lastName, p.employeeId, p.symptom, p.request) " +
-            "FROM Patient p"
-    )
-    List<PatientDTO> getPatientList();
+    boolean existsByCitizenId(String citizenId);
 
     Patient findPatientByCitizenId(String citizenId);
 

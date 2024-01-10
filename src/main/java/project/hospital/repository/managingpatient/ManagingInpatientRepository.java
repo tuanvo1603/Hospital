@@ -11,4 +11,6 @@ public interface ManagingInpatientRepository extends JpaRepository<ManagingInpat
     List<ManagingInpatient> findByDoctorId(Long doctorId);
 
     List<ManagingInpatient> findByNurseId(Long nurseId);
+
+    boolean existsByDoctorIdAndPatientId(Long doctorId, Long patientId);
 }

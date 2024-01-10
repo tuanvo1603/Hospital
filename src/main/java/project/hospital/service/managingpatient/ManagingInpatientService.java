@@ -74,6 +74,10 @@ public class ManagingInpatientService extends CommonManagingPatientService imple
         return patientList;
     }
 
+    public boolean isManagedPatientByDoctor(Long doctorId, Long patientId) {
+        return managingInpatientRepository.existsByDoctorIdAndPatientId(doctorId, patientId);
+    }
+
     @Override
     @Transactional
     public void updateManagingPatient(Long patientId, ManagingInpatient managingInpatient) {
