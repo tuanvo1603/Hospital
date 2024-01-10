@@ -45,7 +45,7 @@ public class ResidentDoctorController {
         return getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
     }
 
-    @PutMapping("/update-treatment/{doctorId}/{patientId}")
+    @PutMapping("/update-treatment/{patientId}")
     public ResponseEntity<String> updateTreatment(@RequestBody Treatment treatment,
                                                   @PathVariable Long doctorId,
                                                   @PathVariable Long patientId) {
