@@ -19,8 +19,12 @@ public class MedicationService {
         this.medicationRepository = medicationRepository;
     }
 
-    public List<Medication> importMedicationList(List<Medication> medicationList) {
-        return medicationRepository.saveAll(medicationList);
+    public Medication importMedicationList(Medication medication) {
+        return medicationRepository.save(medication);
+    }
+
+    public List<Medication> getMedicationList() {
+        return medicationRepository.findAll();
     }
 
     public Medication importMedication(Medication medication) {
