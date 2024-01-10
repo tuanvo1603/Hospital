@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.medicationrecord.AddMedicationRecordApi;
 import project.hospital.api.medicationrecord.GetMedicationRecordApi;
+import project.hospital.api.treatment.GetTreatmentInfoApi;
 import project.hospital.model.medicationrecord.MedicationRecord;
+import project.hospital.model.treatment.Treatment;
 
 @Controller
 @PreAuthorize("hasRole('DOCTOR')")
@@ -17,10 +19,14 @@ public class DoctorController {
 
     private final AddMedicationRecordApi addMedicationRecordApi;
 
+    private final GetTreatmentInfoApi getTreatmentInfoApi;
+
     public DoctorController(GetMedicationRecordApi getMedicationRecordApi,
-                            AddMedicationRecordApi addMedicationRecordApi) {
+                            AddMedicationRecordApi addMedicationRecordApi,
+                            GetTreatmentInfoApi getTreatmentInfoApi) {
         this.getMedicationRecordApi = getMedicationRecordApi;
         this.addMedicationRecordApi = addMedicationRecordApi;
+        this.getTreatmentInfoApi = getTreatmentInfoApi;
     }
 
     @GetMapping("/get-medication-record/{citizenId}")
@@ -34,5 +40,10 @@ public class DoctorController {
                                                       @PathVariable Long patientId) {
         addMedicationRecordApi.addMedicationRecordDetail(description, doctorId, patientId);
         return ResponseEntity.ok("Add medication record successfully.");
+    }
+
+    @GetMapping("/get-patient-treatment/{patientId}")
+    public Treatment getPatientTreatment(@PathVariable Long patientId) {
+        return getTreatmentInfoApi.getTreatmentInfo(patientId);
     }
 }
