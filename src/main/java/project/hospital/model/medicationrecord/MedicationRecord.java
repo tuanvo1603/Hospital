@@ -36,6 +36,7 @@ public class MedicationRecord {
     private String occupation;
 
     @OneToMany(
+            cascade = CascadeType.PERSIST,
             mappedBy = "medicationRecord",
             fetch = FetchType.LAZY
     )

@@ -43,11 +43,4 @@ public class ResidentDoctorController {
         return getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
     }
 
-    @GetMapping("/get-patient/{citizenId}")
-    public PatientDTO getManagedPatientByCitizenId(@PathVariable Long doctorId,
-                                                   @PathVariable String citizenId) {
-        return getManagedPatientByCitizenIdApi.getManagedPatientByCitizenId(doctorId, citizenId);
-    }
-
-
 }
