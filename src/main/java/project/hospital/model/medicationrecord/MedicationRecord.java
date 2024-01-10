@@ -7,7 +7,7 @@ import java.sql.Date;
 import java.util.List;
 
 @Entity
-@Table("medication_record")
+@Table(name = "medication_record")
 public class MedicationRecord {
 
     @Id
