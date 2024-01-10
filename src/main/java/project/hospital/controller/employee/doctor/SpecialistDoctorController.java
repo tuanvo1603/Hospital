@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/specialist-doctor/{doctorId}/{outpatientId}")
+@RequestMapping("/specialist-doctor")
 @PreAuthorize("hasRole('SPECIALIST_DOCTOR')")
 public class SpecialistDoctorController {
 
@@ -36,27 +36,27 @@ public class SpecialistDoctorController {
         this.searchByFullNameApi = searchByFullNameApi;
     }
 
-    @GetMapping("/search-by-name/{firstName}/{lastName}")
-    public List<PatientDTO> searchPatientByName(@PathVariable Long administratorId,
+    @GetMapping("/search-by-name/{doctorId}/{firstName}/{lastName}")
+    public List<PatientDTO> searchPatientByName(@PathVariable Long doctorId,
                                                 @PathVariable String firstName,
                                                 @PathVariable String lastName) {
-        return searchByFullNameApi.searchByFullName(administratorId, firstName, lastName);
+        return searchByFullNameApi.searchByFullName(doctorId, firstName, lastName);
     }
 
-    @PostMapping("/admit-inpatient")
+    @PostMapping("/admit-inpatient/{doctorId}/{outpatientId}")
     public ResponseEntity<String> admitInpatient(@PathVariable Long doctorId,
                                                  @PathVariable Long outpatientId) {
         return admitInpatientApi.admitInpatient(doctorId, outpatientId);
     }
 
-    @PostMapping("/add-prescription-detail")
+    @PostMapping("/add-prescription-detail/{doctorId}/{outpatientId}")
     public ResponseEntity<String> addPrescriptionDetail(@RequestBody PrescriptionDetail prescriptionDetail,
                                                         @PathVariable Long doctorId,
                                                         @PathVariable Long outpatientId) {
         return addPrescriptionDetailForOutpatientApi.addPrescriptionDetail(prescriptionDetail, doctorId, outpatientId);
     }
 
-    @PostMapping("/add-appointment/{date}")
+    @PostMapping("/add-appointment/{doctorId}/{outpatientId}/{date}")
     public ResponseEntity<String> addAppointment(@PathVariable Long doctorId,
                                                  @PathVariable Long outpatientId,
                                                  @PathVariable Date date) {

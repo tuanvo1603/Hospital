@@ -2,8 +2,11 @@ package project.hospital.advice;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import project.hospital.exception.*;
 
 @RestControllerAdvice
@@ -32,5 +35,15 @@ public class NoSuchElementController {
     @ExceptionHandler(ServiceNotFoundException.class)
     public ResponseEntity<String> handleNotExistingService(ServiceNotFoundException exception) {
         return new ResponseEntity<>("This service is not existed in Service Warehouse", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MedicationRecordNotFoundException.class)
+    public ResponseEntity<String> handleMedicationRecordNotFound(MedicationRecordNotFoundException exception) {
+        return new ResponseEntity<>("There is no medication record of this patient in system.", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> handleForbidden(AccessDeniedException exception) {
+        return new ResponseEntity<>("You do not have permission to access this resource.", HttpStatus.FORBIDDEN);
     }
 }
