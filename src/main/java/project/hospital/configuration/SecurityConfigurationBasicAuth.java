@@ -11,9 +11,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.ModelAndView;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableMethodSecurity
@@ -29,13 +26,13 @@ public class SecurityConfigurationBasicAuth{
         UserDetails residentDoctor1 = User.builder()
                 .username("residentdoctor1")
                 .password(encoder().encode("residentdoctor1"))
-                .roles("RESIDENT_DOCTOR", "EMPLOYEE")
+                .roles("RESIDENT_DOCTOR", "EMPLOYEE", "DOCTOR")
                 .build();
 
         UserDetails residentDoctor2 = User.builder()
                 .username("residentdoctor2")
                 .password(encoder().encode("residentdoctor2"))
-                .roles("RESIDENT_DOCTOR", "EMPLOYEE")
+                .roles("RESIDENT_DOCTOR", "EMPLOYEE", "DOCTOR")
                 .build();
 
         UserDetails nurse1 = User.builder()
@@ -65,13 +62,13 @@ public class SecurityConfigurationBasicAuth{
         UserDetails specialistDoctor1 = User.builder()
                 .username("specialistdoctor1")
                 .password(encoder().encode("specialistdoctor1"))
-                .roles("SPECIALIST_DOCTOR", "EMPLOYEE")
+                .roles("SPECIALIST_DOCTOR", "EMPLOYEE", "DOCTOR")
                 .build();
 
         UserDetails specialistDoctor2 = User.builder()
                 .username("specialistdoctor2")
                 .password(encoder().encode("specialistdoctor2"))
-                .roles("SPECIALIST_DOCTOR", "EMPLOYEE")
+                .roles("SPECIALIST_DOCTOR", "EMPLOYEE", "DOCTOR")
                 .build();
 
         UserDetails dean1 = User.builder()
