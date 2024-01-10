@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfigurationBasicAuth{
@@ -127,8 +129,15 @@ public class SecurityConfigurationBasicAuth{
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().authenticated())
+                .httpBasic(withDefaults())
+                .formLogin(withDefaults())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")  // Set the logout URL to "/logot"
+                        .logoutSuccessUrl("/home") // Set the URL to redirect after successful logout
+                        .permitAll()
+                );
 
         return http.build();
     }

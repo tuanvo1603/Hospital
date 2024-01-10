@@ -1,6 +1,7 @@
 package project.hospital.controller.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.inpatient.GetInpatientInfoApi;
 import project.hospital.api.treatment.GetTreatmentInfoApi;
@@ -11,6 +12,7 @@ import project.hospital.model.treatment.Treatment;
 
 @RestController
 @RequestMapping("/inpatient/{patientId}")
+@PreAuthorize("hasRole('PATIENT')")
 public class InpatientController {
 
     private final GetInpatientInfoApi getInpatientInfoApi;
