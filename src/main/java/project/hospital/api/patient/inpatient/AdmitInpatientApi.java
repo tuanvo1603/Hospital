@@ -2,7 +2,9 @@ package project.hospital.api.patient.inpatient;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import project.hospital.mapper.PatientMapper;
+import project.hospital.model.employee.doctor.SpecialistDoctor;
 import project.hospital.model.managingpatient.ManagingInpatient;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.service.employee.doctor.SpecialistDoctorService;
@@ -35,11 +37,12 @@ public class AdmitInpatientApi {
         this.managingInpatientService = managingInpatientService;
     }
 
+    @Transactional
     public ResponseEntity<String> admitInpatient(Long doctorId, Long outpatientId) {
-        specialistDoctorService.checkExistenceOfEmployee(doctorId);
+        SpecialistDoctor specialistDoctor = specialistDoctorService.getEmployeeById(doctorId);
         Inpatient inpatient = inpatientService.admitPatient(patientMapper.mapOutpatientToInpatient(outpatientId), outpatientId);
-//        treatmentService.createTreatment(treatmentMapper.mapTreatmentOutpatientToInpatient(outpatientId, admittedInpatient.getEmployeeId()));
-        managingInpatientService.initManagingPatient(inpatient);
+        inpatient.setDepartment(specialistDoctor.getDepartment());
+        managingInpatientService.initManagingPatient(inpatient.getPatientId());
         outpatientService.dischargePatient(outpatientId);
         return ResponseEntity.ok("Admit inpatient successfully");
     }

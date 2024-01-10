@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import project.hospital.dto.PatientDTO;
+import project.hospital.mapper.PatientMapper;
 import project.hospital.model.employee.Administrator;
 import project.hospital.model.employee.Employee;
 import project.hospital.model.employee.Nurse;
@@ -20,6 +22,7 @@ import project.hospital.service.employee.TechnicianService;
 import project.hospital.service.employee.doctor.ResidentDoctorService;
 import project.hospital.service.employee.doctor.SpecialistDoctorService;
 import project.hospital.service.managingpatient.ManagingInpatientService;
+import project.hospital.service.patient.InpatientService;
 import project.hospital.service.schedule.WorkingScheduleService;
 import project.hospital.service.treatment.prescription.MedicationService;
 import project.hospital.service.treatment.service.HospitalService;
@@ -51,6 +54,10 @@ public class DeanController {
 
     private final HospitalService hospitalService;
 
+    private final InpatientService inpatientService;
+
+    private final PatientMapper patientMapper;
+
     @Autowired
     public DeanController(AdministratorService administratorService,
                           TechnicianService technicianService,
@@ -61,7 +68,9 @@ public class DeanController {
                           CommonEmployeeService commonEmployeeService,
                           ManagingInpatientService managingInpatientService,
                           MedicationService medicationService,
-                          HospitalService hospitalService) {
+                          HospitalService hospitalService,
+                          InpatientService inpatientService,
+                          PatientMapper patientMapper) {
         this.administratorService = administratorService;
         this.technicianService = technicianService;
         this.residentDoctorService = residentDoctorService;
@@ -72,12 +81,19 @@ public class DeanController {
         this.managingInpatientService = managingInpatientService;
         this.medicationService = medicationService;
         this.hospitalService = hospitalService;
+        this.inpatientService = inpatientService;
+        this.patientMapper = patientMapper;
     }
 
     @DeleteMapping("/delete-employee/{employeeId}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId) {
         commonEmployeeService.deleteEmployee(employeeId);
         return ResponseEntity.ok("Delete successfully");
+    }
+
+    @GetMapping("/get-patient-in-department/{department}")
+    public List<PatientDTO> getAllPatientInDepartment(@PathVariable String department) {
+        return patientMapper.mapToPatientDTOList(inpatientService.getAllPatientByDepartment(department));
     }
 
     @GetMapping("/show-department-employees/{department}")

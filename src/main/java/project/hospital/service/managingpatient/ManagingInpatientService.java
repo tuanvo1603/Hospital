@@ -43,9 +43,8 @@ public class ManagingInpatientService extends CommonManagingPatientService imple
     @Override
     @Transactional
     public ManagingInpatient initManagingPatient(Long patientId) {
-        Inpatient inpatient = inpatientService.getPatientById(patientId);
         ManagingInpatient managingInpatient = new ManagingInpatient();
-        managingInpatient.setInpatient(inpatient);
+        managingInpatient.setPatientId(patientId);
         return managingInpatientRepository.save(managingInpatient);
     }
 

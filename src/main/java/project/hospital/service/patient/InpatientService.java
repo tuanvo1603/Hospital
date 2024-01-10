@@ -7,12 +7,15 @@ import project.hospital.exception.PatientNotFoundException;
 import project.hospital.mapper.PatientMapper;
 import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Patient;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.patient.InpatientRepository;
 import project.hospital.repository.patient.PatientRepository;
 import project.hospital.repository.treatment.HospitalFeeRepository;
 import project.hospital.repository.treatment.TreatmentRepository;
 import project.hospital.service.treatment.HospitalFeeService;
+
+import java.util.List;
 
 @Service
 public class InpatientService extends CommonPatientService implements IPatientService<Inpatient> {
@@ -60,5 +63,9 @@ public class InpatientService extends CommonPatientService implements IPatientSe
         Treatment treatment = treatmentRepository.save(treatmentMapper.mapTreatmentOutpatientToInpatient(outpatientId, admittedPatient));
         hospitalFeeService.createHospitalFee(treatment);
         return admittedPatient;
+    }
+
+    public List<Patient> getAllPatientByDepartment(String department) {
+        return inpatientRepository.findAllByDepartment(department);
     }
 }

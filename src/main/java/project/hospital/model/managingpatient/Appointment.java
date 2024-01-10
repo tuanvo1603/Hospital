@@ -16,6 +16,7 @@ public class Appointment extends ManagingPatient {
 
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "patient_id", insertable = false, updatable = false)
+    @MapsId
     private Outpatient outpatient;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
