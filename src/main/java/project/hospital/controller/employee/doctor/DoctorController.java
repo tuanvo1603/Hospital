@@ -28,9 +28,10 @@ public class DoctorController {
     }
 
     @GetMapping("/add-medication-record/{doctorId}/{patientId}{description}")
-    public ResponseEntity<String> addMedicationRecord(@PathVariable String description,
+    public ResponseEntity<String> addMedicationRecord(
                                                       @PathVariable Long doctorId,
-                                                      @PathVariable Long patientId) {
+                                                      @PathVariable Long patientId,
+                                                      @PathVariable String description) {
         addMedicationRecordApi.addMedicationRecordDetail(description, doctorId, patientId);
         return ResponseEntity.ok("Add medication record successfully.");
     }
