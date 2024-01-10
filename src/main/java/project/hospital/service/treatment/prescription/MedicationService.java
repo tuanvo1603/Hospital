@@ -32,15 +32,13 @@ public class MedicationService {
     }
 
     public void deleteMedication(Long medicationId) {
+        if(!medicationRepository.existsById(medicationId))
+            throw new MedicationNotFoundException();
         medicationRepository.deleteById(medicationId);
     }
 
     public Medication getMedicationById(Long medicationId) {
         return medicationRepository.findById(medicationId).orElseThrow(MedicationNotFoundException::new);
-    }
-
-    public List<Medication> getMedicationByName(String medicationName) {
-        return medicationRepository.findAllByMedicationNameContainingIgnoreCase(medicationName);
     }
 
     public void updateMedication(Long medicationId, Medication medication) {

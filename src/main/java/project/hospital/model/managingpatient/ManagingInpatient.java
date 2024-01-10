@@ -12,15 +12,16 @@ public class ManagingInpatient extends ManagingPatient {
     @Column(name = "nurse_id")
     private Long nurseId;
 
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "patient_id", insertable = false, updatable = false)
+    @MapsId
     private Inpatient inpatient; 
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "doctor_id", insertable = false, updatable = false)
     private ResidentDoctor residentDoctor;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "nurse_id", insertable = false, updatable = false)
     private Nurse nurse;
 

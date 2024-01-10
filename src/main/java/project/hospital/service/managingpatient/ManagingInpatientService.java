@@ -43,9 +43,8 @@ public class ManagingInpatientService extends CommonManagingPatientService imple
     @Override
     @Transactional
     public ManagingInpatient initManagingPatient(Long patientId) {
-        Inpatient inpatient = inpatientService.getPatientById(patientId);
         ManagingInpatient managingInpatient = new ManagingInpatient();
-        managingInpatient.setInpatient(inpatient);
+        managingInpatient.setPatientId(patientId);
         return managingInpatientRepository.save(managingInpatient);
     }
 
@@ -72,6 +71,10 @@ public class ManagingInpatientService extends CommonManagingPatientService imple
         List<Patient> patientList = new ArrayList<>();
         managingInpatientRepository.findByNurseId(nurseId).forEach(managingInpatient -> patientList.add(managingInpatient.getInpatient()));
         return patientList;
+    }
+
+    public boolean isManagedPatientByDoctor(Long doctorId, Long patientId) {
+        return managingInpatientRepository.existsByDoctorIdAndPatientId(doctorId, patientId);
     }
 
     @Override

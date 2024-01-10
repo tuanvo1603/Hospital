@@ -8,12 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
 import project.hospital.api.patient.inpatient.GetManagedPatientListForResidentDoctorApi;
+
+import project.hospital.api.treatment.UpdateTreatmentForInpatientApi;
 import project.hospital.api.treatment.medication.GetMedicationListApi;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForInpatientApi;
 import project.hospital.controller.employee.EmployeeController;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.treatment.Treatment;
-import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 
 import java.util.List;
@@ -22,21 +23,21 @@ import java.util.List;
 @RequestMapping("/resident-doctor")
 @PreAuthorize("hasRole('RESIDENT_DOCTOR')")
 public class ResidentDoctorController {
-    private final GetMedicationListApi getMedicationListApi;
-    private final GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi;
 
     private final GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi;
 
     private final AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi;
+    private final GetMedicationListApi getMedicationListApi;
 
-    public ResidentDoctorController(GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi,
-                                    GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi,
+    private final UpdateTreatmentForInpatientApi updateTreatmentForInpatientApi;
+
+    public ResidentDoctorController(GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi,
                                     AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi,
-                                    GetMedicationListApi getMedicationListApi
-    ) {
-        this.getManagedPatientByCitizenIdApi = getManagedPatientByCitizenIdApi;
+                                    GetMedicationListApi getMedicationListApi,
+                                    UpdateTreatmentForInpatientApi updateTreatmentForInpatientApi) {
         this.getManagedPatientListForResidentDoctorApi = getManagedPatientListForResidentDoctorApi;
         this.addPrescriptionDetailForInpatientApi = addPrescriptionDetailForInpatientApi;
+        this.updateTreatmentForInpatientApi = updateTreatmentForInpatientApi;
         this.getMedicationListApi = getMedicationListApi;
     }
 
@@ -78,6 +79,13 @@ public class ResidentDoctorController {
     @GetMapping("/{doctorId}/insert-treatment/{patientId}")
     public String getInsertTreatmentForm(){
         return "resident-doctor-insert-treatment";
+    }
+
+    @PutMapping("/{doctorId}/update-treatment/{patientId}")
+    public ResponseEntity<String> updateTreatment(@RequestBody Treatment treatment,
+                                                  @PathVariable Long doctorId,
+                                                  @PathVariable Long patientId) {
+        return updateTreatmentForInpatientApi.updateTreatmentForInpatient(treatment, doctorId, patientId);
     }
 
 }

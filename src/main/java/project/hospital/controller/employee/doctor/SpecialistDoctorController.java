@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import project.hospital.api.managingpatient.AddAppointmentApi;
 import project.hospital.api.patient.SearchByFullNameApi;
 import project.hospital.api.patient.inpatient.AdmitInpatientApi;
+import project.hospital.api.patient.outpatient.GetListPatientHasAppointment;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForOutpatientApi;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
@@ -30,14 +31,18 @@ public class SpecialistDoctorController {
 
     private final SearchByFullNameApi searchByFullNameApi;
 
+    private final GetListPatientHasAppointment getListPatientHasAppointment;
+
     public SpecialistDoctorController(AdmitInpatientApi admitInpatientApi,
                                       AddAppointmentApi addAppointmentApi,
                                       AddPrescriptionDetailForOutpatientApi addPrescriptionDetailForOutpatientApi,
-                                      SearchByFullNameApi searchByFullNameApi) {
+                                      SearchByFullNameApi searchByFullNameApi,
+                                      GetListPatientHasAppointment getListPatientHasAppointment) {
         this.admitInpatientApi = admitInpatientApi;
         this.addAppointmentApi = addAppointmentApi;
         this.addPrescriptionDetailForOutpatientApi = addPrescriptionDetailForOutpatientApi;
         this.searchByFullNameApi = searchByFullNameApi;
+        this.getListPatientHasAppointment = getListPatientHasAppointment;
     }
 
     @GetMapping("/search-by-name/{doctorId}/{firstName}/{lastName}")
@@ -65,5 +70,10 @@ public class SpecialistDoctorController {
                                                  @PathVariable Long outpatientId,
                                                  @PathVariable Date date) {
         return addAppointmentApi.addAppointment(doctorId, outpatientId, date);
+    }
+
+    @GetMapping("/get-patient-has-appointment")
+    public List<PatientDTO> getListPatientHasAppointment(Long doctorId) {
+        return getListPatientHasAppointment.getListPatientHasAppointment(doctorId);
     }
 }
