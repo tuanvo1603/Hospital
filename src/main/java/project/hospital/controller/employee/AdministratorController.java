@@ -13,7 +13,7 @@ import project.hospital.model.patient.Outpatient;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/{administratorId}")
+@RequestMapping("/admin")
 @PreAuthorize("hasRole('ADMINISTRATOR')")
 public class AdministratorController {
 
@@ -35,26 +35,26 @@ public class AdministratorController {
         this.dischargePatientApi = dischargePatientApi;
     }
 
-    @GetMapping("/search-by-name/{firstName}/{lastName}")
+    @GetMapping("/{administratorId}/search-by-name/{firstName}/{lastName}")
     public List<PatientDTO> searchPatientByName(@PathVariable Long administratorId,
                                                 @PathVariable String firstName,
                                                 @PathVariable String lastName) {
         return searchByFullNameApi.searchByFullName(administratorId, firstName, lastName);
     }
 
-    @PostMapping("/admit-outpatient")
+    @PostMapping("/{administratorId}/admit-outpatient")
     public ResponseEntity<String> admitOutpatient(@PathVariable Long administratorId,
                                                   @RequestBody Outpatient outpatient) {
         return admitOutpatientApi.admitOutpatient(administratorId, outpatient);
     }
 
-    @DeleteMapping("/discharge-patient/{patientId}")
+    @DeleteMapping("/{administratorId}/discharge-patient/{patientId}")
     public ResponseEntity<String> dischargePatient(@PathVariable Long administratorId,
                                                    @PathVariable Long patientId) {
         return dischargePatientApi.dischargePatient(administratorId, patientId);
     }
 
-    @PostMapping("/update-advanced-payment/{patientId}/{advancedPayment}")
+    @PostMapping("/{administratorId}/update-advanced-payment/{patientId}/{advancedPayment}")
     public ResponseEntity<String> updateAdvancedPayment(@PathVariable Long administratorId,
                                                         @PathVariable Long patientId,
                                                         @PathVariable Integer advancedPayment) {

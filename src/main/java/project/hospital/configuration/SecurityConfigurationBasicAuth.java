@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.ModelAndView;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -131,13 +132,14 @@ public class SecurityConfigurationBasicAuth{
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated())
-                .httpBasic(withDefaults())
-                .formLogin(withDefaults())
+                .formLogin(formLogin -> formLogin
+                        .defaultSuccessUrl("/home", true)
+                )
+                .httpBasic(Customizer.withDefaults())
                 .logout(logout -> logout
-                        .logoutUrl("/logout")  // Set the logout URL to "/logot"
-                        .logoutSuccessUrl("/home") // Set the URL to redirect after successful logout
-                        .permitAll()
-                );
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/")
+                        .permitAll());
 
         return http.build();
     }
