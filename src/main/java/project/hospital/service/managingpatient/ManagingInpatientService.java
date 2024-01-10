@@ -49,6 +49,13 @@ public class ManagingInpatientService extends CommonManagingPatientService imple
         return managingInpatientRepository.save(managingInpatient);
     }
 
+    @Transactional
+    public ManagingInpatient initManagingPatient(Inpatient inpatient) {
+        ManagingInpatient managingInpatient = new ManagingInpatient();
+        managingInpatient.setInpatient(inpatient);
+        return managingInpatientRepository.save(managingInpatient);
+    }
+
     @Override
     public ManagingInpatient getManagingPatientById(Long patientId) {
         return managingInpatientRepository.findById(patientId).orElseThrow(PatientNotFoundException::new);
