@@ -56,7 +56,7 @@ public class Patient {
     @Column(name = "occupation")
     protected String occupation;
 
-    @Column(name = "citizen_id")
+    @Column(name = "citizen_id", unique = true)
     protected String citizenId;
 
     @Column(name = "insurance_id")
