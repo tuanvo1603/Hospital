@@ -4,10 +4,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.employee.GetEmployeeInfoApi;
 import project.hospital.api.treatment.medication.GetMedicationListApi;
+import project.hospital.api.treatment.service.GetServiceListApi;
 import project.hospital.api.workingschedule.GetWorkingScheduleInfoApi;
 import project.hospital.model.employee.Employee;
 import project.hospital.model.schedule.WorkingSchedule;
 import project.hospital.model.treatment.medication.Medication;
+import project.hospital.model.treatment.service.HospitalServiceEntity;
 
 import java.util.List;
 
@@ -22,12 +24,16 @@ public class EmployeeController {
 
     private final GetMedicationListApi getMedicationListApi;
 
+    private final GetServiceListApi getServiceListApi;
+
     public EmployeeController(GetEmployeeInfoApi getEmployeeInfoApi,
                               GetWorkingScheduleInfoApi getWorkingScheduleInfoApi,
-                              GetMedicationListApi getMedicationListApi) {
+                              GetMedicationListApi getMedicationListApi,
+                              GetServiceListApi getServiceListApi) {
         this.getEmployeeInfoApi = getEmployeeInfoApi;
         this.getWorkingScheduleInfoApi = getWorkingScheduleInfoApi;
         this.getMedicationListApi = getMedicationListApi;
+        this.getServiceListApi = getServiceListApi;
     }
 
 
@@ -44,5 +50,10 @@ public class EmployeeController {
     @GetMapping("/get-medication-list")
     public List<Medication> getMedicationList() {
         return getMedicationListApi.getMedicationList();
+    }
+
+    @GetMapping("/get-service-list")
+    public List<HospitalServiceEntity> getServiceList() {
+        return getServiceListApi.getServiceList();
     }
 }

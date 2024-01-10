@@ -11,6 +11,8 @@ import project.hospital.model.employee.Technician;
 import project.hospital.model.employee.doctor.ResidentDoctor;
 import project.hospital.model.employee.doctor.SpecialistDoctor;
 import project.hospital.model.schedule.WorkingSchedule;
+import project.hospital.model.treatment.medication.Medication;
+import project.hospital.model.treatment.service.HospitalServiceEntity;
 import project.hospital.service.employee.AdministratorService;
 import project.hospital.service.employee.CommonEmployeeService;
 import project.hospital.service.employee.NurseService;
@@ -19,6 +21,8 @@ import project.hospital.service.employee.doctor.ResidentDoctorService;
 import project.hospital.service.employee.doctor.SpecialistDoctorService;
 import project.hospital.service.managingpatient.ManagingInpatientService;
 import project.hospital.service.schedule.WorkingScheduleService;
+import project.hospital.service.treatment.prescription.MedicationService;
+import project.hospital.service.treatment.service.HospitalService;
 
 import java.util.List;
 
@@ -43,6 +47,10 @@ public class DeanController {
 
     private final ManagingInpatientService managingInpatientService;
 
+    private final MedicationService medicationService;
+
+    private final HospitalService hospitalService;
+
     @Autowired
     public DeanController(AdministratorService administratorService,
                           TechnicianService technicianService,
@@ -51,7 +59,9 @@ public class DeanController {
                           SpecialistDoctorService specialistDoctorService,
                           WorkingScheduleService workingScheduleService,
                           CommonEmployeeService commonEmployeeService,
-                          ManagingInpatientService managingInpatientService) {
+                          ManagingInpatientService managingInpatientService,
+                          MedicationService medicationService,
+                          HospitalService hospitalService) {
         this.administratorService = administratorService;
         this.technicianService = technicianService;
         this.residentDoctorService = residentDoctorService;
@@ -60,6 +70,8 @@ public class DeanController {
         this.workingScheduleService = workingScheduleService;
         this.commonEmployeeService = commonEmployeeService;
         this.managingInpatientService = managingInpatientService;
+        this.medicationService = medicationService;
+        this.hospitalService = hospitalService;
     }
 
     @DeleteMapping("/delete-employee/{employeeId}")
@@ -127,6 +139,42 @@ public class DeanController {
                                                              @PathVariable Long patientId) {
         managingInpatientService.assignNurseForPatient(nurseId, patientId);
         return ResponseEntity.ok("Set nurse successfully");
+    }
+
+    @PostMapping("/import-medication")
+    public ResponseEntity<String> importMedication(@RequestBody Medication medication) {
+        medicationService.importMedication(medication);
+        return ResponseEntity.ok("insert successfully.");
+    }
+
+    @PostMapping("/import-service")
+    public ResponseEntity<String> importService(@RequestBody HospitalServiceEntity hospitalServiceEntity) {
+        hospitalService.importHospitalFeeService(hospitalServiceEntity);
+        return ResponseEntity.ok("insert successfully.");
+    }
+
+    @PutMapping("/update-medication/{medicationId}")
+    public ResponseEntity<String> updateMedication(@RequestBody Medication medication, @PathVariable Long medicationId) {
+        medicationService.updateMedication(medicationId, medication);
+        return ResponseEntity.ok("update successfully.");
+    }
+
+    @PutMapping("/update-service/{serviceId}")
+    public ResponseEntity<String> updateService(@RequestBody HospitalServiceEntity hospitalServiceEntity, @PathVariable Long serviceId) {
+        hospitalService.updateHospitalService(serviceId, hospitalServiceEntity);
+        return ResponseEntity.ok("update successfully.");
+    }
+
+    @DeleteMapping("/delete-medication/{medicationId}")
+    public ResponseEntity<String> deleteMedication(@PathVariable Long medicationId) {
+        medicationService.deleteMedication(medicationId);
+        return ResponseEntity.ok("delete successfully.");
+    }
+
+    @DeleteMapping("/delete-service/{serviceId}")
+    public ResponseEntity<String> deleteService(@PathVariable Long serviceId) {
+        hospitalService.deleteHospitalService(serviceId);
+        return ResponseEntity.ok("delete successfully.");
     }
 
 }

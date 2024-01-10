@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findByDoctorId(Long doctorId);
+
+    boolean existsByDoctorIdAndPatientId(Long doctorId, Long patientId);
 }

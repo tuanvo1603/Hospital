@@ -16,11 +16,17 @@ public class HospitalService {
         this.hospitalServiceRepository = hospitalServiceRepository;
     }
 
-    public List<HospitalServiceEntity> importHospitalFeeService(List<HospitalServiceEntity> hospitalServiceEntityList) {
-        return hospitalServiceRepository.saveAll(hospitalServiceEntityList);
+    public HospitalServiceEntity importHospitalFeeService(HospitalServiceEntity hospitalServiceEntity) {
+        return hospitalServiceRepository.save(hospitalServiceEntity);
+    }
+
+    public List<HospitalServiceEntity> getHospitalServiceList() {
+        return hospitalServiceRepository.findAll();
     }
 
     public void deleteHospitalService(Long serviceId) {
+        if(!hospitalServiceRepository.existsById(serviceId))
+            throw new ServiceNotFoundException();
         hospitalServiceRepository.deleteById(serviceId);
     }
 

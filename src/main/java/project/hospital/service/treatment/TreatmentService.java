@@ -37,10 +37,6 @@ public class TreatmentService {
         return treatmentRepository.save(treatment);
     }
 
-    public void deleteTreatment(Long patientId) {
-        treatmentRepository.deleteById(patientId);
-    }
-
     public void updateTreatment(Long patientId, Treatment treatment) {
         if(treatmentRepository.existsById(patientId))
             treatmentRepository.save(treatment);

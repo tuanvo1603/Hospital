@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/nurse")
-@PreAuthorize("hasAnyRole('NURSE')")
+@PreAuthorize("hasRole('NURSE')")
 public class NurseController {
 
     private final GetManagedPatientListForNurseApi getManagedPatientListForNurseApi;

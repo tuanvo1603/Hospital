@@ -2,6 +2,7 @@ package project.hospital.service.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.hospital.exception.CitizenIdIsExistedException;
 import project.hospital.exception.PatientNotFoundException;
 import project.hospital.model.patient.Outpatient;
 import project.hospital.repository.patient.OutpatientRepository;
@@ -38,6 +39,8 @@ public class OutpatientService extends CommonPatientService implements IPatientS
 
     @Override
     public Outpatient admitPatient(Outpatient outpatient) {
+        if(patientRepository.existsByCitizenId(outpatient.getCitizenId()))
+            throw new CitizenIdIsExistedException();
         return outpatientRepository.save(outpatient);
     }
 
