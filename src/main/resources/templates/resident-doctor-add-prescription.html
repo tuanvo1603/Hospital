@@ -1,0 +1,190 @@
+<html lang="en">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<i id="loadingMessage" style="display: none;">Loading...</i>
+<i id="statusMessage" style="display: none;"></i>
+<head>
+    <title>Patient Information Form</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #004C99;
+       /* background-image:url("image\\background-form-image.jpg"); */
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            width: 680px;
+            padding: 30px;
+            background-color: #FFFFFF;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: inline-block;
+            width: 150px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submit-button {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <i id="loadingIcon" class="fas fa-spinner fa-spin" style="display: none;"></i>
+    <h2 style="text-align: center; color: #003366;">Prescription Detail</h2>
+    <form>
+        <div class="form-group">
+            <label for="prescribedMedications">Prescribed:</label>
+            <input type="text" id="prescribedMedications" name="prescribedMedications">
+        </div>
+        <div class="form-group">
+            <label for="startTime">Start Time:</label>
+            <input type="date" id="startTime" name="startTime">
+        </div>
+        <div class="form-group">
+            <label for="endtime">End Time:</label>
+            <input type="date" id="endTime" name="endTime">
+        </div>
+        <div class="form-group">
+            <label for="quantityPerDay">Quantity Per Day:</label>
+            <input type="number" id="quantityPerDay" name="quantityPerDay">
+        </div>
+        <div class="form-group">
+            <label for="medicationId">Medication Id:</label>
+            <input type="number" id="medicationId" name="medicationId">
+        </div>
+        <div class="submit-button">
+            <button type="button" onclick="submitForm()">Submit</button>
+        </div>
+    </form>
+    <script>
+        async function submitForm() {
+            // Display the loading icon and message
+            showLoading(true);
+            alert("Đang kiểm tra thông tin, vui lòng chờ...");
+            var prescribedMedications = document.getElementById('prescribedMedications').value;
+            var startTime = document.getElementById('startTime').value;
+            var endTime = document.getElementById('endTime').value;
+            var quantityPerDay = document.getElementById('quantityPerDay').value;
+            var medicationId = document.getElementById('medicationId').value;
+        
+            var formData = {
+                prescribedMedications: prescribedMedications,
+                startTime: startTime,
+                endTime: endTime,
+                quantityPerDay: quantityPerDay,
+                medicationId: medicationId,
+            };
+
+            try {
+                // Giả lập chờ đợi trong 2 giây
+                await new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve();
+                    }, 4000);
+                });
+
+                // Thực hiện yêu cầu fetch
+                const response = await fetch('http://localhost:8090/admin/update/add-patient-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    console.log('Success:', response);
+                    // Chuyển hướng sau khi hoàn thành
+                    window.location.href = "http://localhost:8090/admin/show/patient-list";
+                } else {
+                    console.error('Error:', response.statusText);
+                }
+
+            } catch (error) {
+                // Simulate an error
+                showStatusMessage('Error submitting the form. Please try again.', true);
+            } finally {
+                // Hide the loading icon and message
+                showLoading(false);
+            }
+        }
+
+        function showLoading(isLoading) {
+            var loadingIconElement = document.getElementById('loadingIcon');
+
+            if (isLoading) {
+                loadingIconElement.style.display = 'inline-block';
+            } else {
+                loadingIconElement.style.display = 'none';
+            }
+        }
+
+        function showStatusMessage(message, isError = false) {
+            var statusMessageElement = document.getElementById('statusMessage');
+
+            // Set the message and style
+            statusMessageElement.innerHTML = message;
+            statusMessageElement.className = isError ? 'status-message error-message' : 'status-message';
+
+            // Clear the message after a delay (you can adjust the delay)
+            setTimeout(() => {
+                statusMessageElement.innerHTML = '';
+            }, 5000);
+        }
+
+        // Hàm để lấy tham số từ URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Sử dụng hàm để lấy tham số
+        var parameterValue = getParameterByName('parameterName');
+
+        // Kiểm tra xem tham số có tồn tại không
+        if (parameterValue !== null) {
+            console.log('Giá trị của tham số là:', parameterValue);
+        } else {
+            console.log('Tham số không tồn tại trong URL.');
+        }
+
+    </script>
+</div>
+</body>
+</html>
