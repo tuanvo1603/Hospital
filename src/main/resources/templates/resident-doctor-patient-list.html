@@ -1,0 +1,262 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var patients = /*[[${patients}]]*/ [];
+        console.log(patients);
+        /*]]>*/
+    </script>
+    <style>
+        .fixed-div {
+          position: fixed;
+          top: 0;
+          left: 0;
+          background-color: #fff;
+        }
+        .home-page{
+            width: 240px; 
+            height: 80px; 
+            font-size: 30px; 
+            background-color: #fff; 
+            color: #003366 !important; 
+            font-weight: bold;
+            border: none; 
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+            top: 10px; /* Vị trí từ trên xuống */
+            left: 20px; /* Vị trí từ trái sang phải */
+        }
+        .add-new{
+            width: 120px; 
+            height: 60px; 
+            padding: 15px;
+            font-size: 18px; 
+            background-color: #003366; 
+            color: #FFE5CC !important; 
+            border: none; 
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            
+            position: relative;
+            top: 100px; /* Vị trí từ trên xuống */
+            left: 60px; /* Vị trí từ trái sang phải */
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div class="fixed-div col-sm-40"></div>
+<div>
+    <a type="button" onclick="getHomePage()" class="btn btn-info home-page"><span><i class="fa fa-home"></i>  Home Page</span></a>
+
+    <script>
+        function getHomePage(){
+            window.location.href = "http://localhost:8090/resident-doctor";
+        }
+    </script>
+</div>
+
+</div>
+
+</div>
+<div class="container">
+
+    <!-- Modal -->
+    <div class="modal fade" id="editForm" tabindex="-1" role="dialog" aria-labelledby="editFormLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editFormLabel">Edit Patient Information</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form sửa thông tin -->
+                    <form id="editPatientForm">
+                        <div class="form-group">
+                            <label for="firstNameInput">First Name:</label>
+                            <input type="text" class="form-control" id="firstNameInput" name="firstName">
+                        </div>
+                        <div class="form-group">
+                            <label for="lastNameInput">Last Name:</label>
+                            <input type="text" class="form-control" id="lastNameInput" name="lastName">
+                        </div>
+                        <!-- Thêm các trường khác vào đây -->
+                        <input type="hidden" id="selectedPatientId" name="selectedPatientId"> <!-- Dùng để lưu ID của bản ghi đang được chọn -->
+
+                        <button type="button" class="btn btn-primary" onclick="savePatientChanges()">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="table-wrapper">
+
+        <div class="table-title">
+
+
+            <div class="col-sm-12 text-center"><h2>Patient <b>List</b></h2></div>
+
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search patient by name">
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>PatientId</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Height</th>
+                <th>Weight</th>
+                <th>Symptom</th>
+                <th>Request</th>
+                <th>Admit Time</th>
+                <th>Employee Managing Id</th>
+            </tr>
+            </thead>
+            <tbody>
+            <script>
+                // Function to dynamically create patient rows
+                function createPatientRows() {
+                            const tableBody = document.querySelector(".table-bordered tbody");
+
+                            patients.forEach(patient => {
+                                const row = tableBody.insertRow();
+                                row.setAttribute('data-patientid', patient.patientId);
+
+                                const keys = ["patientId", "firstName", "lastName", "height", "weight", "symptom", "request", "admitTime", "employeeId"];
+
+                                keys.forEach(key => {
+                                    const cell = row.insertCell();
+                                    const text = document.createTextNode(patient[key]);
+                                    cell.appendChild(text);
+                                });
+
+                                let actionsCell = row.insertCell();
+
+                                // Create Edit button
+                                const editButton = document.createElement("a");
+                                editButton.type = "button";
+                                editButton.className = "edit";
+                                editButton.title = "Edit";
+                                editButton.setAttribute("data-toggle", "tooltip");
+                                editButton.innerHTML = '<i class="material-icons"></i>';
+                                editButton.addEventListener("click", function() {
+                                    addPrescription(row, patient);
+                                    console.log("click edit");
+                                    showEditForm();
+                                });
+                                actionsCell.appendChild(editButton);
+
+                                // Create Delete button
+                                const deleteButton = document.createElement("a");
+                                deleteButton.type = "button";
+                                deleteButton.className = "delete";
+                                deleteButton.title = "Discharge";
+                                deleteButton.setAttribute("data-toggle", "tooltip");
+                                deleteButton.setAttribute("data-patient", JSON.stringify(patient));
+                                deleteButton.innerHTML = '<i class="material-icons"></i>';
+
+                                // Attach click event listener to the Delete button
+                                deleteButton.addEventListener("click", function () {
+                                    confirmDelete(row, patient);
+                                });
+                                actionsCell.appendChild(deleteButton);
+                            });
+
+
+                            // Function to filter patients based on search input
+                            function filterPatientsByName() {
+                                const searchInput = $('#searchInput').val().toLowerCase();
+                                patients.forEach(patient => {
+                                    const fullName = `${patient.firstName.toLowerCase()} ${patient.lastName.toLowerCase()}`;
+                                    const row = $(`.table-bordered tbody tr[data-patientid="${patient.patientId}"]`);
+
+                                    if (fullName.startsWith(searchInput)) {
+                                        row.show();
+                                    } else {
+                                        row.hide();
+                                    }
+                                });
+                            }
+
+                            // Attach input event listener to the search input
+                            $('#searchInput').on('input', filterPatientsByName);
+                        }
+
+                        function confirmDelete(row, patient) {
+                            if (confirm('Are you sure you want to delete this patient?')) {
+                                deletePatientOnServer(row, patient);
+                            }
+                        }
+
+                        function addPrescription(row, patient){
+                            window.location.href = `http://localhost:8090/resident-doctor/1/add-prescription-detail/${patient.patientId}`;
+                        }
+
+
+                        function deletePatientOnServer(row, patient) {
+                            console.log('Deleting patient:', patient);
+
+                            fetch(`http://localhost:8090/admin/update/patient-list/${patient.patientId}`, {
+                                method: 'DELETE',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                            })
+                                .then(response => {
+                                    console.log('Response:', response);
+                                    if (response.ok) {
+                                        console.log('Success:', response);
+                                        row.remove();
+                                    } else {
+                                        console.error('Error:', response.statusText);
+                                    }
+                                })
+                                .catch(error => {
+                                    // Handle network errors
+                                    console.error('Network Error:', error);
+                                });
+                        }
+
+                        createPatientRows();
+
+
+            </script>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

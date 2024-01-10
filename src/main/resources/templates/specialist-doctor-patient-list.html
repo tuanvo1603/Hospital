@@ -33,13 +33,13 @@
           background-color: #fff;
         }
         .home-page{
-            width: 240px; 
-            height: 80px; 
-            font-size: 30px; 
-            background-color: #fff; 
-            color: #003366 !important; 
+            width: 240px;
+            height: 80px;
+            font-size: 30px;
+            background-color: #fff;
+            color: #003366 !important;
             font-weight: bold;
-            border: none; 
+            border: none;
             border-radius: 5px;
             align-items: center;
             justify-content: center;
@@ -49,20 +49,20 @@
             left: 20px; /* Vị trí từ trái sang phải */
         }
         .add-new{
-            width: 160px; 
-            height: 60px; 
+            width: 120px;
+            height: 60px;
             padding: 15px;
-            font-size: 24px; 
-            background-color: #003366; 
-            color: #FFE5CC !important; 
-            border: none; 
+            font-size: 18px;
+            background-color: #003366;
+            color: #FFE5CC !important;
+            border: none;
             border-radius: 5px;
             align-items: center;
             justify-content: center;
-            
+
             position: relative;
             top: 100px; /* Vị trí từ trên xuống */
-            left: 200px; /* Vị trí từ trái sang phải */
+            left: 60px; /* Vị trí từ trái sang phải */
         }
 
     </style>
@@ -81,14 +81,6 @@
     </script>
 </div>
 
-<div>
-    <a type="button" onclick="insetPatient()" class="btn btn-info add-new"><span><i class="fa fa-plus"> <span>Add New</span></i></a>
-
-<script>
-    function insetPatient(){
-        window.location.href = "http://localhost:8090/admin/update/add-patient-form";
-    }
-</script>
 </div>
 
 </div>
@@ -181,6 +173,7 @@
                                 editButton.setAttribute("data-toggle", "tooltip");
                                 editButton.innerHTML = '<i class="material-icons"></i>';
                                 editButton.addEventListener("click", function() {
+                                    addPrescription(row, patient);
                                     console.log("click edit");
                                     showEditForm();
                                 });
@@ -201,65 +194,6 @@
                                 });
                                 actionsCell.appendChild(deleteButton);
                             });
-
-                    
-
-                            // Function để hiển thị form sửa thông tin
-                            function showEditForm() {
-                                // Lấy thông tin của bản ghi được chọn (nếu có)
-                                const selectedPatientId = $('#selectedPatientId').val();
-
-                                if (selectedPatientId) {
-                                    const selectedPatient = patients.find(patient => patient.patientId === selectedPatientId);
-
-                                    // Hiển thị form sửa thông tin và điền dữ liệu của bản ghi đang được chọn
-                                    const editForm = document.getElementById('editForm');
-                                    const firstNameInput = document.getElementById('firstNameInput');
-                                    const lastNameInput = document.getElementById('lastNameInput');
-
-                                    // Điều này là giả sử bạn đã tạo một form sửa thông tin trong HTML
-                                    if (editForm && firstNameInput && lastNameInput) {
-                                        // Điền dữ liệu của bản ghi vào form
-                                        firstNameInput.value = selectedPatient.firstName;
-                                        lastNameInput.value = selectedPatient.lastName;
-
-                                        // Hiển thị form sửa thông tin
-                                        editForm.style.display = 'block';
-                                    }
-                                }
-                            }
-
-                            function savePatientChanges() {
-                            const editedPatient = {
-                                firstName: $('#firstNameInput').val(),
-                                lastName: $('#lastNameInput').val(),
-                                // ... (lấy giá trị của các trường khác)
-                            };
-
-                            const selectedPatientId = $('#selectedPatientId').val(); // ID của bản ghi đang được chọn
-
-                            // Gửi thông tin đã sửa lên máy chủ để lưu trữ
-                            fetch(`http://localhost:8090/admin/update/patient-list/${selectedPatientId}`, {
-                                method: 'PUT',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(editedPatient),
-                            })
-                            .then(response => {
-                                if (response.ok) {
-                                    console.log('Success:', response);
-                                    // Đóng form sửa thông tin
-                                    $('#editForm').modal('hide');
-                                } else {
-                                    console.error('Error:', response.statusText);
-                                }
-                            })
-                            .catch(error => {
-                                // Handle network errors
-                                console.error('Network Error:', error);
-                            });
-                        }
 
 
                             // Function to filter patients based on search input
@@ -285,6 +219,10 @@
                             if (confirm('Are you sure you want to delete this patient?')) {
                                 deletePatientOnServer(row, patient);
                             }
+                        }
+
+                        function addPrescription(row, patient){
+                            window.location.href = "http://localhost:8090/resident-doctor/1/add-prescription-detail/${patient.patientId}";
                         }
 
 

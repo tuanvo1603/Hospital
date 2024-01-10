@@ -42,7 +42,7 @@ public class AdministratorController {
         return searchByFullNameApi.searchByFullName(administratorId, firstName, lastName);
     }
 
-    @PostMapping("/admit-outpatient/")
+    @PostMapping("/admit-outpatient")
     public ResponseEntity<String> admitOutpatient(@PathVariable Long administratorId,
                                                   @RequestBody Outpatient outpatient) {
         return admitOutpatientApi.admitOutpatient(administratorId, outpatient);

@@ -2,6 +2,8 @@ package project.hospital.controller.employee.doctor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.managingpatient.AddAppointmentApi;
 import project.hospital.api.patient.SearchByFullNameApi;
@@ -13,7 +15,7 @@ import project.hospital.model.treatment.medication.PrescriptionDetail;
 import java.sql.Date;
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/specialist-doctor/{doctorId}/{outpatientId}")
 @PreAuthorize("hasRole('SPECIALIST_DOCTOR')")
 public class SpecialistDoctorController {
@@ -37,10 +39,12 @@ public class SpecialistDoctorController {
     }
 
     @GetMapping("/search-by-name/{firstName}/{lastName}")
-    public List<PatientDTO> searchPatientByName(@PathVariable Long administratorId,
+    public String searchPatientByName(@PathVariable Long administratorId,
                                                 @PathVariable String firstName,
-                                                @PathVariable String lastName) {
-        return searchByFullNameApi.searchByFullName(administratorId, firstName, lastName);
+                                                @PathVariable String lastName,
+                                                Model model) {
+        model.addAttribute("patients", searchByFullNameApi.searchByFullName(administratorId, firstName, lastName));
+        return "specialist-doctor-patient-list";
     }
 
     @PostMapping("/admit-inpatient")

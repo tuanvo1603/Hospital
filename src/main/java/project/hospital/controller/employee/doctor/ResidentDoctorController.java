@@ -1,8 +1,10 @@
 package project.hospital.controller.employee.doctor;
 
-import ch.qos.logback.core.model.Model;
+import org.springframework.boot.Banner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
 import project.hospital.api.patient.inpatient.GetManagedPatientListForResidentDoctorApi;
@@ -12,8 +14,8 @@ import project.hospital.model.treatment.medication.PrescriptionDetail;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/resident-doctor/{doctorId}")
+@Controller
+@RequestMapping("/resident-doctor")
 @PreAuthorize("hasRole('RESIDENT_DOCTOR')")
 public class ResidentDoctorController {
 
@@ -31,22 +33,34 @@ public class ResidentDoctorController {
         this.addPrescriptionDetailForInpatientApi = addPrescriptionDetailForInpatientApi;
     }
 
-    @PutMapping("/add-prescription-detail/{patientId}")
+    @PutMapping("/{doctorId}/add-prescription-detail/{patientId}")
     public ResponseEntity<String> addPrescriptionDetail(@RequestBody PrescriptionDetail prescriptionDetail,
                                                         @PathVariable Long doctorId,
                                                         @PathVariable Long patientId) {
         return addPrescriptionDetailForInpatientApi.addPrescriptionDetail(prescriptionDetail, doctorId, patientId);
     }
 
-    @GetMapping("/get-managed-patient-list")
-    public List<PatientDTO> getManagedPatientList(@PathVariable Long doctorId, Model model) {
-        return getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
+    @GetMapping("/{doctorId}/add-prescription-detail/{patientId}")
+    public String getPrescriptionDetail() {
+        return "resident-doctor-add-prescription";
+    }
+
+    @GetMapping("/{doctorId}/get-managed-patient-list")
+    public String getManagedPatientList(@PathVariable Long doctorId, Model model) {
+        List<PatientDTO> patients =  getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
+        model.addAttribute("patients", patients);
+        return "resident-doctor-patient-list";
     }
 
     @GetMapping("/get-patient/{citizenId}")
     public PatientDTO getManagedPatientByCitizenId(@PathVariable Long doctorId,
                                                    @PathVariable String citizenId) {
         return getManagedPatientByCitizenIdApi.getManagedPatientByCitizenId(doctorId, citizenId);
+    }
+
+    @GetMapping
+    public String getMenu(){
+        return "resident-doctor-menu";
     }
 
 

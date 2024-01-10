@@ -65,83 +65,53 @@
     <form>
         <div class="form-group">
             <label for="prescribedMedications">Prescribed:</label>
-            <input type="text" id="prescribedMedications" name="prescribedMedications" required>
+            <input type="text" id="prescribedMedications" name="prescribedMedications">
         </div>
         <div class="form-group">
-            <label for="startTime">Start Time:</label>
-            <input type="date" id="startTime" name="startTime" required>
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
         </div>
         <div class="form-group">
-            <label for="endtime">End Time:</label>
-            <input type="date" id="endTime" name="endTime" required>
-        </div>
-        <div class="form-group">
-            <label for="quantityPerDay">Quantity Per Day:</label>
-            <input type="number" id="quantityPerDay" name="quantityPerDay" required>
-        </div>
-        <div class="form-group">
-            <label for="medicationId">Medication Id:</label>
-            <input type="number" id="medicationId" name="medicationId" required>
+            <label for="lastName">Last Name:</label>
+            <input type="date" id="lastName" name="lastName">
         </div>
         <div class="submit-button">
-            <button type="button" onclick="submitForm()">Submit</button>
+            <button type="button" onclick="submitForm()">Search</button>
         </div>
     </form>
     <script>
         async function submitForm() {
             // Display the loading icon and message
             showLoading(true);
-            var prescribedMedications = document.getElementById('prescribedMedications').value;
-            var startTime = document.getElementById('startTime').value;
-            var endTime = document.getElementById('endTime').value;
-            var quantityPerDay = document.getElementById('quantityPerDay').value;
-            var medicationId = document.getElementById('medicationId').value;
-        
-            var formData = {
-                prescribedMedications: prescribedMedications,
-                startTime: startTime,
-                endTime: endTime,
-                quantityPerDay: quantityPerDay,
-                medicationId: medicationId,
-            };
-
-            if (!prescribedMedications || !startTime || !endTime || !quantityPerDay || !medicationId) {
-                alert("Vui lòng điền đầy đủ thông tin.");
-                showLoading(false);
-                return; // Do not proceed with the form submission
-            }
-
             alert("Đang kiểm tra thông tin, vui lòng chờ...");
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+
+            var formData = {
+                  firstName:firstName,
+                  lastName:lastName
+            };
 
             try {
                 // Giả lập chờ đợi trong 2 giây
                 await new Promise(resolve => {
                     setTimeout(() => {
                         resolve();
-                    }, 2000);
+                    }, 4000);
                 });
-                const currentUrl = window.location.href;
+
                 // Thực hiện yêu cầu fetch
-                const response = await fetch(currentUrl, {
-                    method: 'PUT',
+                const response = await fetch('http://localhost:8090/resident-doctor/1/add-prescription-detail/${patient.patientId}', {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(formData)
                 });
 
                 if (response.ok) {
-                    alert("Thêm đơn thuốc thành công");
-                    await new Promise(resolve => {
-                    setTimeout(() => {
-                        resolve();
-                    }, 2000);
-                });
                     console.log('Success:', response);
                     // Chuyển hướng sau khi hoàn thành
-                    window.location.href = "http://localhost:8090/resident-doctor/1/get-managed-patient-list";
                 } else {
-                    alert("Error: " + response.statusText);
                     console.error('Error:', response.statusText);
                 }
 
@@ -167,7 +137,6 @@
         function showStatusMessage(message, isError = false) {
             var statusMessageElement = document.getElementById('statusMessage');
 
-
             // Set the message and style
             statusMessageElement.innerHTML = message;
             statusMessageElement.className = isError ? 'status-message error-message' : 'status-message';
@@ -178,7 +147,26 @@
             }, 5000);
         }
 
+        // Hàm để lấy tham số từ URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
 
+        // Sử dụng hàm để lấy tham số
+        var parameterValue = getParameterByName('parameterName');
+
+        // Kiểm tra xem tham số có tồn tại không
+        if (parameterValue !== null) {
+            console.log('Giá trị của tham số là:', parameterValue);
+        } else {
+            console.log('Tham số không tồn tại trong URL.');
+        }
 
     </script>
 </div>
