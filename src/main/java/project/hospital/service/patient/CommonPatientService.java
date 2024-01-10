@@ -2,6 +2,7 @@ package project.hospital.service.patient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import project.hospital.exception.PatientNotFoundException;
 import project.hospital.model.patient.Patient;
 import project.hospital.repository.patient.PatientRepository;
 
@@ -25,6 +26,9 @@ public class CommonPatientService {
         return patientRepository.findAll();
     }
 
+    public Patient getPatientById(Long patientId) {
+        return patientRepository.findById(patientId).orElseThrow(PatientNotFoundException::new);
+    }
 
     public Patient getPatientByCitizenId(String citizenId) {
         return patientRepository.findPatientByCitizenId(citizenId);

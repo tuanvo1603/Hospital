@@ -51,17 +51,4 @@ public class ResidentDoctorController {
         model.addAttribute("patients", patients);
         return "resident-doctor-patient-list";
     }
-
-    @GetMapping("/get-patient/{citizenId}")
-    public PatientDTO getManagedPatientByCitizenId(@PathVariable Long doctorId,
-                                                   @PathVariable String citizenId) {
-        return getManagedPatientByCitizenIdApi.getManagedPatientByCitizenId(doctorId, citizenId);
-    }
-
-    @GetMapping
-    public String getMenu(){
-        return "resident-doctor-menu";
-    }
-
-
 }
