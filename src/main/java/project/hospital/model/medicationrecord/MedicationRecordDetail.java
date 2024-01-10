@@ -10,6 +10,10 @@ import java.sql.Date;
 public class MedicationRecordDetail {
 
     @Id
+    @Column(name = "medication_record_detail_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long medicationRecordDetailId;
+
     @Column(name = "citizenId")
     private String citizenId;
 
@@ -23,8 +27,7 @@ public class MedicationRecordDetail {
     private String description;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "citizenId")
-    @MapsId
+    @JoinColumn(name = "citizenId", insertable = false, updatable = false)
     @JsonBackReference
     private MedicationRecord medicationRecord;
 
@@ -66,5 +69,13 @@ public class MedicationRecordDetail {
 
     public void setMedicationRecord(MedicationRecord medicationRecord) {
         this.medicationRecord = medicationRecord;
+    }
+
+    public Long getMedicationRecordDetailId() {
+        return medicationRecordDetailId;
+    }
+
+    public void setMedicationRecordDetailId(Long medicationRecordDetailId) {
+        this.medicationRecordDetailId = medicationRecordDetailId;
     }
 }
