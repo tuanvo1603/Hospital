@@ -93,9 +93,12 @@
                     }, 2000);
                 });
                 const currentUrl = window.location.href;
+                const updatedUrl = `${currentUrl}/${encodeURIComponent(description)}`
+
+                console.log(updatedUrl);
                 // Thực hiện yêu cầu fetch
-                const response = await fetch(currentUrl + `/${description}`, {
-                    method: 'Get',
+                const response = await fetch(updatedUrl, {
+                    method: 'Post',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -110,7 +113,7 @@
                 });
                     console.log('Success:', response);
                     // Chuyển hướng sau khi hoàn thành
-                  //   window.location.href = "http://localhost:8090/resident-doctor/1/get-managed-patient-list";
+                    window.location.href = "http://localhost:8090/resident-doctor/1/get-managed-patient-list";
                 } else {
                     alert("Error: " + response.statusText);
                     console.error('Error:', response.statusText);

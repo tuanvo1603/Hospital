@@ -56,81 +56,53 @@
         justify-content: center;
         margin-top: 20px;
         }
-        .view-medication-list{
-            width: 120px; 
-            height: 60px; 
-            font-size: 12px; 
-            background-color: #fff; 
-            color: #003366 !important; 
-            font-weight: bold;
-            border: none; 
-            border-radius: 5px;
-            align-items: center;
-            justify-content: center;
-
-            position: relative;
-            top: 10px; /* Vị trí từ trên xuống */
-            left: 20px; /* Vị trí từ trái sang phải */
-        }
     </style>
 </head>
 <body>
 <div class="form-container">
-    <div>
-        <a type="button" onclick="getMedicationList()" class="btn btn-info view-medication-list"><span><i class="fas fa-list"></i>  View Medication List</span></a>
-    
-        <script>
-            function getMedicationList(){
-                window.location.href = "http://localhost:8090/resident-doctor/get-medication-list";
-            }
-        </script>
-    </div>
     <i id="loadingIcon" class="fas fa-spinner fa-spin" style="display: none;"></i>
     <h2 style="text-align: center; color: #003366;">Prescription Detail</h2>
     <form>
         <div class="form-group">
-            <label for="prescribedMedications">Prescribed:</label>
-            <input type="text" id="prescribedMedications" name="prescribedMedications" required>
+            <label for="prescribedMedications">Diagnostic: </label>
+            <input type="text" id="diagnostic" name="diagnostic" required>
         </div>
         <div class="form-group">
-            <label for="startTime">Start Time:</label>
-            <input type="date" id="startTime" name="startTime" required>
+            <label for="startTime">Procedure:</label>
+            <input type="text" id="treatmentProcedure" name="treatmentProcedure" required>
         </div>
         <div class="form-group">
-            <label for="endtime">End Time:</label>
-            <input type="date" id="endTime" name="endTime" required>
-        </div>
-        <div class="form-group">
-            <label for="quantityPerDay">Quantity Per Day:</label>
-            <input type="number" id="quantityPerDay" name="quantityPerDay" required>
-        </div>
-        <div class="form-group">
-            <label for="medicationId">Medication Id:</label>
-            <input type="text" id="medicationId" name="medicationId" required>
+            <label for="endtime">Description:</label>
+            <input type="text" id="description" name="description" required>
         </div>
         <div class="submit-button">
             <button type="button" onclick="submitForm()">Submit</button>
         </div>
     </form>
     <script>
+        const currentUrl = window.location.href;
+        const match = currentUrl.match(/\/resident-doctor\/\d+\/insert-treatment\/(\d+)/);
+        const patientId = match ? match[1] : null;
+
+console.log(patientId);
+
         async function submitForm() {
             // Display the loading icon and message
             showLoading(true);
-            var prescribedMedications = document.getElementById('prescribedMedications').value;
-            var startTime = document.getElementById('startTime').value;
-            var endTime = document.getElementById('endTime').value;
-            var quantityPerDay = document.getElementById('quantityPerDay').value;
-            var medicationId = document.getElementById('medicationId').value;
+            var diagnostic = document.getElementById('diagnostic').value;
+            var treatmentProcedure = document.getElementById('treatmentProcedure').value;
+            var description = document.getElementById('description').value;
         
             var formData = {
-                prescribedMedications: prescribedMedications,
-                startTime: startTime,
-                endTime: endTime,
-                quantityPerDay: quantityPerDay,
-                medicationId: medicationId,
+                  patientId: patientId,
+                  diagnostic: diagnostic,
+                  treatmentProcedure: treatmentProcedure,
+                  description: description,
             };
 
-            if (!prescribedMedications || !startTime || !endTime || !quantityPerDay || !medicationId) {
+            console.log(formData);
+
+            if (!diagnostic || !treatmentProcedure || !description) {
                 alert("Vui lòng điền đầy đủ thông tin.");
                 showLoading(false);
                 return; // Do not proceed with the form submission
@@ -145,10 +117,10 @@
                         resolve();
                     }, 2000);
                 });
-                const currentUrl = window.location.href;
+
                 // Thực hiện yêu cầu fetch
                 const response = await fetch(currentUrl, {
-                    method: 'PUT',
+                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -156,7 +128,7 @@
                 });
 
                 if (response.ok) {
-                    alert("Thêm đơn thuốc thành công");
+                    alert("Thêm lộ trình điều trị thành công");
                     await new Promise(resolve => {
                     setTimeout(() => {
                         resolve();
@@ -164,7 +136,7 @@
                 });
                     console.log('Success:', response);
                     // Chuyển hướng sau khi hoàn thành
-                    window.location.href = "http://localhost:8090/resident-doctor/1/get-managed-patient-list";
+                    // window.location.href = "http://localhost:8090/resident-doctor";
                 } else {
                     alert("Error: " + response.statusText);
                     console.error('Error:', response.statusText);

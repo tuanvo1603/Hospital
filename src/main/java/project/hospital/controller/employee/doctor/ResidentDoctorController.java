@@ -8,8 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
 import project.hospital.api.patient.inpatient.GetManagedPatientListForResidentDoctorApi;
+import project.hospital.api.treatment.medication.GetMedicationListApi;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForInpatientApi;
+import project.hospital.controller.employee.EmployeeController;
 import project.hospital.dto.PatientDTO;
+import project.hospital.model.treatment.Treatment;
+import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 
 import java.util.List;
@@ -18,7 +22,7 @@ import java.util.List;
 @RequestMapping("/resident-doctor")
 @PreAuthorize("hasRole('RESIDENT_DOCTOR')")
 public class ResidentDoctorController {
-
+    private final GetMedicationListApi getMedicationListApi;
     private final GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi;
 
     private final GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi;
@@ -27,10 +31,13 @@ public class ResidentDoctorController {
 
     public ResidentDoctorController(GetManagedPatientByCitizenIdApi getManagedPatientByCitizenIdApi,
                                     GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi,
-                                    AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi) {
+                                    AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi,
+                                    GetMedicationListApi getMedicationListApi
+    ) {
         this.getManagedPatientByCitizenIdApi = getManagedPatientByCitizenIdApi;
         this.getManagedPatientListForResidentDoctorApi = getManagedPatientListForResidentDoctorApi;
         this.addPrescriptionDetailForInpatientApi = addPrescriptionDetailForInpatientApi;
+        this.getMedicationListApi = getMedicationListApi;
     }
 
     @PutMapping("/{doctorId}/add-prescription-detail/{patientId}")
@@ -51,4 +58,26 @@ public class ResidentDoctorController {
         model.addAttribute("patients", patients);
         return "resident-doctor-patient-list";
     }
+
+    @GetMapping
+    public String getMenu(){
+        return "resident-doctor-menu";
+    }
+
+    @GetMapping("/get-medication-list")
+    public String getMedicationList(Model model) {
+        model.addAttribute("medicationList", getMedicationListApi.getMedicationList());
+        return "resident-doctor-medication-list";
+    }
+
+    @PostMapping("/{doctorId}/insert-treatment/{patientId}")
+    public void insertTreatment(@RequestBody Treatment treatment){
+
+    }
+
+    @GetMapping("/{doctorId}/insert-treatment/{patientId}")
+    public String getInsertTreatmentForm(){
+        return "resident-doctor-insert-treatment";
+    }
+
 }

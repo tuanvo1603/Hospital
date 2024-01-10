@@ -1,0 +1,144 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+
+<!------ Include the above in your HEAD tag ---------->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap Table with Add and Delete Row Feature</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var medicationList = /*[[${medicationList}]]*/ [];
+        console.log(medicationList);
+        /*]]>*/
+    </script>
+    <style>
+        .fixed-div {
+          position: fixed;
+          top: 0;
+          left: 0;
+          background-color: #fff;
+        }
+        .home-page{
+            width: 240px; 
+            height: 80px; 
+            font-size: 30px; 
+            background-color: #fff; 
+            color: #003366 !important; 
+            font-weight: bold;
+            border: none; 
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+
+            position: relative;
+            top: 10px; /* Vị trí từ trên xuống */
+            left: 20px; /* Vị trí từ trái sang phải */
+        }
+        .add-new{
+            width: 120px; 
+            height: 60px; 
+            padding: 15px;
+            font-size: 18px; 
+            background-color: #003366; 
+            color: #FFE5CC !important; 
+            border: none; 
+            border-radius: 5px;
+            align-items: center;
+            justify-content: center;
+            
+            position: relative;
+            top: 100px; /* Vị trí từ trên xuống */
+            left: 60px; /* Vị trí từ trái sang phải */
+        }
+
+    </style>
+
+
+</head>
+<body>
+<div class="fixed-div col-sm-40"></div>
+<div>
+    <a type="button" onclick="getHomePage()" class="btn btn-info home-page"><span><i class="fa fa-home"></i>  Home Page</span></a>
+
+    <script>
+        function getHomePage(){
+            window.location.href = "http://localhost:8090/resident-doctor";
+        }
+    </script>
+</div>
+
+</div>
+
+</div>
+<div class="container">
+
+
+
+    <div class="table-wrapper">
+
+        <div class="table-title">
+
+
+            <div class="col-sm-12 text-center"><h2>Medication <b>List</b></h2></div>
+
+        </div>
+
+        <div class="form-group">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search patient by name">
+        </div>
+
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th>Medication Id</th>
+                <th>Medication Name</th>
+                <th>Alter Name</th>
+                <th>Medication Description</th>
+                <th>Remaining</th>
+                <th>Unit Price</th>
+                <th>Html Link</th>
+            </tr>
+            </thead>
+            <tbody>
+            <script>
+                // Function to dynamically create patient rows
+                function createMedicationRows() {
+                            const tableBody = document.querySelector(".table-bordered tbody");
+
+                            medicationList.forEach(medication => {
+                                const row = tableBody.insertRow();
+                                row.setAttribute('data-medicationId', medication.medicationId);
+
+                                const keys = ["medicationId", "medicationName", "alterName", "medicationDescription", "remaining", "unitPrice", "htmlLink"];
+
+                                keys.forEach(key => {
+                                    const cell = row.insertCell();
+                                    const text = document.createTextNode(medication[key]);
+                                    cell.appendChild(text);
+                                });
+
+                            });
+                        }
+
+                        createMedicationRows();
+            </script>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

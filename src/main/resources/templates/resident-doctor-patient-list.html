@@ -137,12 +137,9 @@
                 <th>PatientId</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Height</th>
-                <th>Weight</th>
-                <th>Symptom</th>
-                <th>Request</th>
-                <th>Admit Time</th>
-                <th>Employee Managing Id</th>
+                <th>Room</th>
+                <th>Bed Sell</th>
+                <th>Citizen Id</th>
             </tr>
             </thead>
             <tbody>
@@ -155,7 +152,7 @@
                                 const row = tableBody.insertRow();
                                 row.setAttribute('data-patientid', patient.patientId);
 
-                                const keys = ["patientId", "firstName", "lastName", "height", "weight", "symptom", "request", "admitTime", "employeeId"];
+                                const keys = ["patientId", "firstName", "lastName", "room", "bedCell", "citizenId"];
 
                                 keys.forEach(key => {
                                     const cell = row.insertCell();
@@ -168,7 +165,7 @@
                                 // Create Edit button
                                 const editButton = document.createElement("a");
                                 editButton.type = "button";
-                                editButton.className = "edit";
+                                editButton.className = "addPrescription";
                                 editButton.title = "Add Precription Detail";
                                 editButton.setAttribute("data-toggle", "tooltip");
                                 editButton.innerHTML = '<i class="material-icons">add</i>';
@@ -179,20 +176,35 @@
                                 });
                                 actionsCell.appendChild(editButton);
 
-                                // Create Delete button
+                               
                                 const addButton = document.createElement("a");
                                 addButton.type = "button";
-                                addButton.className = "delete";
+                                addButton.className = "addMedicalRecord";
                                 addButton.title = "Add Medical Record";
                                 addButton.setAttribute("data-toggle", "tooltip");
                                 addButton.setAttribute("data-patient", JSON.stringify(patient));
-                                addButton.innerHTML = '<i class="material-icons"></i>';
+                                addButton.innerHTML = '<i class="material-icons">list</i>';
 
                                 // Attach click event listener to the Delete button
                                 addButton.addEventListener("click", function () {
                                     addMedicalRecord(row, patient);
                                 });
                                 actionsCell.appendChild(addButton);
+
+
+                                const editTreatmentButton = document.createElement("a");
+                                editTreatmentButton.type = "button";
+                                editTreatmentButton.className = "editTreatMent";
+                                editTreatmentButton.title = "Edit TreatMent";
+                                editTreatmentButton.setAttribute("data-toggle", "tooltip");
+                                editTreatmentButton.setAttribute("data-patient", JSON.stringify(patient));
+                                editTreatmentButton.innerHTML = '<i class="material-icons">edit</i>';
+
+                                // Attach click event listener to the Delete button
+                                editTreatmentButton.addEventListener("click", function () {
+                                    editTreatment(row, patient);
+                                });
+                                actionsCell.appendChild(editTreatmentButton);
                             });
 
 
@@ -223,10 +235,11 @@
 
 
                         function addMedicalRecord(row, patient) {
-
                             window.location.href =  `http://localhost:8090/doctor/add-medication-record/1/${patient.patientId}`;
+                        }
 
-                    
+                        function editTreatment(row, patient){
+                            window.location.href =  `http://localhost:8090/resident-doctor/1/insert-treatment/${patient.patientId}`;
                         }
 
                         createPatientRows();
