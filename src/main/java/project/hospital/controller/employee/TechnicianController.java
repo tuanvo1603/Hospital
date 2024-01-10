@@ -35,10 +35,10 @@ public class TechnicianController {
         return addServiceDetailApi.addServiceDetail(serviceDetail, technicianId, patientId);
     }
 
-    @GetMapping("/search-by-name/{firstName}/{lastName}")
-    public List<PatientDTO> searchPatientByName(@PathVariable Long administratorId,
+    @GetMapping("/search-by-name/{technicianId}/{firstName}/{lastName}")
+    public List<PatientDTO> searchPatientByName(@PathVariable Long technicianId,
                                                 @PathVariable String firstName,
                                                 @PathVariable String lastName) {
-        return searchByFullNameApi.searchByFullName(administratorId, firstName, lastName);
+        return searchByFullNameApi.searchByFullName(technicianId, firstName, lastName);
     }
 }

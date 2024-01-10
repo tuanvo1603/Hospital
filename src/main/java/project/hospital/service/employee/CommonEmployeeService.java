@@ -34,5 +34,4 @@ public class CommonEmployeeService{
     public Employee getEmployeeById(Long employeeId) {
         return employeeRepository.findById(employeeId).orElseThrow(EmployeeNotFoundException::new);
     }
-
 }
