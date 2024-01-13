@@ -50,35 +50,30 @@ public class ResidentDoctorController {
 
     @GetMapping("/{doctorId}/add-prescription-detail/{patientId}")
     public String getPrescriptionDetail() {
-        return "resident-doctor-add-prescription";
+        return "resident-doctor/resident-doctor-add-prescription";
     }
 
     @GetMapping("/{doctorId}/get-managed-patient-list")
     public String getManagedPatientList(@PathVariable Long doctorId, Model model) {
         List<PatientDTO> patients =  getManagedPatientListForResidentDoctorApi.getManagedPatientList(doctorId);
         model.addAttribute("patients", patients);
-        return "resident-doctor-patient-list";
+        return "resident-doctor/resident-doctor-patient-list";
     }
 
     @GetMapping
     public String getMenu(){
-        return "resident-doctor-menu";
+        return "resident-doctor/resident-doctor-menu";
     }
 
     @GetMapping("/get-medication-list")
     public String getMedicationList(Model model) {
         model.addAttribute("medicationList", getMedicationListApi.getMedicationList());
-        return "resident-doctor-medication-list";
-    }
-
-    @PostMapping("/{doctorId}/insert-treatment/{patientId}")
-    public void insertTreatment(@RequestBody Treatment treatment){
-
+        return "resident-doctor/resident-doctor-medication-list";
     }
 
     @GetMapping("/{doctorId}/insert-treatment/{patientId}")
     public String getInsertTreatmentForm(){
-        return "resident-doctor-insert-treatment";
+        return "resident-doctor/resident-doctor-insert-treatment";
     }
 
     @PutMapping("/{doctorId}/update-treatment/{patientId}")

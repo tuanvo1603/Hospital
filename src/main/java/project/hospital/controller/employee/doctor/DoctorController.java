@@ -45,7 +45,7 @@ public class DoctorController {
 
     @GetMapping("/add-medication-record/{doctorId}/{patientId}")
     public String getAddMedicalRecord() {
-        return "resident-doctor-add-medical-record";
+        return "resident-doctor/resident-doctor-add-medical-record";
     }
     @GetMapping("/get-patient-treatment/{patientId}")
     public Treatment getPatientTreatment(@PathVariable Long patientId){
