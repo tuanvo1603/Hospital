@@ -89,10 +89,6 @@
     <h2 style="text-align: center; color: #003366;">Prescription Detail</h2>
     <form>
         <div class="form-group">
-            <label for="prescribedMedications">Prescribed:</label>
-            <input type="text" id="prescribedMedications" name="prescribedMedications" required>
-        </div>
-        <div class="form-group">
             <label for="startTime">Start Time:</label>
             <input type="date" id="startTime" name="startTime" required>
         </div>
@@ -116,22 +112,26 @@
         async function submitForm() {
             // Display the loading icon and message
             showLoading(true);
-            var prescribedMedications = document.getElementById('prescribedMedications').value;
             var startTime = document.getElementById('startTime').value;
             var endTime = document.getElementById('endTime').value;
             var quantityPerDay = document.getElementById('quantityPerDay').value;
             var medicationId = document.getElementById('medicationId').value;
         
             var formData = {
-                prescribedMedications: prescribedMedications,
                 startTime: startTime,
                 endTime: endTime,
                 quantityPerDay: quantityPerDay,
                 medicationId: medicationId,
             };
 
-            if (!prescribedMedications || !startTime || !endTime || !quantityPerDay || !medicationId) {
+            if (!startTime || !endTime || !quantityPerDay || !medicationId) {
                 alert("Vui lòng điền đầy đủ thông tin.");
+                showLoading(false);
+                return; // Do not proceed with the form submission
+            }
+
+            if(startTime > endTime){
+                alert("Ngày kết thúc không thể trước ngày bắt đầu");
                 showLoading(false);
                 return; // Do not proceed with the form submission
             }
@@ -166,8 +166,10 @@
                     // Chuyển hướng sau khi hoàn thành
                     window.location.href = "http://localhost:8090/resident-doctor/1/get-managed-patient-list";
                 } else {
-                    alert("Error: " + response.statusText);
-                    console.error('Error:', response.statusText);
+                    const errorMessage = await response.text();
+                    showStatusMessage('Error: ' + errorMessage, true);
+                    console.error('Error:', errorMessage);
+                    alert(errorMessage);
                 }
 
             } catch (error) {

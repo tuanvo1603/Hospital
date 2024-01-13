@@ -51,7 +51,7 @@ public class PrescriptionDetailService {
         if(medicationService.isEnoughMedicationRemainingQuantity(medication, usedMedicationQuantity)) {
             medicationService.updateRemainingQuantity(medication, usedMedicationQuantity);
             hospitalFeeService.updateTotalMoneyAfterAddingPrescription(patientId, medication, usedMedicationQuantity);
-            prescriptionDetail.setTreatment(treatment);
+            prescriptionDetail.setPatientId(patientId);
             prescriptionDetailRepository.save(prescriptionDetail);
         }
         else throw new MedicationQuantityNotEnoughException();
