@@ -1,18 +1,15 @@
 package project.hospital.controller.employee.doctor;
 
-import org.springframework.boot.Banner;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import project.hospital.api.patient.inpatient.GetManagedPatientByCitizenIdApi;
 import project.hospital.api.patient.inpatient.GetManagedPatientListForResidentDoctorApi;
 
 import project.hospital.api.treatment.UpdateTreatmentForInpatientApi;
 import project.hospital.api.treatment.medication.GetMedicationListApi;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForInpatientApi;
-import project.hospital.controller.employee.EmployeeController;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
@@ -27,6 +24,7 @@ public class ResidentDoctorController {
     private final GetManagedPatientListForResidentDoctorApi getManagedPatientListForResidentDoctorApi;
 
     private final AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi;
+
     private final GetMedicationListApi getMedicationListApi;
 
     private final UpdateTreatmentForInpatientApi updateTreatmentForInpatientApi;

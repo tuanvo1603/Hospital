@@ -2,6 +2,7 @@ package project.hospital.api.patient;
 
 import org.springframework.stereotype.Component;
 import project.hospital.dto.PatientDTO;
+import project.hospital.exception.PatientNotFoundException;
 import project.hospital.mapper.PatientMapper;
 import project.hospital.service.employee.CommonEmployeeService;
 import project.hospital.service.patient.InpatientService;
@@ -27,6 +28,10 @@ public class SearchByFullNameApi {
 
     public List<PatientDTO> searchByFullName(Long administratorId, String firstName, String lastName) {
         commonEmployeeService.checkExistenceOfEmployee(administratorId);
-        return patientMapper.mapToPatientDTOList(inpatientService.findAllPatientsByFullName(firstName, lastName));
+        List<PatientDTO> patientDTOList = patientMapper.mapToPatientDTOList(inpatientService.findAllPatientsByFullName(firstName, lastName));
+        if(patientDTOList.isEmpty())
+            throw new PatientNotFoundException();
+
+        return patientDTOList;
     }
 }

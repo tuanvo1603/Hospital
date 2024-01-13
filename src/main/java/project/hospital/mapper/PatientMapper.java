@@ -22,15 +22,13 @@ public class PatientMapper {
 
     private final OutpatientService outpatientService;
 
-    private final CommonPatientService commonPatientService;
+
 
     @Autowired
     public PatientMapper(ModelMapper modelMapper,
-                         OutpatientService outpatientService,
-                         CommonPatientService commonPatientService) {
+                         OutpatientService outpatientService) {
         this.modelMapper = modelMapper;
         this.outpatientService = outpatientService;
-        this.commonPatientService = commonPatientService;
     }
 
     public PatientDTO mapToPatientDTO(Patient patient) {
@@ -48,16 +46,6 @@ public class PatientMapper {
         Inpatient inpatient = modelMapper.map(outpatient, Inpatient.class);
         inpatient.setPatientId(null);
         return inpatient;
-    }
-
-    public MedicationRecord mapMedicationRecordFromPatient(String citizenId) {
-        Patient patient = commonPatientService.getPatientByCitizenId(citizenId);
-        return modelMapper.map(patient, MedicationRecord.class);
-    }
-
-    public MedicationRecordDetail mapMedicationRecordDetailFromPatient(String citizenId) {
-        Patient patient = commonPatientService.getPatientByCitizenId(citizenId);
-        return modelMapper.map(patient, MedicationRecordDetail.class);
     }
 
 }

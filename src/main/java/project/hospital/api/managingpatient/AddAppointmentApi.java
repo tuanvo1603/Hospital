@@ -16,7 +16,7 @@ public class AddAppointmentApi {
     }
 
     public ResponseEntity<String> addAppointment(Long specialistDoctorId, Long outpatientId, Date date) {
-        appointmentService.assignDoctorForPatient(specialistDoctorId, outpatientId);
+        appointmentService.assignDoctorForPatient(specialistDoctorId, outpatientId,date);
         return ResponseEntity.ok("Add appointment detail successfully");
     }
 }
