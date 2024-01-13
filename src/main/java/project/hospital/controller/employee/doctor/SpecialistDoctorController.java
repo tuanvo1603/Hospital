@@ -72,8 +72,8 @@ public class SpecialistDoctorController {
         return addAppointmentApi.addAppointment(doctorId, outpatientId, date);
     }
 
-    @GetMapping("/get-patient-has-appointment")
-    public List<PatientDTO> getListPatientHasAppointment(Long doctorId) {
+    @GetMapping("/get-patient-has-appointment/{doctorId}")
+    public List<PatientDTO> getListPatientHasAppointment(@PathVariable Long doctorId) {
         return getListPatientHasAppointment.getListPatientHasAppointment(doctorId);
     }
 }

@@ -38,9 +38,8 @@ public class AppointmentService extends CommonManagingPatientService implements 
     @Override
     @Transactional
     public Appointment initManagingPatient(Long patientId) {
-        Outpatient outpatient = outpatientService.getPatientById(patientId);
         Appointment appointment = new Appointment();
-        appointment.setOutpatient(outpatient);
+        appointment.setPatientId(patientId);
         return appointmentRepository.save(appointment);
     }
 

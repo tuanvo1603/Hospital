@@ -3,12 +3,14 @@ package project.hospital.controller.employee;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import project.hospital.api.patient.GetAllPatientApi;
 import project.hospital.api.patient.outpatient.AdmitOutpatientApi;
 import project.hospital.api.patient.DischargePatientApi;
 import project.hospital.api.patient.SearchByFullNameApi;
 import project.hospital.api.treatment.hospitalfee.UpdateAdvancePaymentApi;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.patient.Outpatient;
+import project.hospital.model.patient.Patient;
 
 import java.util.List;
 
@@ -25,14 +27,18 @@ public class AdministratorController {
 
     private final DischargePatientApi dischargePatientApi;
 
+    private final GetAllPatientApi getAllPatientApi;
+
     public AdministratorController(SearchByFullNameApi searchByFullNameApi,
                                    AdmitOutpatientApi admitOutpatientApi,
                                    UpdateAdvancePaymentApi updateAdvancePaymentApi,
-                                   DischargePatientApi dischargePatientApi) {
+                                   DischargePatientApi dischargePatientApi,
+                                   GetAllPatientApi getAllPatientApi) {
         this.searchByFullNameApi = searchByFullNameApi;
         this.admitOutpatientApi = admitOutpatientApi;
         this.updateAdvancePaymentApi = updateAdvancePaymentApi;
         this.dischargePatientApi = dischargePatientApi;
+        this.getAllPatientApi = getAllPatientApi;
     }
 
     @GetMapping("/{administratorId}/search-by-name/{firstName}/{lastName}")
@@ -40,6 +46,11 @@ public class AdministratorController {
                                                 @PathVariable String firstName,
                                                 @PathVariable String lastName) {
         return searchByFullNameApi.searchByFullName(administratorId, firstName, lastName);
+    }
+
+    @GetMapping("/get-all-patients/{administratorId}")
+    public List<PatientDTO> getAllPatients(@PathVariable Long administratorId) {
+        return getAllPatientApi.getAllPatients(administratorId);
     }
 
     @PostMapping("/{administratorId}/admit-outpatient")

@@ -11,6 +11,6 @@ public class ElementIsExisted {
 
     @ExceptionHandler(CitizenIdIsExistedException.class)
     public ResponseEntity<String> handleCitizenIdIsExisted(CitizenIdIsExistedException exception) {
-        return new ResponseEntity<>("CitizenId is already used.", HttpStatus.CREATED);
+        return new ResponseEntity<>("CitizenId is already used.", HttpStatus.CONFLICT);
     }
 }

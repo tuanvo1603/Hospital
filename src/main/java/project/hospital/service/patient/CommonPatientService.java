@@ -19,6 +19,7 @@ public class CommonPatientService {
     }
 
     public void dischargePatient(Long patientId) {
+        this.checkExistenceOfPatient(patientId);
         patientRepository.deleteById(patientId);
     }
 
@@ -36,6 +37,11 @@ public class CommonPatientService {
 
     public List<Patient> findAllPatientsByFullName(String firstName, String lastName) {
         return patientRepository.findPatientByFirstNameAndLastName(firstName, lastName);
+    }
+
+    public void checkExistenceOfPatient(Long patientId) {
+        if(!patientRepository.existsById(patientId))
+            throw new PatientNotFoundException();
     }
 
 }

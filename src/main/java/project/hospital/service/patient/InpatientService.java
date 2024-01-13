@@ -4,14 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientNotFoundException;
-import project.hospital.mapper.PatientMapper;
 import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Patient;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.patient.InpatientRepository;
 import project.hospital.repository.patient.PatientRepository;
-import project.hospital.repository.treatment.HospitalFeeRepository;
 import project.hospital.repository.treatment.TreatmentRepository;
 import project.hospital.service.treatment.HospitalFeeService;
 
