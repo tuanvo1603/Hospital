@@ -1,7 +1,9 @@
 package project.hospital.mapper;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.medicationrecord.MedicationRecord;
@@ -15,7 +17,7 @@ import project.hospital.service.patient.OutpatientService;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Component
 public class PatientMapper {
 
     private final ModelMapper modelMapper;
@@ -41,8 +43,7 @@ public class PatientMapper {
         return patientDTOList;
     }
 
-    public Inpatient  mapOutpatientToInpatient(Long outpatientId) {
-        Outpatient outpatient = outpatientService.getPatientById(outpatientId);
+    public Inpatient  mapOutpatientToInpatient(Outpatient outpatient) {
         Inpatient inpatient = modelMapper.map(outpatient, Inpatient.class);
         inpatient.setPatientId(null);
         return inpatient;

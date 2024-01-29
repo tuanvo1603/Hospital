@@ -3,6 +3,7 @@ package project.hospital.service.schedule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.model.schedule.WorkingSchedule;
+import project.hospital.model.schedule.WorkingScheduleId;
 import project.hospital.repository.schedule.WorkingScheduleRepository;
 import project.hospital.service.DateService;
 import project.hospital.service.employee.CommonEmployeeService;
@@ -16,20 +17,22 @@ public class WorkingScheduleService {
 
     private final DateService dateService;
 
-    private final CommonEmployeeService commonEmployeeService;
-
     @Autowired
     public WorkingScheduleService(WorkingScheduleRepository workingScheduleRepository,
-                                  DateService dateService,
-                                  CommonEmployeeService commonEmployeeService) {
+                                  DateService dateService) {
         this.workingScheduleRepository = workingScheduleRepository;
         this.dateService = dateService;
-        this.commonEmployeeService = commonEmployeeService;
     }
 
-    private void initWorkingSchedule(WorkingSchedule workingSchedule) {
-        commonEmployeeService.checkExistenceOfEmployee(workingSchedule.getEmployeeId());
-        workingSchedule.setWeekStartDate(dateService.getStartDateOfThisWeek());
+    public void initWorkingSchedule(WorkingSchedule workingSchedule) {
+        if(workingScheduleRepository.existsById(workingSchedule.getWorkingScheduleId().getEmployeeId(), dateService.getStartDateOfThisWeek())) {
+            workingSchedule.getWorkingScheduleId().setStartWeekDate(dateService.getStartDateOfThisWeek());
+            updateWorkingSchedule(workingSchedule);
+        }
+        WorkingScheduleId workingScheduleId = new WorkingScheduleId();
+        workingScheduleId.setEmployeeId(workingSchedule.getWorkingScheduleId().getEmployeeId());
+        workingScheduleId.setStartWeekDate(dateService.getStartDateOfThisWeek());
+        workingSchedule.setWorkingScheduleId(workingScheduleId);
     }
 
     public void initWorkingScheduleList(List<WorkingSchedule> workingScheduleList) {
@@ -42,10 +45,10 @@ public class WorkingScheduleService {
     }
 
     public void deleteWorkingSchedule(Long employeeId) {
-        workingScheduleRepository.deleteById(employeeId);
+        workingScheduleRepository.deleteByEmployeeId(employeeId, dateService.getStartDateOfThisWeek());
     }
 
     public WorkingSchedule getCurrentWeekWorkingSchedule(Long employeeId) {
-        return workingScheduleRepository.findByEmployeeIdAndAndWeekStartDate(employeeId, dateService.getStartDateOfThisWeek());
+        return workingScheduleRepository.findByWorkingScheduleId(employeeId, dateService.getStartDateOfThisWeek());
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import project.hospital.exception.PatientNotFoundException;
 import project.hospital.exception.TreatmentNotFoundException;
 import project.hospital.model.treatment.HospitalFee;
 import project.hospital.model.treatment.Treatment;
@@ -47,7 +48,7 @@ public class HospitalFeeService {
     }
 
     public HospitalFee getHospitalFeeById(Long patientId) {
-        return hospitalFeeRepository.findById(patientId).orElseThrow(TreatmentNotFoundException::new);
+        return hospitalFeeRepository.findById(patientId).orElseThrow(PatientNotFoundException::new);
     }
 
     private int countPriceOfPrescription(Medication medication, int usedMedicationQuantity) {

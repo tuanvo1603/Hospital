@@ -26,17 +26,21 @@ public class InpatientService extends CommonPatientService implements IPatientSe
 
     private final HospitalFeeService hospitalFeeService;
 
+    private final OutpatientService outpatientService;
+
     @Autowired
     public InpatientService(PatientRepository patientRepository,
                             InpatientRepository inpatientRepository,
                             TreatmentRepository treatmentRepository,
                             TreatmentMapper treatmentMapper,
-                            HospitalFeeService hospitalFeeService) {
+                            HospitalFeeService hospitalFeeService,
+                            OutpatientService outpatientService) {
         super(patientRepository);
         this.inpatientRepository = inpatientRepository;
         this.treatmentRepository = treatmentRepository;
         this.treatmentMapper = treatmentMapper;
         this.hospitalFeeService = hospitalFeeService;
+        this.outpatientService = outpatientService;
     }
 
     @Override
@@ -56,9 +60,10 @@ public class InpatientService extends CommonPatientService implements IPatientSe
     }
 
     @Transactional
-    public Inpatient admitPatient(Inpatient inpatient, Long outpatientId) {
-        Inpatient admittedPatient = inpatientRepository.save(inpatient);
-        Treatment treatment = treatmentRepository.save(treatmentMapper.mapTreatmentOutpatientToInpatient(outpatientId, admittedPatient));
+    public Inpatient admitPatient(Inpatient inpatient, Treatment treatment) {
+        Inpatient admittedPatient = inpatientRepository.saveAndFlush(inpatient);
+        treatment.setPatient(admittedPatient);
+        treatmentRepository.save(treatment);
         hospitalFeeService.createHospitalFee(treatment);
         return admittedPatient;
     }

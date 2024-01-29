@@ -1,47 +1,51 @@
 package project.hospital.controller.patient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import project.hospital.api.patient.inpatient.GetInpatientInfoApi;
-import project.hospital.api.treatment.GetTreatmentInfoApi;
-import project.hospital.api.treatment.hospitalfee.GetHospitalFeeInfoApi;
-import project.hospital.model.patient.Patient;
-import project.hospital.model.treatment.HospitalFee;
-import project.hospital.model.treatment.Treatment;
+import project.hospital.api.patient.GetPatientInfoByIdApi;
+import project.hospital.api.treatment.GetHospitalFeeApi;
+import project.hospital.api.treatment.GetTreatmentApi;
+import project.hospital.request.patient.GetPatientInfoByIdRequest;
+import project.hospital.request.treatment.GetHospitalFeeRequest;
+import project.hospital.request.treatment.GetTreatmentRequest;
+import project.hospital.response.patient.GetPatientInfoByIdResponse;
+import project.hospital.response.treatment.GetHospitalFeeResponse;
+import project.hospital.response.treatment.GetTreatmentResponse;
 
 @RestController
 @RequestMapping("/inpatient/{patientId}")
 @PreAuthorize("hasRole('PATIENT')")
 public class InpatientController {
 
-    private final GetInpatientInfoApi getInpatientInfoApi;
+    private final GetPatientInfoByIdApi getPatientInfoByIdApi;
 
-    private final GetHospitalFeeInfoApi getHospitalFeeInfoApi;
+    private final GetTreatmentApi getTreatmentApi;
 
-    private final GetTreatmentInfoApi getTreatmentInfoApi;
+    private final GetHospitalFeeApi getHospitalFeeApi;
 
-    @Autowired
-    public InpatientController(GetInpatientInfoApi getInpatientInfoApi,
-                               GetHospitalFeeInfoApi getHospitalFeeInfoApi,
-                               GetTreatmentInfoApi getTreatmentInfoApi) {
-        this.getInpatientInfoApi = getInpatientInfoApi;
-        this.getHospitalFeeInfoApi = getHospitalFeeInfoApi;
-        this.getTreatmentInfoApi = getTreatmentInfoApi;
+    public InpatientController(GetPatientInfoByIdApi getPatientInfoByIdApi,
+                               GetTreatmentApi getTreatmentApi,
+                               GetHospitalFeeApi getHospitalFeeApi) {
+        this.getPatientInfoByIdApi = getPatientInfoByIdApi;
+        this.getTreatmentApi = getTreatmentApi;
+        this.getHospitalFeeApi = getHospitalFeeApi;
     }
 
     @GetMapping("/show-my-information")
-    public Patient showPatientInformation(@PathVariable Long patientId) {
-        return getInpatientInfoApi.getInpatientInfo(patientId);
+    public GetPatientInfoByIdResponse showPatientInformation(@PathVariable Long patientId) {
+        GetPatientInfoByIdRequest getPatientInfoByIdRequest = new GetPatientInfoByIdRequest(patientId);
+        return getPatientInfoByIdApi.execute(getPatientInfoByIdRequest);
     }
 
     @GetMapping("/show-hospital-fee")
-    public HospitalFee showHospitalFee(@PathVariable Long patientId) {
-        return getHospitalFeeInfoApi.getHospitalFeeInfo(patientId);
+    public GetHospitalFeeResponse showHospitalFee(@PathVariable Long patientId) {
+        GetHospitalFeeRequest getHospitalFeeRequest = new GetHospitalFeeRequest(patientId);
+        return getHospitalFeeApi.execute(getHospitalFeeRequest);
     }
 
     @GetMapping("/show-treatment")
-    public Treatment showTreatment(@PathVariable Long patientId) {
-        return getTreatmentInfoApi.getTreatmentInfo(patientId);
+    public GetTreatmentResponse showTreatment(@PathVariable Long patientId) {
+        GetTreatmentRequest getTreatmentRequest = new GetTreatmentRequest(patientId);
+        return getTreatmentApi.execute(getTreatmentRequest);
     }
 }

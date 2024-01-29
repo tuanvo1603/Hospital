@@ -9,108 +9,87 @@ import java.sql.Date;
 @Table(name = "working_schedule")
 public class WorkingSchedule {
 
-    @Id
-    @Column(name = "emp_id")
-    private Long employeeId;
-
-    @Column(name = "week_start_date")
-    private Date weekStartDate;
+    @EmbeddedId
+    private WorkingScheduleId workingScheduleId;
 
     @Column(name = "monday")
-    private WorkingTime monday;
+    private String monday;
 
     @Column(name = "tuesday")
-    private WorkingTime tuesday;
+    private String tuesday;
 
     @Column(name = "wednesday")
-    private WorkingTime wednesday;
+    private String wednesday;
 
     @Column(name = "thursday")
-    private WorkingTime thursday;
+    private String thursday;
 
     @Column(name = "friday")
-    private WorkingTime friday;
+    private String friday;
 
     @Column(name = "saturday")
-    private WorkingTime saturday;
+    private String saturday;
 
     @Column(name = "sunday")
-    private WorkingTime sunday;
+    private String sunday;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "emp_id", referencedColumnName = "emp_id", foreignKey = @ForeignKey(value = ConstraintMode.CONSTRAINT))
-    @MapsId
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "emp_id", insertable = false, updatable = false)
     private Employee employee;
 
-    public Long getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
-    }
-
-    public Date getWeekStartDate() {
-        return weekStartDate;
-    }
-
-    public void setWeekStartDate(Date weekStartDate) {
-        this.weekStartDate = weekStartDate;
-    }
-
-    public WorkingTime getMonday() {
+    public String getMonday() {
         return monday;
     }
 
-    public void setMonday(WorkingTime monday) {
+    public void setMonday(String monday) {
         this.monday = monday;
     }
 
-    public WorkingTime getTuesday() {
+    public String getTuesday() {
         return tuesday;
     }
 
-    public void setTuesday(WorkingTime tuesday) {
+    public void setTuesday(String tuesday) {
         this.tuesday = tuesday;
     }
 
-    public WorkingTime getWednesday() {
+    public String getWednesday() {
         return wednesday;
     }
 
-    public void setWednesday(WorkingTime wednesday) {
+    public void setWednesday(String wednesday) {
         this.wednesday = wednesday;
     }
 
-    public WorkingTime getThursday() {
+    public String getThursday() {
         return thursday;
     }
 
-    public void setThursday(WorkingTime thursday) {
+    public void setThursday(String thursday) {
         this.thursday = thursday;
     }
 
-    public WorkingTime getFriday() {
+    public String getFriday() {
         return friday;
     }
 
-    public void setFriday(WorkingTime friday) {
+    public void setFriday(String friday) {
         this.friday = friday;
     }
 
-    public WorkingTime getSaturday() {
+    public String getSaturday() {
         return saturday;
     }
 
-    public void setSaturday(WorkingTime saturday) {
+    public void setSaturday(String saturday) {
         this.saturday = saturday;
     }
 
-    public WorkingTime getSunday() {
+    public String getSunday() {
         return sunday;
     }
 
-    public void setSunday(WorkingTime sunday) {
+    public void setSunday(String sunday) {
         this.sunday = sunday;
     }
 
@@ -120,6 +99,14 @@ public class WorkingSchedule {
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
+    }
+
+    public WorkingScheduleId getWorkingScheduleId() {
+        return workingScheduleId;
+    }
+
+    public void setWorkingScheduleId(WorkingScheduleId workingScheduleId) {
+        this.workingScheduleId = workingScheduleId;
     }
 
     public enum WorkingTime {

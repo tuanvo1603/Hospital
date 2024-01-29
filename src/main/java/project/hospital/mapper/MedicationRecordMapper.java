@@ -1,6 +1,7 @@
 package project.hospital.mapper;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import project.hospital.model.medicationrecord.MedicationRecord;
 import project.hospital.model.medicationrecord.MedicationRecordDetail;
@@ -8,7 +9,7 @@ import project.hospital.model.patient.Patient;
 import project.hospital.service.patient.CommonPatientService;
 import project.hospital.service.treatment.TreatmentService;
 
-@Service
+@Component
 public class MedicationRecordMapper {
 
     private final CommonPatientService commonPatientService;

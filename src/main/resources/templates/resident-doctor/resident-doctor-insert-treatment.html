@@ -133,10 +133,9 @@ console.log(patientId);
                     setTimeout(() => {
                         resolve();
                     }, 2000);
+                        // console.log('Success:', response);
+                        window.location.href = "http://localhost:8090/resident-doctor";
                 });
-                    console.log('Success:', response);
-                    // Chuyển hướng sau khi hoàn thành
-                    // window.location.href = "http://localhost:8090/resident-doctor";
                 } else {
                     alert("Error: " + response.statusText);
                     console.error('Error:', response.statusText);
