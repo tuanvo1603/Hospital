@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class ManagingPatient implements Cloneable{
+public abstract class ManagingPatient {
 
     @Id
     @Column(name = "patient_id")

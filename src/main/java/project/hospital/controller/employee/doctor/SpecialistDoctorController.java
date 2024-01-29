@@ -1,17 +1,21 @@
 package project.hospital.controller.employee.doctor;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.managingpatient.AddAppointmentApi;
-import project.hospital.api.patient.SearchByFullNameApi;
-import project.hospital.api.patient.inpatient.AdmitInpatientApi;
-import project.hospital.api.patient.outpatient.GetListPatientHasAppointment;
+import project.hospital.api.patient.AdmitInpatientApi;
+import project.hospital.api.patient.GetPatientsHaveAppointmentApi;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForOutpatientApi;
 import project.hospital.dto.PatientDTO;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
+import project.hospital.request.managingpatient.AddAppointmentForPatientRequest;
+import project.hospital.request.patient.AdmitInpatientRequest;
+import project.hospital.request.patient.GetPatientsHaveAppointmentRequest;
+import project.hospital.request.treatment.prescription.InsertPrescriptionRequest;
+import project.hospital.response.managingpatient.AssignDoctorForPatientResponse;
+import project.hospital.response.patient.AdmitInpatientResponse;
+import project.hospital.response.patient.GetPatientsResponse;
+import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
 
 import java.sql.Date;
 import java.util.List;
@@ -29,51 +33,45 @@ public class SpecialistDoctorController {
 
     private final AddPrescriptionDetailForOutpatientApi addPrescriptionDetailForOutpatientApi;
 
-    private final SearchByFullNameApi searchByFullNameApi;
-
-    private final GetListPatientHasAppointment getListPatientHasAppointment;
+    private final GetPatientsHaveAppointmentApi getPatientsHaveAppointmentApi;
 
     public SpecialistDoctorController(AdmitInpatientApi admitInpatientApi,
                                       AddAppointmentApi addAppointmentApi,
                                       AddPrescriptionDetailForOutpatientApi addPrescriptionDetailForOutpatientApi,
-                                      SearchByFullNameApi searchByFullNameApi,
-                                      GetListPatientHasAppointment getListPatientHasAppointment) {
+                                      GetPatientsHaveAppointmentApi getPatientsHaveAppointmentApi) {
         this.admitInpatientApi = admitInpatientApi;
         this.addAppointmentApi = addAppointmentApi;
         this.addPrescriptionDetailForOutpatientApi = addPrescriptionDetailForOutpatientApi;
-        this.searchByFullNameApi = searchByFullNameApi;
-        this.getListPatientHasAppointment = getListPatientHasAppointment;
-    }
 
-    @GetMapping("/search-by-name/{doctorId}/{firstName}/{lastName}")
-    public List<PatientDTO> searchPatientByName(@PathVariable Long doctorId,
-                                                @PathVariable String firstName,
-                                                @PathVariable String lastName) {
-        return searchByFullNameApi.searchByFullName(doctorId, firstName, lastName);
+        this.getPatientsHaveAppointmentApi = getPatientsHaveAppointmentApi;
     }
 
     @PostMapping("/admit-inpatient/{doctorId}/{outpatientId}")
-    public ResponseEntity<String> admitInpatient(@PathVariable Long doctorId,
+    public AdmitInpatientResponse admitInpatient(@PathVariable Long doctorId,
                                                  @PathVariable Long outpatientId) {
-        return admitInpatientApi.admitInpatient(doctorId, outpatientId);
+        AdmitInpatientRequest admitInpatientRequest = new AdmitInpatientRequest(doctorId, outpatientId);
+        return admitInpatientApi.execute(admitInpatientRequest);
     }
 
     @PostMapping("/add-prescription-detail/{doctorId}/{outpatientId}")
-    public ResponseEntity<String> addPrescriptionDetail(@RequestBody PrescriptionDetail prescriptionDetail,
-                                                        @PathVariable Long doctorId,
-                                                        @PathVariable Long outpatientId) {
-        return addPrescriptionDetailForOutpatientApi.addPrescriptionDetail(prescriptionDetail, doctorId, outpatientId);
+    public InsertPrescriptionResponse addPrescriptionDetail(@RequestBody PrescriptionDetail prescriptionDetail,
+                                                            @PathVariable Long doctorId,
+                                                            @PathVariable Long outpatientId) {
+        InsertPrescriptionRequest insertPrescriptionRequest = new InsertPrescriptionRequest(doctorId, outpatientId, prescriptionDetail);
+        return addPrescriptionDetailForOutpatientApi.execute(insertPrescriptionRequest);
     }
 
     @PostMapping("/add-appointment/{doctorId}/{outpatientId}/{date}")
-    public ResponseEntity<String> addAppointment(@PathVariable Long doctorId,
-                                                 @PathVariable Long outpatientId,
-                                                 @PathVariable Date date) {
-        return addAppointmentApi.addAppointment(doctorId, outpatientId, date);
+    public AssignDoctorForPatientResponse addAppointment(@PathVariable Long doctorId,
+                                                         @PathVariable Long outpatientId,
+                                                         @PathVariable Date date) {
+        AddAppointmentForPatientRequest addAppointmentForPatientRequest = new AddAppointmentForPatientRequest(doctorId, outpatientId, date);
+        return addAppointmentApi.execute(addAppointmentForPatientRequest);
     }
 
     @GetMapping("/get-patient-has-appointment/{doctorId}")
-    public List<PatientDTO> getListPatientHasAppointment(@PathVariable Long doctorId) {
-        return getListPatientHasAppointment.getListPatientHasAppointment(doctorId);
+    public GetPatientsResponse getListPatientHasAppointment(@PathVariable Long doctorId) {
+        GetPatientsHaveAppointmentRequest getPatientsHaveAppointmentRequest = new GetPatientsHaveAppointmentRequest(doctorId);
+        return getPatientsHaveAppointmentApi.execute(getPatientsHaveAppointmentRequest);
     }
 }

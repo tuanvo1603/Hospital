@@ -4,6 +4,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import project.hospital.api.employee.*;
+import project.hospital.api.managingpatient.AssignNurseForInpatientApi;
+import project.hospital.api.managingpatient.AssignResidentDoctorForInpatientApi;
+import project.hospital.api.patient.GetInpatientTreatAtDepartmentApi;
+import project.hospital.api.treatment.medication.DeleteMedicationApi;
+import project.hospital.api.treatment.medication.InsertMedicationApi;
+import project.hospital.api.treatment.medication.UpdateMedicationApi;
+import project.hospital.api.treatment.service.DeleteServiceApi;
+import project.hospital.api.treatment.service.InsertServiceApi;
+import project.hospital.api.treatment.service.UpdateServiceApi;
+import project.hospital.api.workingschedule.DeleteWorkingScheduleApi;
+import project.hospital.api.workingschedule.InsertWorkingScheduleApi;
 import project.hospital.dto.PatientDTO;
 import project.hospital.mapper.PatientMapper;
 import project.hospital.model.employee.Administrator;
@@ -15,6 +27,32 @@ import project.hospital.model.employee.doctor.SpecialistDoctor;
 import project.hospital.model.schedule.WorkingSchedule;
 import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.service.HospitalServiceEntity;
+import project.hospital.request.employee.*;
+import project.hospital.request.managingpatient.AssignNurseForInpatientRequest;
+import project.hospital.request.managingpatient.AssignResidentDoctorForInpatientRequest;
+import project.hospital.request.patient.GetInpatientsTreatAtDepartmentRequest;
+import project.hospital.request.treatment.medication.DeleteMedicationRequest;
+import project.hospital.request.treatment.medication.InsertMedicationRequest;
+import project.hospital.request.treatment.medication.UpdateMedicationRequest;
+import project.hospital.request.treatment.service.DeleteServiceRequest;
+import project.hospital.request.treatment.service.InsertServiceRequest;
+import project.hospital.request.treatment.service.UpdateServiceRequest;
+import project.hospital.request.workingschedule.DeleteWorkingScheduleRequest;
+import project.hospital.request.workingschedule.InsertWorkingScheduleRequest;
+import project.hospital.response.employee.DeleteEmployeeResponse;
+import project.hospital.response.employee.GetAllEmployeesInDepartmentResponse;
+import project.hospital.response.employee.InsertEmployeeResponse;
+import project.hospital.response.managingpatient.AssignDoctorForPatientResponse;
+import project.hospital.response.managingpatient.AssignNurseForInpatientResponse;
+import project.hospital.response.patient.GetPatientsResponse;
+import project.hospital.response.treatment.medication.DeleteMedicationResponse;
+import project.hospital.response.treatment.medication.InsertMedicationResponse;
+import project.hospital.response.treatment.medication.UpdateMedicationResponse;
+import project.hospital.response.treatment.service.DeleteServiceResponse;
+import project.hospital.response.treatment.service.InsertServiceResponse;
+import project.hospital.response.treatment.service.UpdateServiceResponse;
+import project.hospital.response.workingschedule.DeleteWorkingScheduleResponse;
+import project.hospital.response.workingschedule.InsertWorkingScheduleResponse;
 import project.hospital.service.employee.AdministratorService;
 import project.hospital.service.employee.CommonEmployeeService;
 import project.hospital.service.employee.NurseService;
@@ -34,163 +72,188 @@ import java.util.List;
 @PreAuthorize("hasRole('DEAN')")
 public class DeanController {
 
-    private final AdministratorService administratorService;
+    private final InsertResidentDoctorApi insertResidentDoctorApi;
 
-    private final TechnicianService technicianService;
+    private final InsertSpecialistDoctorApi insertSpecialistDoctorApi;
 
-    private final ResidentDoctorService residentDoctorService;
+    private final InsertNurseApi insertNurseApi;
 
-    private final NurseService nurseService;
+    private final InsertTechnicianApi insertTechnicianApi;
 
-    private final SpecialistDoctorService specialistDoctorService;
+    private final InsertAdministratorApi insertAdministratorApi;
 
-    private final WorkingScheduleService workingScheduleService;
+    private final InsertMedicationApi insertMedicationApi;
 
-    private final CommonEmployeeService commonEmployeeService;
+    private final InsertServiceApi insertServiceApi;
 
-    private final ManagingInpatientService managingInpatientService;
+    private final UpdateServiceApi updateServiceApi;
 
-    private final MedicationService medicationService;
+    private final UpdateMedicationApi updateMedicationApi;
 
-    private final HospitalService hospitalService;
+    private final DeleteEmployeeApi deleteEmployeeApi;
 
-    private final InpatientService inpatientService;
+    private final DeleteMedicationApi deleteMedicationApi;
 
-    private final PatientMapper patientMapper;
+    private final DeleteServiceApi deleteServiceApi;
 
-    @Autowired
-    public DeanController(AdministratorService administratorService,
-                          TechnicianService technicianService,
-                          ResidentDoctorService residentDoctorService,
-                          NurseService nurseService,
-                          SpecialistDoctorService specialistDoctorService,
-                          WorkingScheduleService workingScheduleService,
-                          CommonEmployeeService commonEmployeeService,
-                          ManagingInpatientService managingInpatientService,
-                          MedicationService medicationService,
-                          HospitalService hospitalService,
-                          InpatientService inpatientService,
-                          PatientMapper patientMapper) {
-        this.administratorService = administratorService;
-        this.technicianService = technicianService;
-        this.residentDoctorService = residentDoctorService;
-        this.nurseService = nurseService;
-        this.specialistDoctorService = specialistDoctorService;
-        this.workingScheduleService = workingScheduleService;
-        this.commonEmployeeService = commonEmployeeService;
-        this.managingInpatientService = managingInpatientService;
-        this.medicationService = medicationService;
-        this.hospitalService = hospitalService;
-        this.inpatientService = inpatientService;
-        this.patientMapper = patientMapper;
+    private final GetAllEmployeesInDepartmentApi getAllEmployeesInDepartmentApi;
+
+    private final GetInpatientTreatAtDepartmentApi getInpatientsTreatAtDepartmentApi;
+
+    private final InsertWorkingScheduleApi insertWorkingScheduleApi;
+
+    private final DeleteWorkingScheduleApi deleteWorkingScheduleApi;
+
+    private final AssignResidentDoctorForInpatientApi assignResidentDoctorForInpatientApi;
+
+    private final AssignNurseForInpatientApi assignNurseForInpatientApi;
+
+    public DeanController(InsertResidentDoctorApi insertResidentDoctorApi,
+                          InsertSpecialistDoctorApi insertSpecialistDoctorApi,
+                          InsertNurseApi insertNurseApi,
+                          InsertTechnicianApi insertTechnicianApi,
+                          InsertAdministratorApi insertAdministratorApi,
+                          InsertMedicationApi insertMedicationApi,
+                          InsertServiceApi insertServiceApi,
+                          UpdateServiceApi updateServiceApi,
+                          UpdateMedicationApi updateMedicationApi,
+                          DeleteEmployeeApi deleteEmployeeApi,
+                          DeleteMedicationApi deleteMedicationApi,
+                          DeleteServiceApi deleteServiceApi,
+                          GetAllEmployeesInDepartmentApi getAllEmployeesInDepartmentApi,
+                          GetInpatientTreatAtDepartmentApi getInpatientsTreatAtDepartmentApi,
+                          InsertWorkingScheduleApi insertWorkingScheduleApi,
+                          DeleteWorkingScheduleApi deleteWorkingScheduleApi,
+                          AssignResidentDoctorForInpatientApi assignResidentDoctorForInpatientApi,
+                          AssignNurseForInpatientApi assignNurseForInpatientApi) {
+        this.insertResidentDoctorApi = insertResidentDoctorApi;
+        this.insertSpecialistDoctorApi = insertSpecialistDoctorApi;
+        this.insertNurseApi = insertNurseApi;
+        this.insertTechnicianApi = insertTechnicianApi;
+        this.insertAdministratorApi = insertAdministratorApi;
+        this.insertMedicationApi = insertMedicationApi;
+        this.insertServiceApi = insertServiceApi;
+        this.updateServiceApi = updateServiceApi;
+        this.updateMedicationApi = updateMedicationApi;
+        this.deleteEmployeeApi = deleteEmployeeApi;
+        this.deleteMedicationApi = deleteMedicationApi;
+        this.deleteServiceApi = deleteServiceApi;
+        this.getAllEmployeesInDepartmentApi = getAllEmployeesInDepartmentApi;
+        this.getInpatientsTreatAtDepartmentApi = getInpatientsTreatAtDepartmentApi;
+        this.insertWorkingScheduleApi = insertWorkingScheduleApi;
+        this.deleteWorkingScheduleApi = deleteWorkingScheduleApi;
+        this.assignResidentDoctorForInpatientApi = assignResidentDoctorForInpatientApi;
+        this.assignNurseForInpatientApi = assignNurseForInpatientApi;
     }
 
     @DeleteMapping("/delete-employee/{employeeId}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId) {
-        commonEmployeeService.deleteEmployee(employeeId);
-        return ResponseEntity.ok("Delete successfully");
+    public DeleteEmployeeResponse deleteEmployee(@PathVariable Long employeeId) {
+        DeleteEmployeeRequest deleteEmployeeRequest = new DeleteEmployeeRequest(employeeId);
+        return deleteEmployeeApi.execute(deleteEmployeeRequest);
     }
 
     @GetMapping("/get-patient-in-department/{department}")
-    public List<PatientDTO> getAllPatientInDepartment(@PathVariable String department) {
-        return patientMapper.mapToPatientDTOList(inpatientService.getAllPatientByDepartment(department));
+    public GetPatientsResponse getAllPatientInDepartment(@PathVariable String department) {
+        GetInpatientsTreatAtDepartmentRequest getInpatientsTreatAtDepartmentRequest = new GetInpatientsTreatAtDepartmentRequest(department);
+        return getInpatientsTreatAtDepartmentApi.execute(getInpatientsTreatAtDepartmentRequest);
     }
 
     @GetMapping("/show-department-employees/{department}")
-    public List<Employee> showDepartmentEmployees(@PathVariable String department) {
-        return commonEmployeeService.getAllEmployeesByDepartment(department);
+    public GetAllEmployeesInDepartmentResponse showDepartmentEmployees(@PathVariable String department) {
+        GetAllEmployeesInDepartmentRequest getAllEmployeesInDepartmentRequest = new GetAllEmployeesInDepartmentRequest(department);
+        return getAllEmployeesInDepartmentApi.execute(getAllEmployeesInDepartmentRequest);
     }
 
     @PostMapping("/insert-resident-doctor")
-    public ResponseEntity<String> insertResidentDoctor(@RequestBody ResidentDoctor residentDoctor) {
-        residentDoctorService.createEmployee(residentDoctor);
-        return ResponseEntity.ok("Insert resident doctor successfully");
+    public InsertEmployeeResponse insertResidentDoctor(@RequestBody ResidentDoctor residentDoctor) {
+        InsertResidentDoctorRequest insertResidentDoctorRequest = new InsertResidentDoctorRequest(residentDoctor);
+        return insertResidentDoctorApi.execute(insertResidentDoctorRequest);
     }
 
     @PostMapping("/insert-specialist-doctor")
-    public ResponseEntity<String> insertSpecialistDoctor(@RequestBody SpecialistDoctor specialistDoctor) {
-        specialistDoctorService.createEmployee(specialistDoctor);
-        return ResponseEntity.ok("Insert specialist doctor successfully");
+    public InsertEmployeeResponse insertSpecialistDoctor(@RequestBody SpecialistDoctor specialistDoctor) {
+        InsertSpecialistDoctorRequest insertSpecialistDoctorRequest = new InsertSpecialistDoctorRequest(specialistDoctor);
+        return insertSpecialistDoctorApi.execute(insertSpecialistDoctorRequest);
     }
 
     @PostMapping("/insert-technician")
-    public ResponseEntity<String> insertTechnician(@RequestBody Technician technician) {
-        technicianService.createEmployee(technician);
-        return ResponseEntity.ok("Insert technician successfully");
+    public InsertEmployeeResponse insertTechnician(@RequestBody Technician technician) {
+        InsertTechnicianRequest insertTechnicianRequest = new InsertTechnicianRequest(technician);
+        return insertTechnicianApi.execute(insertTechnicianRequest);
     }
 
     @PostMapping("/insert-nurse")
-    public ResponseEntity<String> insertNurse(@RequestBody Nurse nurse) {
-        nurseService.createEmployee(nurse);
-        return ResponseEntity.ok("Insert nurse successfully");
+    public InsertEmployeeResponse insertNurse(@RequestBody Nurse nurse) {
+        InsertNurseRequest insertNurseRequest = new InsertNurseRequest(nurse);
+        return insertNurseApi.execute(insertNurseRequest);
     }
 
     @PostMapping("/insert-administrator")
-    public ResponseEntity<String> insertAdministrator(@RequestBody Administrator administrator) {
-        administratorService.createEmployee(administrator);
-        return ResponseEntity.ok("Insert administrator successfully");
+    public InsertEmployeeResponse insertAdministrator(@RequestBody Administrator administrator) {
+        InsertAdministratorRequest insertAdministratorRequest = new InsertAdministratorRequest(administrator);
+        return insertAdministratorApi.execute(insertAdministratorRequest);
     }
 
     @PutMapping("/insert-working-schedule")
-    public ResponseEntity<String> insertWorkingSchedule(@RequestBody List<WorkingSchedule> workingScheduleList) {
-        workingScheduleService.initWorkingScheduleList(workingScheduleList);
-        return ResponseEntity.ok("Insert working schedule successfully");
+    public InsertWorkingScheduleResponse insertWorkingSchedule(@RequestBody WorkingSchedule workingSchedule) {
+        InsertWorkingScheduleRequest insertWorkingScheduleRequest = new InsertWorkingScheduleRequest(workingSchedule);
+        return insertWorkingScheduleApi.execute(insertWorkingScheduleRequest);
     }
 
     @DeleteMapping("/delete-working-schedule/{employeeId}")
-    public ResponseEntity<String> deleteWorkingScheduleForEmployee(@PathVariable Long employeeId) {
-        workingScheduleService.deleteWorkingSchedule(employeeId);
-        return ResponseEntity.ok("Delete working schedule successfully");
+    public DeleteWorkingScheduleResponse deleteWorkingScheduleForEmployee(@PathVariable Long employeeId) {
+        DeleteWorkingScheduleRequest deleteWorkingScheduleRequest = new DeleteWorkingScheduleRequest(employeeId);
+        return deleteWorkingScheduleApi.execute(deleteWorkingScheduleRequest);
     }
 
     @PutMapping("/assign-doctor-for-inpatient/{doctorId}/{patientId}")
-    public ResponseEntity<String> assignManagingDoctorForPatient(@PathVariable Long doctorId,
-                                                              @PathVariable Long patientId) {
-        managingInpatientService.assignDoctorForPatient(doctorId, patientId);
-        return ResponseEntity.ok("Set doctor successfully");
+    public AssignDoctorForPatientResponse assignManagingDoctorForPatient(@PathVariable Long doctorId,
+                                                                         @PathVariable Long patientId) {
+        AssignResidentDoctorForInpatientRequest assignResidentDoctorForInpatientRequest = new AssignResidentDoctorForInpatientRequest(doctorId, patientId);
+        return assignResidentDoctorForInpatientApi.execute(assignResidentDoctorForInpatientRequest);
     }
 
     @PutMapping("/set-nurse-for-patient/{nurseId}/{patientId}")
-    public ResponseEntity<String> setManagingNurseForPatient(@PathVariable Long nurseId,
-                                                             @PathVariable Long patientId) {
-        managingInpatientService.assignNurseForPatient(nurseId, patientId);
-        return ResponseEntity.ok("Set nurse successfully");
+    public AssignNurseForInpatientResponse setManagingNurseForPatient(@PathVariable Long nurseId,
+                                                                      @PathVariable Long patientId) {
+        AssignNurseForInpatientRequest assignNurseForInpatientRequest = new AssignNurseForInpatientRequest(nurseId, patientId);
+        return assignNurseForInpatientApi.execute(assignNurseForInpatientRequest);
     }
 
     @PostMapping("/import-medication")
-    public ResponseEntity<String> importMedication(@RequestBody Medication medication) {
-        medicationService.importMedication(medication);
-        return ResponseEntity.ok("insert successfully.");
+    public InsertMedicationResponse importMedication(@RequestBody Medication medication) {
+        InsertMedicationRequest insertMedicationRequest = new InsertMedicationRequest(medication);
+        return insertMedicationApi.execute(insertMedicationRequest);
     }
 
     @PostMapping("/import-service")
-    public ResponseEntity<String> importService(@RequestBody HospitalServiceEntity hospitalServiceEntity) {
-        hospitalService.importHospitalFeeService(hospitalServiceEntity);
-        return ResponseEntity.ok("insert successfully.");
+    public InsertServiceResponse importService(@RequestBody HospitalServiceEntity hospitalServiceEntity) {
+        InsertServiceRequest insertServiceRequest = new InsertServiceRequest(hospitalServiceEntity);
+        return insertServiceApi.execute(insertServiceRequest);
     }
 
     @PutMapping("/update-medication/{medicationId}")
-    public ResponseEntity<String> updateMedication(@RequestBody Medication medication, @PathVariable Long medicationId) {
-        medicationService.updateMedication(medicationId, medication);
-        return ResponseEntity.ok("update successfully.");
+    public UpdateMedicationResponse updateMedication(@RequestBody Medication medication, @PathVariable Long medicationId) {
+        UpdateMedicationRequest updateMedicationRequest = new UpdateMedicationRequest(medicationId, medication);
+        return updateMedicationApi.execute(updateMedicationRequest);
     }
 
     @PutMapping("/update-service/{serviceId}")
-    public ResponseEntity<String> updateService(@RequestBody HospitalServiceEntity hospitalServiceEntity, @PathVariable Long serviceId) {
-        hospitalService.updateHospitalService(serviceId, hospitalServiceEntity);
-        return ResponseEntity.ok("update successfully.");
+    public UpdateServiceResponse updateService(@RequestBody HospitalServiceEntity hospitalServiceEntity, @PathVariable Long serviceId) {
+        UpdateServiceRequest updateServiceRequest = new UpdateServiceRequest(serviceId, hospitalServiceEntity);
+        return updateServiceApi.execute(updateServiceRequest);
     }
 
     @DeleteMapping("/delete-medication/{medicationId}")
-    public ResponseEntity<String> deleteMedication(@PathVariable Long medicationId) {
-        medicationService.deleteMedication(medicationId);
-        return ResponseEntity.ok("delete successfully.");
+    public DeleteMedicationResponse deleteMedication(@PathVariable Long medicationId) {
+        DeleteMedicationRequest deleteMedicationRequest = new DeleteMedicationRequest(medicationId);
+        return deleteMedicationApi.execute(deleteMedicationRequest);
     }
 
     @DeleteMapping("/delete-service/{serviceId}")
-    public ResponseEntity<String> deleteService(@PathVariable Long serviceId) {
-        hospitalService.deleteHospitalService(serviceId);
-        return ResponseEntity.ok("delete successfully.");
+    public DeleteServiceResponse deleteService(@PathVariable Long serviceId) {
+        DeleteServiceRequest deleteServiceRequest = new DeleteServiceRequest(serviceId);
+        return deleteServiceApi.execute(deleteServiceRequest);
     }
 
 }

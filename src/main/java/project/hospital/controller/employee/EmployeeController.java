@@ -2,14 +2,25 @@ package project.hospital.controller.employee;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import project.hospital.api.employee.GetEmployeeInfoApi;
-import project.hospital.api.treatment.medication.GetMedicationListApi;
-import project.hospital.api.treatment.service.GetServiceListApi;
-import project.hospital.api.workingschedule.GetWorkingScheduleInfoApi;
+import project.hospital.api.employee.GetEmployeeInfoByIdApi;
+import project.hospital.api.patient.GetPatientByFullNameApi;
+import project.hospital.api.treatment.medication.GetAllMedicationsApi;
+import project.hospital.api.treatment.service.GetAllServicesApi;
+import project.hospital.api.workingschedule.GetCurrentWeekWorkingScheduleApi;
 import project.hospital.model.employee.Employee;
 import project.hospital.model.schedule.WorkingSchedule;
 import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.service.HospitalServiceEntity;
+import project.hospital.request.employee.GetEmployeeInfoByIdRequest;
+import project.hospital.request.patient.GetPatientByFullNameRequest;
+import project.hospital.request.treatment.medication.GetAllMedicationsRequest;
+import project.hospital.request.treatment.service.GetAllServicesRequest;
+import project.hospital.request.workingschedule.GetCurrentWeekWorkingScheduleRequest;
+import project.hospital.response.employee.GetEmployeeInfoByIdResponse;
+import project.hospital.response.patient.GetPatientsResponse;
+import project.hospital.response.treatment.medication.GetAllMedicationsResponse;
+import project.hospital.response.treatment.service.GetAllServicesResponse;
+import project.hospital.response.workingschedule.GetCurrentWeekWorkingScheduleResponse;
 
 import java.util.List;
 
@@ -18,42 +29,58 @@ import java.util.List;
 @PreAuthorize("hasRole('EMPLOYEE')")
 public class EmployeeController {
 
-    private final GetEmployeeInfoApi getEmployeeInfoApi;
+    private final GetEmployeeInfoByIdApi getEmployeeInfoByIdApi;
 
-    private final GetWorkingScheduleInfoApi getWorkingScheduleInfoApi;
+    private final GetCurrentWeekWorkingScheduleApi getCurrentWeekWorkingScheduleApi;
 
-    private final GetMedicationListApi getMedicationListApi;
+    private final GetAllMedicationsApi getAllMedicationsApi;
 
-    private final GetServiceListApi getServiceListApi;
+    private final GetAllServicesApi getAllServicesApi;
 
-    public EmployeeController(GetEmployeeInfoApi getEmployeeInfoApi,
-                              GetWorkingScheduleInfoApi getWorkingScheduleInfoApi,
-                              GetMedicationListApi getMedicationListApi,
-                              GetServiceListApi getServiceListApi) {
-        this.getEmployeeInfoApi = getEmployeeInfoApi;
-        this.getWorkingScheduleInfoApi = getWorkingScheduleInfoApi;
-        this.getMedicationListApi = getMedicationListApi;
-        this.getServiceListApi = getServiceListApi;
+    private final GetPatientByFullNameApi getPatientByFullNameApi;
+
+    public EmployeeController(GetEmployeeInfoByIdApi getEmployeeInfoByIdApi,
+                              GetCurrentWeekWorkingScheduleApi getCurrentWeekWorkingScheduleApi,
+                              GetAllMedicationsApi getAllMedicationsApi,
+                              GetAllServicesApi getAllServicesApi,
+                              GetPatientByFullNameApi getPatientByFullNameApi) {
+        this.getEmployeeInfoByIdApi = getEmployeeInfoByIdApi;
+        this.getCurrentWeekWorkingScheduleApi = getCurrentWeekWorkingScheduleApi;
+        this.getAllMedicationsApi = getAllMedicationsApi;
+        this.getAllServicesApi = getAllServicesApi;
+        this.getPatientByFullNameApi = getPatientByFullNameApi;
     }
 
 
     @GetMapping("/check-schedule/{employeeId}")
-    public WorkingSchedule checkWorkingSchedule(@PathVariable Long employeeId) {
-        return getWorkingScheduleInfoApi.getWorkingSchedule(employeeId);
+    public GetCurrentWeekWorkingScheduleResponse checkWorkingSchedule(@PathVariable Long employeeId) {
+        GetCurrentWeekWorkingScheduleRequest getCurrentWeekWorkingScheduleRequest = new GetCurrentWeekWorkingScheduleRequest(employeeId);
+        return getCurrentWeekWorkingScheduleApi.execute(getCurrentWeekWorkingScheduleRequest);
     }
 
     @GetMapping("/check-my-information/{employeeId}")
-    public Employee checkMyInformation(@PathVariable Long employeeId) {
-        return getEmployeeInfoApi.getEmployeeInfo(employeeId);
+    public GetEmployeeInfoByIdResponse checkMyInformation(@PathVariable Long employeeId) {
+        GetEmployeeInfoByIdRequest getEmployeeInfoByIdRequest = new GetEmployeeInfoByIdRequest(employeeId);
+        return getEmployeeInfoByIdApi.execute(getEmployeeInfoByIdRequest);
     }
 
     @GetMapping("/get-medication-list")
-    public List<Medication> getMedicationList() {
-        return getMedicationListApi.getMedicationList();
+    public GetAllMedicationsResponse getMedicationList() {
+        GetAllMedicationsRequest getAllMedicationsRequest = new GetAllMedicationsRequest();
+        return getAllMedicationsApi.execute(getAllMedicationsRequest);
     }
 
     @GetMapping("/get-service-list")
-    public List<HospitalServiceEntity> getServiceList() {
-        return getServiceListApi.getServiceList();
+    public GetAllServicesResponse getServiceList() {
+        GetAllServicesRequest getAllServicesRequest = new GetAllServicesRequest();
+        return getAllServicesApi.execute(getAllServicesRequest);
+    }
+
+    @GetMapping("/{administratorId}/search-by-name/{firstName}/{lastName}")
+    public GetPatientsResponse searchPatientByName(@PathVariable Long administratorId,
+                                                   @PathVariable String firstName,
+                                                   @PathVariable String lastName) {
+        GetPatientByFullNameRequest getPatientByFullNameRequest = new GetPatientByFullNameRequest(administratorId, firstName, lastName);
+        return getPatientByFullNameApi.execute(getPatientByFullNameRequest);
     }
 }

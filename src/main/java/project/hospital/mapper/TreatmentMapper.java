@@ -1,12 +1,11 @@
 package project.hospital.mapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import project.hospital.model.patient.Inpatient;
+import org.springframework.stereotype.Component;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.service.treatment.TreatmentService;
 
-@Service
+@Component
 public class TreatmentMapper {
 
     private final TreatmentService treatmentService;
@@ -16,10 +15,9 @@ public class TreatmentMapper {
         this.treatmentService = treatmentService;
     }
 
-    public Treatment mapTreatmentOutpatientToInpatient(Long outpatientId, Inpatient inpatient) {
+    public Treatment mapTreatmentOutpatientToInpatient(Long outpatientId) {
         Treatment mappedTreatment = treatmentService.getTreatmentById(outpatientId);
         Treatment treatment = new Treatment();
-        treatment.setPatient(inpatient);
         treatment.setHospitalFee(mappedTreatment.getHospitalFee());
         treatment.setTreatmentProcedure(mappedTreatment.getTreatmentProcedure());
         treatment.setDescription(mappedTreatment.getDescription());

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import project.hospital.model.schedule.WorkingSchedule;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "emp")
@@ -34,13 +35,12 @@ public abstract class Employee {
     @Column(name = "qualifications")
     protected String qualifications;
 
-    @OneToOne(
+    @OneToMany(
             mappedBy = "employee",
             cascade = CascadeType.REMOVE,
             fetch = FetchType.LAZY)
     @JsonIgnore
-    protected WorkingSchedule workingSchedule;
-
+    protected List<WorkingSchedule> workingScheduleList;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "department", insertable=false, updatable=false)
@@ -68,10 +68,6 @@ public abstract class Employee {
         return workingRoom;
     }
 
-    public WorkingSchedule getWorkingSchedule() {
-        return workingSchedule;
-    }
-
     public String getQualifications() {
         return qualifications;
     }
@@ -96,10 +92,6 @@ public abstract class Employee {
         this.workingRoom = workingRoom;
     }
 
-    public void setWorkingSchedule(WorkingSchedule workingSchedule) {
-        this.workingSchedule = workingSchedule;
-    }
-
     public void setQualifications(String qualifications) {
         this.qualifications = qualifications;
     }
@@ -118,5 +110,13 @@ public abstract class Employee {
 
     public void setDepartmentEntity(Department departmentEntity) {
         this.departmentEntity = departmentEntity;
+    }
+
+    public List<WorkingSchedule> getWorkingScheduleList() {
+        return workingScheduleList;
+    }
+
+    public void setWorkingScheduleList(List<WorkingSchedule> workingScheduleList) {
+        this.workingScheduleList = workingScheduleList;
     }
 }
