@@ -19,7 +19,7 @@ import project.hospital.response.treatment.UpdateAdvancedPaymentResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/v1/admin")
 @PreAuthorize("hasRole('ADMINISTRATOR')")
 public class AdministratorController {
 

@@ -25,7 +25,7 @@ import project.hospital.response.workingschedule.GetCurrentWeekWorkingScheduleRe
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee")
+@RequestMapping("/v1/employee")
 @PreAuthorize("hasRole('EMPLOYEE')")
 public class EmployeeController {
 
@@ -76,11 +76,11 @@ public class EmployeeController {
         return getAllServicesApi.execute(getAllServicesRequest);
     }
 
-    @GetMapping("/{administratorId}/search-by-name/{firstName}/{lastName}")
-    public GetPatientsResponse searchPatientByName(@PathVariable Long administratorId,
+    @GetMapping("/{employeeId}/search-by-name/{firstName}/{lastName}")
+    public GetPatientsResponse searchPatientByName(@PathVariable Long employeeId,
                                                    @PathVariable String firstName,
                                                    @PathVariable String lastName) {
-        GetPatientByFullNameRequest getPatientByFullNameRequest = new GetPatientByFullNameRequest(administratorId, firstName, lastName);
+        GetPatientByFullNameRequest getPatientByFullNameRequest = new GetPatientByFullNameRequest(employeeId, firstName, lastName);
         return getPatientByFullNameApi.execute(getPatientByFullNameRequest);
     }
 }

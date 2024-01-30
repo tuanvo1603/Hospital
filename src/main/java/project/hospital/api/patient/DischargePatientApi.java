@@ -1,6 +1,5 @@
 package project.hospital.api.patient;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
@@ -32,6 +31,7 @@ public class DischargePatientApi extends Api<DischargePatientRequest, DischargeP
         try{
             administratorService.checkExistenceOfEmployee(requestData.getAdministratorId());
             commonPatientService.dischargePatient(requestData.getPatientId());
+            return new DischargePatientResponse();
         }catch (EmployeeNotFoundException e) {
             return new DischargePatientResponse(StatusCode.REQUEST.getCode(), "Error in employeeId.");
         }catch (PatientNotFoundException e) {

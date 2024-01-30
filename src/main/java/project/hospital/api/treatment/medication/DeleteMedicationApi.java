@@ -4,7 +4,6 @@ import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.request.treatment.medication.DeleteMedicationRequest;
-import project.hospital.response.employee.DeleteEmployeeResponse;
 import project.hospital.response.treatment.medication.DeleteMedicationResponse;
 import project.hospital.service.SessionService;
 import project.hospital.service.treatment.prescription.MedicationService;

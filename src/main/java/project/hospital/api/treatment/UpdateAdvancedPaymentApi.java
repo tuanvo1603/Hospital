@@ -8,7 +8,6 @@ import project.hospital.request.treatment.UpdateAdvancedPaymentRequest;
 import project.hospital.response.treatment.UpdateAdvancedPaymentResponse;
 import project.hospital.service.SessionService;
 import project.hospital.service.employee.AdministratorService;
-import project.hospital.service.employee.CommonEmployeeService;
 import project.hospital.service.treatment.HospitalFeeService;
 
 @Component

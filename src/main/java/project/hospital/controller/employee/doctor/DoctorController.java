@@ -1,6 +1,5 @@
 package project.hospital.controller.employee.doctor;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +7,6 @@ import project.hospital.api.medicationrecord.GetMedicationRecordByCitizenIdApi;
 import project.hospital.api.medicationrecord.InsertMedicationRecordApi;
 import project.hospital.api.treatment.GetTreatmentApi;
 import project.hospital.api.treatment.InsertTreatmentApi;
-import project.hospital.model.medicationrecord.MedicationRecord;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.request.medicationrecord.GetMedicationRecordByCitizenIdRequest;
 import project.hospital.request.medicationrecord.InsertMedicationRecordRequest;
@@ -21,7 +19,7 @@ import project.hospital.response.treatment.InsertTreatmentResponse;
 
 @Controller
 @PreAuthorize("hasRole('DOCTOR')")
-@RequestMapping("/doctor")
+@RequestMapping("/v1/doctor")
 public class DoctorController {
 
     private final GetMedicationRecordByCitizenIdApi getMedicationRecordByCitizenIdApi;

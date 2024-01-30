@@ -68,7 +68,7 @@ import project.hospital.service.treatment.service.HospitalService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/dean/manage-employee")
+@RequestMapping("/v1/dean")
 @PreAuthorize("hasRole('DEAN')")
 public class DeanController {
 

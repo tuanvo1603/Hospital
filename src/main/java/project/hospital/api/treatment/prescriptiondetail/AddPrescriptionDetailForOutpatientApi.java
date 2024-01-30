@@ -1,11 +1,9 @@
 package project.hospital.api.treatment.prescriptiondetail;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.exception.*;
-import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.request.treatment.prescription.InsertPrescriptionRequest;
 import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
 import project.hospital.service.SessionService;

@@ -23,7 +23,7 @@ import project.hospital.response.treatment.prescription.InsertPrescriptionRespon
 import java.util.List;
 
 @Controller
-@RequestMapping("/resident-doctor")
+@RequestMapping("/v1/resident-doctor")
 @PreAuthorize("hasRole('RESIDENT_DOCTOR')")
 public class ResidentDoctorController {
 
@@ -31,18 +31,10 @@ public class ResidentDoctorController {
 
     private final AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi;
 
-    private final GetAllMedicationsApi getAllMedicationsApi;
-
-    private final InsertTreatmentApi insertTreatmentApi;
-
     public ResidentDoctorController(GetInpatientsManagedByResidentDoctorApi getInpatientsManagedByResidentDoctorApi,
-                                    AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi,
-                                    GetAllMedicationsApi getAllMedicationsApi,
-                                    InsertTreatmentApi insertTreatmentApi) {
+                                    AddPrescriptionDetailForInpatientApi addPrescriptionDetailForInpatientApi) {
         this.getInpatientsManagedByResidentDoctorApi = getInpatientsManagedByResidentDoctorApi;
         this.addPrescriptionDetailForInpatientApi = addPrescriptionDetailForInpatientApi;
-        this.insertTreatmentApi = insertTreatmentApi;
-        this.getAllMedicationsApi = getAllMedicationsApi;
     }
 
     @PutMapping("/{doctorId}/add-prescription-detail/{patientId}")

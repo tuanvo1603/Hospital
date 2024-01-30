@@ -16,7 +16,7 @@ import project.hospital.response.treatment.prescription.GetDistributedMedication
 import java.util.List;
 
 @RestController
-@RequestMapping("/nurse")
+@RequestMapping("/v1/nurse")
 @PreAuthorize("hasRole('NURSE')")
 public class NurseController {
 

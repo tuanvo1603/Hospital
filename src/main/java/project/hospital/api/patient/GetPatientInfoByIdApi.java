@@ -1,6 +1,5 @@
 package project.hospital.api.patient;
 
-import jdk.jshell.Snippet;
 import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;

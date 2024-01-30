@@ -13,7 +13,7 @@ import project.hospital.response.treatment.GetHospitalFeeResponse;
 import project.hospital.response.treatment.GetTreatmentResponse;
 
 @RestController
-@RequestMapping("/inpatient/{patientId}")
+@RequestMapping("/v1/inpatient/{patientId}")
 @PreAuthorize("hasRole('PATIENT')")
 public class InpatientController {
 
