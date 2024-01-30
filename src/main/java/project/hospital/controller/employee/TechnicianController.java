@@ -15,7 +15,7 @@ import project.hospital.response.treatment.servicedetail.InsertServiceDetailResp
 import java.util.List;
 
 @RestController
-@RequestMapping("/technician")
+@RequestMapping("/v1/technician")
 @PreAuthorize("hasRole('TECHNICIAN')")
 public class TechnicianController {
 

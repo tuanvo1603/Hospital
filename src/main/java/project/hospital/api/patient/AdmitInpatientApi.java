@@ -1,8 +1,6 @@
 package project.hospital.api.patient;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.exception.EmployeeNotFoundException;
@@ -10,7 +8,6 @@ import project.hospital.exception.PatientNotFoundException;
 import project.hospital.mapper.PatientMapper;
 import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.employee.doctor.SpecialistDoctor;
-import project.hospital.model.managingpatient.ManagingInpatient;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Outpatient;
 import project.hospital.model.treatment.Treatment;

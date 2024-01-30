@@ -4,13 +4,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientNotFoundException;
 import project.hospital.model.employee.doctor.SpecialistDoctor;
-import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
 import project.hospital.model.managingpatient.Appointment;
 import project.hospital.repository.managingpatient.AppointmentRepository;
 import project.hospital.repository.managingpatient.ManagingPatientRepository;
 import project.hospital.service.employee.doctor.SpecialistDoctorService;
-import project.hospital.service.patient.OutpatientService;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -21,17 +19,13 @@ public class AppointmentService extends CommonManagingPatientService implements 
 
     private final AppointmentRepository appointmentRepository;
 
-    private final OutpatientService outpatientService;
-
     private final SpecialistDoctorService specialistDoctorService;
 
     public AppointmentService(ManagingPatientRepository managingPatientRepository,
                               AppointmentRepository appointmentRepository,
-                              OutpatientService outpatientService,
                               SpecialistDoctorService specialistDoctorService) {
         super(managingPatientRepository);
         this.appointmentRepository = appointmentRepository;
-        this.outpatientService = outpatientService;
         this.specialistDoctorService = specialistDoctorService;
     }
 

@@ -22,8 +22,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/specialist-doctor")
-
+@RequestMapping("/v1/specialist-doctor")
 @PreAuthorize("hasRole('SPECIALIST_DOCTOR')")
 public class SpecialistDoctorController {
 

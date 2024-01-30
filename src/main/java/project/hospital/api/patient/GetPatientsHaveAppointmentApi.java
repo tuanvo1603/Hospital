@@ -5,7 +5,6 @@ import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.dto.PatientDTO;
 import project.hospital.mapper.PatientMapper;
-import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
 import project.hospital.request.patient.GetPatientsHaveAppointmentRequest;
 import project.hospital.response.patient.GetPatientsResponse;
