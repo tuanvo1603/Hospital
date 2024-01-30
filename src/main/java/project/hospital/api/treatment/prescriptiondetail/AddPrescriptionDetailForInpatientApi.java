@@ -4,11 +4,14 @@ import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.exception.*;
+import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.request.treatment.prescription.InsertPrescriptionRequest;
 import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
 import project.hospital.service.SessionService;
 import project.hospital.service.employee.doctor.ResidentDoctorService;
 import project.hospital.service.patient.InpatientService;
+import project.hospital.service.treatment.HospitalFeeService;
+import project.hospital.service.treatment.IMoneyCountableService;
 import project.hospital.service.treatment.prescription.PrescriptionDetailService;
 
 @Component
@@ -20,11 +23,18 @@ public class AddPrescriptionDetailForInpatientApi extends Api<InsertPrescription
 
     private final InpatientService inpatientService;
 
-    public AddPrescriptionDetailForInpatientApi(ResidentDoctorService residentDoctorService, PrescriptionDetailService prescriptionDetailService, SessionService sessionService, InpatientService inpatientService) {
+    private final HospitalFeeService hospitalFeeService;
+
+    public AddPrescriptionDetailForInpatientApi(ResidentDoctorService residentDoctorService,
+                                                PrescriptionDetailService prescriptionDetailService,
+                                                SessionService sessionService,
+                                                InpatientService inpatientService,
+                                                HospitalFeeService hospitalFeeService) {
         super(sessionService);
         this.residentDoctorService = residentDoctorService;
         this.prescriptionDetailService = prescriptionDetailService;
         this.inpatientService = inpatientService;
+        this.hospitalFeeService = hospitalFeeService;
     }
 
     @Override
@@ -33,6 +43,7 @@ public class AddPrescriptionDetailForInpatientApi extends Api<InsertPrescription
             residentDoctorService.checkExistenceOfEmployee(requestData.getDoctorId());
             inpatientService.checkExistenceOfPatient(requestData.getPatientId());
             prescriptionDetailService.createPrescriptionDetail(requestData.getPatientId(), requestData.getPrescriptionDetail());
+            hospitalFeeService.updateHospitalFee(requestData.getPatientId(), requestData.getPrescriptionDetail());
 
             return new InsertPrescriptionResponse();
         }catch (PatientNotFoundException e) {

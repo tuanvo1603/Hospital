@@ -14,7 +14,6 @@ public class TreatmentService {
 
     private final TreatmentRepository treatmentRepository;
 
-    @Autowired
     public TreatmentService(TreatmentRepository treatmentRepository) {
         this.treatmentRepository = treatmentRepository;
     }

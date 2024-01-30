@@ -1,6 +1,5 @@
 package project.hospital.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.service.treatment.TreatmentService;
@@ -10,7 +9,6 @@ public class TreatmentMapper {
 
     private final TreatmentService treatmentService;
 
-    @Autowired
     public TreatmentMapper(TreatmentService treatmentService) {
         this.treatmentService = treatmentService;
     }

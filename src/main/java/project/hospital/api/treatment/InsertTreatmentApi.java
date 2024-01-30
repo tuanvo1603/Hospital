@@ -34,13 +34,6 @@ public class InsertTreatmentApi extends Api<InsertTreatmentRequest, InsertTreatm
         this.treatmentService = treatmentService;
     }
 
-    public ResponseEntity<String> updateTreatmentForInpatient(Treatment treatment, Long doctorId, Long patientId) {
-        residentDoctorService.checkExistenceOfEmployee(doctorId);
-        managingInpatientService.isManagedPatientByDoctor(doctorId, patientId);
-        treatmentService.updateTreatment(patientId, treatment);
-        return ResponseEntity.ok("Update treatment successfully.");
-    }
-
     @Override
     public InsertTreatmentResponse execute(InsertTreatmentRequest requestData) {
         try{

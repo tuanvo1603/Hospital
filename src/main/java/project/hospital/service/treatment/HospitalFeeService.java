@@ -1,15 +1,13 @@
 package project.hospital.service.treatment;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientNotFoundException;
-import project.hospital.exception.TreatmentNotFoundException;
 import project.hospital.model.treatment.HospitalFee;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.model.treatment.medication.Medication;
-import project.hospital.model.treatment.service.HospitalServiceEntity;
+import project.hospital.model.treatment.medication.PrescriptionDetail;
+import project.hospital.model.treatment.service.ServiceDetail;
 import project.hospital.repository.treatment.HospitalFeeRepository;
 
 @Service
@@ -17,9 +15,16 @@ public class HospitalFeeService {
 
     private final HospitalFeeRepository hospitalFeeRepository;
 
-    @Autowired
-    public HospitalFeeService(HospitalFeeRepository hospitalFeeRepository) {
+    private final IMoneyCountableService<PrescriptionDetail> prescriptionDetailService;
+
+    private final IMoneyCountableService<ServiceDetail> hospitalServiceDetailService;
+
+    public HospitalFeeService(HospitalFeeRepository hospitalFeeRepository,
+                              IMoneyCountableService<PrescriptionDetail> prescriptionDetailService,
+                              IMoneyCountableService<ServiceDetail> hospitalServiceDetailService) {
         this.hospitalFeeRepository = hospitalFeeRepository;
+        this.prescriptionDetailService = prescriptionDetailService;
+        this.hospitalServiceDetailService = hospitalServiceDetailService;
     }
 
     @Transactional
@@ -51,22 +56,17 @@ public class HospitalFeeService {
         return hospitalFeeRepository.findById(patientId).orElseThrow(PatientNotFoundException::new);
     }
 
-    private int countPriceOfPrescription(Medication medication, int usedMedicationQuantity) {
-        return usedMedicationQuantity * medication.getUnitPrice();
-    }
-
     @Transactional
-    public void updateTotalMoneyAfterAddingPrescription(Long patientId, Medication medication, int usedMedicationQuantity) {
+    public void updateHospitalFee(Long patientId, PrescriptionDetail prescriptionDetail) {
         HospitalFee hospitalFee = this.getHospitalFeeById(patientId);
-        int priceOfPrescription = this.countPriceOfPrescription(medication, usedMedicationQuantity);
-        hospitalFee.setTotalMoney(hospitalFee.getTotalMoney() + priceOfPrescription);
+        hospitalFee.setTotalMoney(hospitalFee.getTotalMoney() + prescriptionDetailService.countHospitalFee(prescriptionDetail));
         hospitalFeeRepository.save(hospitalFee);
     }
 
     @Transactional
-    public void updateTotalMoneyAfterAddingService(Long patient, HospitalServiceEntity hospitalServiceEntity) {
-        HospitalFee hospitalFee = this.getHospitalFeeById(patient);
-        hospitalFee.setTotalMoney(hospitalFee.getTotalMoney() + hospitalServiceEntity.getUnitPrice());
+    public void updateHospitalFee(Long patientId, ServiceDetail serviceDetail) {
+        HospitalFee hospitalFee = this.getHospitalFeeById(patientId);
+        hospitalFee.setTotalMoney(hospitalFee.getTotalMoney() + hospitalServiceDetailService.countHospitalFee(serviceDetail));
         hospitalFeeRepository.save(hospitalFee);
     }
 }

@@ -9,6 +9,7 @@ import project.hospital.response.treatment.prescription.InsertPrescriptionRespon
 import project.hospital.service.SessionService;
 import project.hospital.service.employee.doctor.SpecialistDoctorService;
 import project.hospital.service.patient.OutpatientService;
+import project.hospital.service.treatment.HospitalFeeService;
 import project.hospital.service.treatment.prescription.PrescriptionDetailService;
 
 @Component
@@ -20,14 +21,18 @@ public class AddPrescriptionDetailForOutpatientApi extends Api<InsertPrescriptio
 
     private final PrescriptionDetailService prescriptionDetailService;
 
+    private final HospitalFeeService hospitalFeeService;
+
     public AddPrescriptionDetailForOutpatientApi(SpecialistDoctorService specialistDoctorService,
                                                  OutpatientService outpatientService,
                                                  PrescriptionDetailService prescriptionDetailService,
-                                                 SessionService sessionService) {
+                                                 SessionService sessionService,
+                                                 HospitalFeeService hospitalFeeService) {
         super(sessionService);
         this.specialistDoctorService = specialistDoctorService;
         this.outpatientService = outpatientService;
         this.prescriptionDetailService = prescriptionDetailService;
+        this.hospitalFeeService = hospitalFeeService;
     }
 
     @Override
@@ -36,6 +41,7 @@ public class AddPrescriptionDetailForOutpatientApi extends Api<InsertPrescriptio
             specialistDoctorService.checkExistenceOfEmployee(requestData.getDoctorId());
             outpatientService.checkExistenceOfPatient(requestData.getPatientId());
             prescriptionDetailService.createPrescriptionDetail(requestData.getPatientId(), requestData.getPrescriptionDetail());
+            hospitalFeeService.updateHospitalFee(requestData.getPatientId(), requestData.getPrescriptionDetail());
 
             return new InsertPrescriptionResponse();
         }catch (PatientNotFoundException e) {

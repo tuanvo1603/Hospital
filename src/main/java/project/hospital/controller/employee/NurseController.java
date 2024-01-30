@@ -24,7 +24,6 @@ public class NurseController {
 
     private final GetDistributedMedicationTodayApi getDistributedMedicationTodayApi;
 
-    @Autowired
     public NurseController(GetInpatientsManagedByNurseApi getInpatientsManagedByNurseApi,
                            GetDistributedMedicationTodayApi getDistributedMedicationTodayApi) {
         this.getInpatientManagedByNurseApi = getInpatientsManagedByNurseApi;

@@ -21,10 +21,6 @@ public class GetAllServicesApi extends Api<GetAllServicesRequest, GetAllServices
         this.hospitalService = hospitalService;
     }
 
-    public List<HospitalServiceEntity> getServiceList() {
-        return hospitalService.getHospitalServiceList();
-    }
-
     @Override
     public GetAllServicesResponse execute(GetAllServicesRequest requestData) {
         try{

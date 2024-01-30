@@ -26,7 +26,6 @@ public class GetPatientsHaveAppointmentApi extends Api<GetPatientsHaveAppointmen
         this.patientMapper = patientMapper;
     }
 
-
     @Override
     public GetPatientsResponse execute(GetPatientsHaveAppointmentRequest requestData) {
         try{

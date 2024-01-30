@@ -11,27 +11,12 @@ public class MedicationRecordService {
 
     private final MedicalRecordRepository medicalRecordRepository;
 
-    private final CommonPatientService commonPatientService;
 
-
-    public MedicationRecordService(MedicalRecordRepository medicalRecordRepository,
-                                   CommonPatientService commonPatientService) {
+    public MedicationRecordService(MedicalRecordRepository medicalRecordRepository) {
         this.medicalRecordRepository = medicalRecordRepository;
-        this.commonPatientService = commonPatientService;
     }
 
     public MedicationRecord getMedicationRecordById(String citizenId) {
         return medicalRecordRepository.findById(citizenId).orElseThrow(MedicationRecordNotFoundException::new);
     }
-
-//    public MedicationRecord createMedicationRecord(MedicationRecord medicationRecord, String citizenId) {
-//        if(medicalRecordRepository.existsById(citizenId)) {
-//            MedicationRecord storedMedicationRecord = getMedicationRecordById(citizenId);
-//            medicationRecord.getMedicationRecordDetailList()
-//                    .forEach(medicationRecordDetail -> storedMedicationRecord.getMedicationRecordDetailList().add(medicationRecordDetail));
-//            return medicalRecordRepository.save(storedMedicationRecord);
-//        }else {
-//            return medicalRecordRepository.save(medicationRecord);
-//        }
-//    }
 }

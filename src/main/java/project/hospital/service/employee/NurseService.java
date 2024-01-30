@@ -12,7 +12,6 @@ public class NurseService extends CommonEmployeeService implements IEmployeeServ
 
     private final NurseRepository nurseRepository;
 
-    @Autowired
     public NurseService(EmployeeRepository employeeRepository, NurseRepository nurseRepository) {
         super(employeeRepository);
         this.nurseRepository = nurseRepository;

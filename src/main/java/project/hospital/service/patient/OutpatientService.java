@@ -13,7 +13,6 @@ public class OutpatientService extends CommonPatientService implements IPatientS
 
     private final OutpatientRepository outpatientRepository;
 
-    @Autowired
     public OutpatientService(PatientRepository patientRepository,
                              OutpatientRepository outpatientRepository) {
         super(patientRepository);

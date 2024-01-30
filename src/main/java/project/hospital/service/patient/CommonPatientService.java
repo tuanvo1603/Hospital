@@ -13,7 +13,6 @@ public class CommonPatientService {
 
     protected final PatientRepository patientRepository;
 
-    @Autowired
     public CommonPatientService(PatientRepository patientRepository) {
         this.patientRepository = patientRepository;
     }

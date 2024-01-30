@@ -14,7 +14,6 @@ public class MedicationService {
 
     private final MedicationRepository medicationRepository;
 
-    @Autowired
     public MedicationService(MedicationRepository medicationRepository) {
         this.medicationRepository = medicationRepository;
     }

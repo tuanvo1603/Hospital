@@ -27,7 +27,6 @@ public class GetPatientInfoByIdApi extends Api<GetPatientInfoByIdRequest, GetPat
         this.patientMapper = patientMapper;
     }
 
-
     @Override
     public GetPatientInfoByIdResponse execute(GetPatientInfoByIdRequest requestData) {
         try {

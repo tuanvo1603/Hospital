@@ -1,9 +1,7 @@
 package project.hospital.mapper;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import project.hospital.dto.MedicationDTO;
 import project.hospital.dto.PrescriptionDetailDTO;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
@@ -15,7 +13,6 @@ public class PrescriptionDetailMapper {
 
     private final ModelMapper modelMapper;
 
-    @Autowired
     public PrescriptionDetailMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }

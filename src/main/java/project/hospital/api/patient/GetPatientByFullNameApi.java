@@ -34,15 +34,6 @@ public class GetPatientByFullNameApi extends Api<GetPatientByFullNameRequest, Ge
         this.inpatientService = inpatientService;
     }
 
-    public List<PatientDTO> searchByFullName(Long administratorId, String firstName, String lastName) {
-        commonEmployeeService.checkExistenceOfEmployee(administratorId);
-        List<PatientDTO> patientDTOList = patientMapper.mapToPatientDTOList(inpatientService.findAllPatientsByFullName(firstName, lastName));
-        if(patientDTOList.isEmpty())
-            throw new PatientNotFoundException();
-
-        return patientDTOList;
-    }
-
     @Override
     public GetPatientsResponse execute(GetPatientByFullNameRequest requestData) {
         try{

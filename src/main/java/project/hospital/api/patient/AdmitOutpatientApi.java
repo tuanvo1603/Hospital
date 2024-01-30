@@ -46,10 +46,11 @@ public class AdmitOutpatientApi extends Api<AdmitOutpatientRequest, AdmitOutpati
     public AdmitOutpatientResponse execute(AdmitOutpatientRequest requestData) {
         try{
             administratorService.checkExistenceOfEmployee(requestData.getAdministratorId());
-            requestData.getOutpatient().setEmployeeId(requestData.getAdministratorId());
-            Outpatient admitOutpatient = outpatientService.admitPatient(requestData.getOutpatient());
-            Treatment treatment = treatmentService.createTreatment(admitOutpatient);
-            appointmentService.initManagingPatient(admitOutpatient.getPatientId());
+            Outpatient outpatient = requestData.getOutpatient();
+            outpatient.setEmployeeId(requestData.getAdministratorId());
+            Outpatient admittedOutpatient = outpatientService.admitPatient(outpatient);
+            Treatment treatment = treatmentService.createTreatment(admittedOutpatient);
+            appointmentService.initManagingPatient(admittedOutpatient.getPatientId());
             hospitalFeeService.createHospitalFee(treatment);
 
             return new AdmitOutpatientResponse();

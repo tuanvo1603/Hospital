@@ -21,10 +21,6 @@ public class GetAllMedicationsApi extends Api<GetAllMedicationsRequest, GetAllMe
         this.medicationService = medicationService;
     }
 
-    public List<Medication> getMedicationList() {
-        return medicationService.getMedicationList();
-    }
-
     @Override
     public GetAllMedicationsResponse execute(GetAllMedicationsRequest requestData) {
         try{

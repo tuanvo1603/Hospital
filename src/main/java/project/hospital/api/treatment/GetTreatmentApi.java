@@ -20,10 +20,6 @@ public class GetTreatmentApi extends Api<GetTreatmentRequest, GetTreatmentRespon
         this.treatmentService = treatmentService;
     }
 
-    public Treatment getTreatmentInfo(Long patientId) {
-        return treatmentService.getTreatmentById(patientId);
-    }
-
     @Override
     public GetTreatmentResponse execute(GetTreatmentRequest requestData) {
         try {

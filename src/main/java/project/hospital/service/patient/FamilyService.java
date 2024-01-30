@@ -14,7 +14,6 @@ public class FamilyService {
 
     private final InpatientService inpatientService;
 
-    @Autowired
     public FamilyService(FamilyRepository familyRepository, InpatientService inpatientService1) {
         this.familyRepository = familyRepository;
         this.inpatientService = inpatientService1;

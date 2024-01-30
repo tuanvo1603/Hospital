@@ -33,16 +33,11 @@ public class GetDistributedMedicationTodayApi extends Api<GetDistributedMedicati
         this.prescriptionDetailMapper = prescriptionDetailMapper;
     }
 
-    public List<PrescriptionDetailDTO> getDistributedMedicationToday(Long nurseId, Long patientId) {
-        nurseService.checkExistenceOfEmployee(nurseId);
-        return prescriptionDetailMapper.mapToPrescriptionDetailDTOList(prescriptionDetailService.getAllDistributedPrescription(patientId));
-    }
-
     @Override
     public GetDistributedMedicationTodayResponse execute(GetDistributedMedicationTodayRequest requestData) {
         try{
             nurseService.checkExistenceOfEmployee(requestData.getEmployeeId());
-            List<PrescriptionDetailDTO> prescriptionDetailDTOList = prescriptionDetailMapper.mapToPrescriptionDetailDTOList(prescriptionDetailService.getAllDistributedPrescription(requestData.getPatientId()));
+            List<PrescriptionDetailDTO> prescriptionDetailDTOList = prescriptionDetailMapper.mapToPrescriptionDetailDTOList(prescriptionDetailService.getAllPrescriptionTodayByPatientId(requestData.getPatientId()));
 
             return new GetDistributedMedicationTodayResponse(prescriptionDetailDTOList);
         }catch (EmployeeNotFoundException e) {

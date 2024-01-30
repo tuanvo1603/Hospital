@@ -20,10 +20,6 @@ public class GetEmployeeInfoByIdApi extends Api<GetEmployeeInfoByIdRequest, GetE
         this.commonEmployeeService = commonEmployeeService;
     }
 
-    public Employee getEmployeeInfo(Long employeeId) {
-        return commonEmployeeService.getEmployeeById(employeeId);
-    }
-
     @Override
     public GetEmployeeInfoByIdResponse execute(GetEmployeeInfoByIdRequest requestData) {
         try{

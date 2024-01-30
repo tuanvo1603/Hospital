@@ -1,23 +1,21 @@
 package project.hospital.service.treatment.prescription;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.MedicationQuantityNotEnoughException;
-import project.hospital.model.treatment.Treatment;
 import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.repository.treatment.PrescriptionDetailRepository;
 import project.hospital.service.DateService;
 import project.hospital.service.treatment.HospitalFeeService;
-import project.hospital.service.treatment.TreatmentService;
+import project.hospital.service.treatment.IMoneyCountableService;
 
 import java.sql.Date;
 import java.util.List;
 
 @Service
-public class PrescriptionDetailService {
+public class PrescriptionDetailService implements IMoneyCountableService<PrescriptionDetail> {
 
     private final PrescriptionDetailRepository prescriptionDetailRepository;
 
@@ -25,17 +23,11 @@ public class PrescriptionDetailService {
 
     private final MedicationService medicationService;
 
-    private final TreatmentService treatmentService;
-
-    private final HospitalFeeService hospitalFeeService;
-
-    @Autowired
-    public PrescriptionDetailService(PrescriptionDetailRepository prescriptionDetailRepository, DateService dateService, MedicationService medicationService, TreatmentService treatmentService, HospitalFeeService hospitalFeeService) {
+    public PrescriptionDetailService(PrescriptionDetailRepository prescriptionDetailRepository,
+                                     DateService dateService, MedicationService medicationService) {
         this.prescriptionDetailRepository = prescriptionDetailRepository;
         this.dateService = dateService;
         this.medicationService = medicationService;
-        this.treatmentService = treatmentService;
-        this.hospitalFeeService = hospitalFeeService;
     }
 
     private int countUsedMedicationQuantity(PrescriptionDetail  prescriptionDetail) {
@@ -45,12 +37,10 @@ public class PrescriptionDetailService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void createPrescriptionDetail(Long patientId, PrescriptionDetail prescriptionDetail) {
-        Treatment treatment = treatmentService.getTreatmentById(patientId);
         Medication medication = medicationService.getMedicationById(prescriptionDetail.getMedicationId());
         int usedMedicationQuantity = this.countUsedMedicationQuantity(prescriptionDetail);
         if(medicationService.isEnoughMedicationRemainingQuantity(medication, usedMedicationQuantity)) {
             medicationService.updateRemainingQuantity(medication, usedMedicationQuantity);
-            hospitalFeeService.updateTotalMoneyAfterAddingPrescription(patientId, medication, usedMedicationQuantity);
             prescriptionDetail.setPatientId(patientId);
             prescriptionDetailRepository.save(prescriptionDetail);
         }
@@ -61,7 +51,7 @@ public class PrescriptionDetailService {
         prescriptionDetailRepository.deleteById(prescriptionDetailId);
     }
 
-    public List<PrescriptionDetail> getAllDistributedPrescription(Long patientId) {
+    public List<PrescriptionDetail> getAllPrescriptionTodayByPatientId(Long patientId) {
         Date today = dateService.getToday();
         List<PrescriptionDetail> prescriptionDetailList = prescriptionDetailRepository.findAllByPatientId(patientId);
         return prescriptionDetailList
@@ -70,4 +60,10 @@ public class PrescriptionDetailService {
                 .toList();
     }
 
+    @Override
+    public int countHospitalFee(PrescriptionDetail prescriptionDetail) {
+        int usedMedicationQuantity = this.countUsedMedicationQuantity(prescriptionDetail);
+        Medication medication = medicationService.getMedicationById(prescriptionDetail.getMedicationId());
+        return usedMedicationQuantity * medication.getUnitPrice();
+    }
 }

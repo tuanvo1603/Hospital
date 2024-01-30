@@ -1,6 +1,5 @@
 package project.hospital.service.employee;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.exception.EmployeeNotFoundException;
 import project.hospital.model.employee.Technician;
@@ -12,7 +11,6 @@ public class TechnicianService extends CommonEmployeeService implements IEmploye
 
     private final TechnicianRepository technicianRepository;
 
-    @Autowired
     public TechnicianService(EmployeeRepository employeeRepository, TechnicianRepository technicianRepository) {
         super(employeeRepository);
         this.technicianRepository = technicianRepository;

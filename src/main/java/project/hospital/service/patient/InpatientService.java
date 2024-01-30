@@ -22,25 +22,17 @@ public class InpatientService extends CommonPatientService implements IPatientSe
 
     private final TreatmentRepository treatmentRepository;
 
-    private final TreatmentMapper treatmentMapper;
-
     private final HospitalFeeService hospitalFeeService;
 
-    private final OutpatientService outpatientService;
 
-    @Autowired
     public InpatientService(PatientRepository patientRepository,
                             InpatientRepository inpatientRepository,
                             TreatmentRepository treatmentRepository,
-                            TreatmentMapper treatmentMapper,
-                            HospitalFeeService hospitalFeeService,
-                            OutpatientService outpatientService) {
+                            HospitalFeeService hospitalFeeService) {
         super(patientRepository);
         this.inpatientRepository = inpatientRepository;
         this.treatmentRepository = treatmentRepository;
-        this.treatmentMapper = treatmentMapper;
         this.hospitalFeeService = hospitalFeeService;
-        this.outpatientService = outpatientService;
     }
 
     @Override

@@ -21,7 +21,6 @@ public class TechnicianController {
 
     private final InsertServiceDetailApi insertServiceDetailApi;
 
-    @Autowired
     public TechnicianController(InsertServiceDetailApi insertServiceDetailApi) {
         this.insertServiceDetailApi = insertServiceDetailApi;
     }

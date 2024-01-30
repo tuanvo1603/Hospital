@@ -22,20 +22,16 @@ public class ManagingInpatientService extends CommonManagingPatientService imple
 
     private final ManagingInpatientRepository managingInpatientRepository;
 
-    private final InpatientService inpatientService;
-
     private final ResidentDoctorService residentDoctorService;
 
     private final NurseService nurseService;
 
     public ManagingInpatientService(ManagingPatientRepository managingPatientRepository,
                                     ManagingInpatientRepository managingInpatientRepository,
-                                    InpatientService inpatientService,
                                     ResidentDoctorService residentDoctorService,
                                     NurseService nurseService) {
         super(managingPatientRepository);
         this.managingInpatientRepository = managingInpatientRepository;
-        this.inpatientService = inpatientService;
         this.residentDoctorService = residentDoctorService;
         this.nurseService = nurseService;
     }

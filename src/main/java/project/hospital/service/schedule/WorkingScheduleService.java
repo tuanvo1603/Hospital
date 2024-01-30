@@ -17,7 +17,6 @@ public class WorkingScheduleService {
 
     private final DateService dateService;
 
-    @Autowired
     public WorkingScheduleService(WorkingScheduleRepository workingScheduleRepository,
                                   DateService dateService) {
         this.workingScheduleRepository = workingScheduleRepository;
