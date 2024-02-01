@@ -12,11 +12,11 @@ import project.hospital.service.treatment.prescription.MedicationService;
 import java.util.List;
 
 @Component
-public class GetAllMedicationsApi extends Api<GetAllMedicationsRequest, GetAllMedicationsResponse> {
+public class GetMedicationsApi extends Api<GetAllMedicationsRequest, GetAllMedicationsResponse> {
 
     private final MedicationService medicationService;
 
-    public GetAllMedicationsApi(MedicationService medicationService, SessionService sessionService) {
+    public GetMedicationsApi(MedicationService medicationService, SessionService sessionService) {
         super(sessionService);
         this.medicationService = medicationService;
     }
@@ -24,7 +24,7 @@ public class GetAllMedicationsApi extends Api<GetAllMedicationsRequest, GetAllMe
     @Override
     public GetAllMedicationsResponse execute(GetAllMedicationsRequest requestData) {
         try{
-            List<Medication> medicationList = medicationService.getMedicationList();
+            List<Medication> medicationList = medicationService.getMedicationList(requestData.getPage(), requestData.getSize());
 
             return new GetAllMedicationsResponse(medicationList);
         }catch (Exception e) {

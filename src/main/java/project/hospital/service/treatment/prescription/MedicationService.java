@@ -1,6 +1,9 @@
 package project.hospital.service.treatment.prescription;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import project.hospital.exception.MedicationQuantityNotEnoughException;
 import project.hospital.exception.MedicationNotFoundException;
@@ -22,8 +25,8 @@ public class MedicationService {
         return medicationRepository.save(medication);
     }
 
-    public List<Medication> getMedicationList() {
-        return medicationRepository.findAll();
+    public List<Medication> getMedicationList(int page, int size) {
+        return medicationRepository.findAll(Pageable.ofSize(size).withPage(page)).getContent();
     }
 
     public Medication importMedication(Medication medication) {

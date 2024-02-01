@@ -1,26 +1,16 @@
 package project.hospital.controller.employee.doctor;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.patient.GetInpatientsManagedByResidentDoctorApi;
 
-import project.hospital.api.treatment.InsertTreatmentApi;
-import project.hospital.api.treatment.medication.GetAllMedicationsApi;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForInpatientApi;
-import project.hospital.dto.PatientDTO;
-import project.hospital.model.treatment.Treatment;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.request.patient.GetInpatientsManagedByResidentDoctorRequest;
-import project.hospital.request.treatment.InsertTreatmentRequest;
 import project.hospital.request.treatment.prescription.InsertPrescriptionRequest;
 import project.hospital.response.patient.GetPatientsResponse;
-import project.hospital.response.treatment.InsertTreatmentResponse;
 import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
-
-import java.util.List;
 
 @Controller
 @RequestMapping("/v1/resident-doctor")
