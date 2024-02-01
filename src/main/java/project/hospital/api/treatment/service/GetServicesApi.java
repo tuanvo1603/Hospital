@@ -12,11 +12,11 @@ import project.hospital.service.treatment.service.HospitalService;
 import java.util.List;
 
 @Component
-public class GetAllServicesApi extends Api<GetAllServicesRequest, GetAllServicesResponse> {
+public class GetServicesApi extends Api<GetAllServicesRequest, GetAllServicesResponse> {
 
     private final HospitalService hospitalService;
 
-    public GetAllServicesApi(HospitalService hospitalService, SessionService sessionService) {
+    public GetServicesApi(HospitalService hospitalService, SessionService sessionService) {
         super(sessionService);
         this.hospitalService = hospitalService;
     }
@@ -24,7 +24,7 @@ public class GetAllServicesApi extends Api<GetAllServicesRequest, GetAllServices
     @Override
     public GetAllServicesResponse execute(GetAllServicesRequest requestData) {
         try{
-            List<HospitalServiceEntity> hospitalServiceEntityList = hospitalService.getHospitalServiceList();
+            List<HospitalServiceEntity> hospitalServiceEntityList = hospitalService.getHospitalServiceList(requestData.getPage(), requestData.getSize());
 
             return new GetAllServicesResponse(hospitalServiceEntityList);
         }catch (Exception e) {

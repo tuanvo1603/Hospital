@@ -19,6 +19,9 @@ public class GetAllMedicationsResponse extends ResponseData {
         this.medicationList = medicationList;
     }
 
+    public GetAllMedicationsResponse() {
+    }
+
     public List<Medication> getMedicationList() {
         return medicationList;
     }

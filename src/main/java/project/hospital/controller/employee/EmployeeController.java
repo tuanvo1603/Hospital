@@ -4,13 +4,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.employee.GetEmployeeInfoByIdApi;
 import project.hospital.api.patient.GetPatientByFullNameApi;
-import project.hospital.api.treatment.medication.GetAllMedicationsApi;
-import project.hospital.api.treatment.service.GetAllServicesApi;
+import project.hospital.api.treatment.medication.GetMedicationsApi;
+import project.hospital.api.treatment.service.GetServicesApi;
 import project.hospital.api.workingschedule.GetCurrentWeekWorkingScheduleApi;
-import project.hospital.model.employee.Employee;
-import project.hospital.model.schedule.WorkingSchedule;
-import project.hospital.model.treatment.medication.Medication;
-import project.hospital.model.treatment.service.HospitalServiceEntity;
 import project.hospital.request.employee.GetEmployeeInfoByIdRequest;
 import project.hospital.request.patient.GetPatientByFullNameRequest;
 import project.hospital.request.treatment.medication.GetAllMedicationsRequest;
@@ -22,8 +18,6 @@ import project.hospital.response.treatment.medication.GetAllMedicationsResponse;
 import project.hospital.response.treatment.service.GetAllServicesResponse;
 import project.hospital.response.workingschedule.GetCurrentWeekWorkingScheduleResponse;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/v1/employee")
 @PreAuthorize("hasRole('EMPLOYEE')")
@@ -33,21 +27,21 @@ public class EmployeeController {
 
     private final GetCurrentWeekWorkingScheduleApi getCurrentWeekWorkingScheduleApi;
 
-    private final GetAllMedicationsApi getAllMedicationsApi;
+    private final GetMedicationsApi getMedicationsApi;
 
-    private final GetAllServicesApi getAllServicesApi;
+    private final GetServicesApi getServicesApi;
 
     private final GetPatientByFullNameApi getPatientByFullNameApi;
 
     public EmployeeController(GetEmployeeInfoByIdApi getEmployeeInfoByIdApi,
                               GetCurrentWeekWorkingScheduleApi getCurrentWeekWorkingScheduleApi,
-                              GetAllMedicationsApi getAllMedicationsApi,
-                              GetAllServicesApi getAllServicesApi,
+                              GetMedicationsApi getMedicationsApi,
+                              GetServicesApi getServicesApi,
                               GetPatientByFullNameApi getPatientByFullNameApi) {
         this.getEmployeeInfoByIdApi = getEmployeeInfoByIdApi;
         this.getCurrentWeekWorkingScheduleApi = getCurrentWeekWorkingScheduleApi;
-        this.getAllMedicationsApi = getAllMedicationsApi;
-        this.getAllServicesApi = getAllServicesApi;
+        this.getMedicationsApi = getMedicationsApi;
+        this.getServicesApi = getServicesApi;
         this.getPatientByFullNameApi = getPatientByFullNameApi;
     }
 
@@ -64,16 +58,16 @@ public class EmployeeController {
         return getEmployeeInfoByIdApi.execute(getEmployeeInfoByIdRequest);
     }
 
-    @GetMapping("/get-medication-list")
-    public GetAllMedicationsResponse getMedicationList() {
-        GetAllMedicationsRequest getAllMedicationsRequest = new GetAllMedicationsRequest();
-        return getAllMedicationsApi.execute(getAllMedicationsRequest);
+    @GetMapping("/get-medication-list/{page}/{size}")
+    public GetAllMedicationsResponse getMedicationList(@PathVariable int page, @PathVariable int size) {
+        GetAllMedicationsRequest getAllMedicationsRequest = new GetAllMedicationsRequest(page, size);
+        return getMedicationsApi.execute(getAllMedicationsRequest);
     }
 
-    @GetMapping("/get-service-list")
-    public GetAllServicesResponse getServiceList() {
-        GetAllServicesRequest getAllServicesRequest = new GetAllServicesRequest();
-        return getAllServicesApi.execute(getAllServicesRequest);
+    @GetMapping("/get-service-list/{page}/{size}")
+    public GetAllServicesResponse getServiceList(@PathVariable int page, @PathVariable int size) {
+        GetAllServicesRequest getAllServicesRequest = new GetAllServicesRequest(page, size);
+        return getServicesApi.execute(getAllServicesRequest);
     }
 
     @GetMapping("/{employeeId}/search-by-name/{firstName}/{lastName}")

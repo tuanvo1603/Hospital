@@ -18,15 +18,9 @@ public class ServiceDetailService implements IMoneyCountableService<ServiceDetai
 
     private final HospitalService hospitalService;
 
-    private final TreatmentService treatmentService;
-
-    private final HospitalFeeService hospitalFeeService;
-
-    public ServiceDetailService(ServiceDetailRepository serviceDetailRepository, HospitalService hospitalService, TreatmentService treatmentService, HospitalFeeService hospitalFeeService) {
+    public ServiceDetailService(ServiceDetailRepository serviceDetailRepository, HospitalService hospitalService) {
         this.serviceDetailRepository = serviceDetailRepository;
         this.hospitalService = hospitalService;
-        this.treatmentService = treatmentService;
-        this.hospitalFeeService = hospitalFeeService;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)

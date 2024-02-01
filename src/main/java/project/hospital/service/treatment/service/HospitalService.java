@@ -1,5 +1,6 @@
 package project.hospital.service.treatment.service;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import project.hospital.exception.ServiceNotFoundException;
 import project.hospital.model.treatment.service.HospitalServiceEntity;
@@ -20,8 +21,8 @@ public class HospitalService {
         return hospitalServiceRepository.save(hospitalServiceEntity);
     }
 
-    public List<HospitalServiceEntity> getHospitalServiceList() {
-        return hospitalServiceRepository.findAll();
+    public List<HospitalServiceEntity> getHospitalServiceList(int page, int size) {
+        return hospitalServiceRepository.findAll(Pageable.ofSize(size).withPage(page)).getContent();
     }
 
     public void deleteHospitalService(Long serviceId) {
