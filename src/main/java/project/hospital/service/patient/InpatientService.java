@@ -1,11 +1,12 @@
 package project.hospital.service.patient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientNotFoundException;
+import project.hospital.mapper.PatientMapper;
 import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.patient.Inpatient;
+import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.patient.InpatientRepository;
@@ -24,15 +25,23 @@ public class InpatientService extends CommonPatientService implements IPatientSe
 
     private final HospitalFeeService hospitalFeeService;
 
+    private final PatientMapper patientMapper;
+
+    private final TreatmentMapper treatmentMapper;
+
 
     public InpatientService(PatientRepository patientRepository,
                             InpatientRepository inpatientRepository,
                             TreatmentRepository treatmentRepository,
-                            HospitalFeeService hospitalFeeService) {
+                            HospitalFeeService hospitalFeeService,
+                            PatientMapper patientMapper,
+                            TreatmentMapper treatmentMapper) {
         super(patientRepository);
         this.inpatientRepository = inpatientRepository;
         this.treatmentRepository = treatmentRepository;
         this.hospitalFeeService = hospitalFeeService;
+        this.patientMapper = patientMapper;
+        this.treatmentMapper = treatmentMapper;
     }
 
     @Override
@@ -52,9 +61,11 @@ public class InpatientService extends CommonPatientService implements IPatientSe
     }
 
     @Transactional
-    public Inpatient admitPatient(Inpatient inpatient, Treatment treatment) {
+    public Inpatient admitInpatient(Outpatient outpatient, Treatment treatment) {
+        Inpatient inpatient = patientMapper.mapOutpatientToInpatient(outpatient);
+        Treatment newTreatment = treatmentMapper.cloneTreatment(treatment);
         Inpatient admittedPatient = inpatientRepository.saveAndFlush(inpatient);
-        treatment.setPatient(admittedPatient);
+        newTreatment.setPatient(admittedPatient);
         treatmentRepository.save(treatment);
         hospitalFeeService.createHospitalFee(treatment);
         return admittedPatient;

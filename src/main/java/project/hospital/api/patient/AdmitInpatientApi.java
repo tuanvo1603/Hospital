@@ -5,8 +5,6 @@ import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.exception.EmployeeNotFoundException;
 import project.hospital.exception.PatientNotFoundException;
-import project.hospital.mapper.PatientMapper;
-import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.employee.doctor.SpecialistDoctor;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Outpatient;
@@ -18,6 +16,7 @@ import project.hospital.service.employee.doctor.SpecialistDoctorService;
 import project.hospital.service.managingpatient.ManagingInpatientService;
 import project.hospital.service.patient.InpatientService;
 import project.hospital.service.patient.OutpatientService;
+import project.hospital.service.treatment.TreatmentService;
 
 @Component
 public class AdmitInpatientApi extends Api<AdmitInpatientRequest, AdmitInpatientResponse> {
@@ -26,28 +25,24 @@ public class AdmitInpatientApi extends Api<AdmitInpatientRequest, AdmitInpatient
 
     private final InpatientService inpatientService;
 
-    private final PatientMapper patientMapper;
-
     private final OutpatientService outpatientService;
 
     private final ManagingInpatientService managingInpatientService;
 
-    private final TreatmentMapper treatmentMapper;
+    private final TreatmentService treatmentService;
 
     public AdmitInpatientApi(SpecialistDoctorService specialistDoctorService,
                              InpatientService inpatientService,
-                             PatientMapper patientMapper,
                              OutpatientService outpatientService,
                              ManagingInpatientService managingInpatientService,
-                             TreatmentMapper treatmentMapper,
-                             SessionService sessionService) {
+                             SessionService sessionService,
+                             TreatmentService treatmentService) {
         super(sessionService);
         this.specialistDoctorService = specialistDoctorService;
         this.inpatientService = inpatientService;
-        this.patientMapper = patientMapper;
         this.outpatientService = outpatientService;
         this.managingInpatientService = managingInpatientService;
-        this.treatmentMapper = treatmentMapper;
+        this.treatmentService = treatmentService;
     }
 
     @Override
@@ -55,13 +50,11 @@ public class AdmitInpatientApi extends Api<AdmitInpatientRequest, AdmitInpatient
         try{
             SpecialistDoctor specialistDoctor = specialistDoctorService.getEmployeeById(requestData.getSpecialistDoctorId());
             Outpatient outpatient = outpatientService.getPatientById(requestData.getPatientId());
-            Inpatient admitInpatient = patientMapper.mapOutpatientToInpatient(outpatient);
-            Treatment treatment = treatmentMapper.mapTreatmentOutpatientToInpatient(requestData.getPatientId());
-            outpatientService.dischargePatient(requestData.getPatientId());
-
-            Inpatient inpatient = inpatientService.admitPatient(admitInpatient, treatment);
+            Treatment treatment = treatmentService.getTreatmentById(requestData.getPatientId());
+            Inpatient inpatient = inpatientService.admitInpatient(outpatient, treatment);
             inpatient.setDepartment(specialistDoctor.getDepartment());
             managingInpatientService.initManagingPatient(inpatient.getPatientId());
+            outpatientService.dischargePatient(requestData.getPatientId());
 
             return new AdmitInpatientResponse();
         }catch (EmployeeNotFoundException e) {
