@@ -10,7 +10,6 @@ import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.repository.treatment.PrescriptionDetailRepository;
 import project.hospital.service.DateService;
-import project.hospital.service.treatment.HospitalFeeService;
 import project.hospital.service.treatment.IMoneyCountableService;
 
 import java.sql.Date;
