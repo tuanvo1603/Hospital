@@ -4,14 +4,12 @@ import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.exception.*;
-import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.request.treatment.prescription.InsertPrescriptionRequest;
 import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
 import project.hospital.service.SessionService;
 import project.hospital.service.employee.doctor.ResidentDoctorService;
 import project.hospital.service.patient.InpatientService;
 import project.hospital.service.treatment.HospitalFeeService;
-import project.hospital.service.treatment.IMoneyCountableService;
 import project.hospital.service.treatment.prescription.PrescriptionDetailService;
 
 @Component

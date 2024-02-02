@@ -10,23 +10,17 @@ import project.hospital.service.patient.CommonPatientService;
 @Component
 public class MedicationRecordMapper {
 
-    private final CommonPatientService commonPatientService;
-
     private final ModelMapper modelMapper;
 
-    public MedicationRecordMapper(CommonPatientService commonPatientService, ModelMapper modelMapper) {
-        this.commonPatientService = commonPatientService;
+    public MedicationRecordMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
-
-    public MedicationRecord mapMedicationRecordFromPatient(String citizenId) {
-        Patient patient = commonPatientService.getPatientByCitizenId(citizenId);
+    public MedicationRecord mapMedicationRecordFromPatient(Patient patient) {
         return modelMapper.map(patient, MedicationRecord.class);
     }
 
-    public MedicationRecordDetail mapMedicationRecordDetailFromPatient(String citizenId) {
-        Patient patient = commonPatientService.getPatientByCitizenId(citizenId);
+    public MedicationRecordDetail mapMedicationRecordDetailFromPatient(Patient patient) {
         return modelMapper.map(patient, MedicationRecordDetail.class);
     }
 }

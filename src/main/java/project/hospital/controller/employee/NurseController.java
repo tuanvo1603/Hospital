@@ -1,6 +1,5 @@
 package project.hospital.controller.employee;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,6 @@ import project.hospital.request.treatment.prescription.GetDistributedMedicationT
 import project.hospital.response.patient.GetPatientsResponse;
 import project.hospital.response.treatment.prescription.GetDistributedMedicationTodayResponse;
 
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/nurse")
