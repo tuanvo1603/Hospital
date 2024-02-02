@@ -12,7 +12,7 @@ import project.hospital.request.treatment.prescription.InsertPrescriptionRequest
 import project.hospital.response.patient.GetPatientsResponse;
 import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
 
-@Controller
+@RestController
 @RequestMapping("/v1/resident-doctor")
 @PreAuthorize("hasRole('RESIDENT_DOCTOR')")
 public class ResidentDoctorController {
@@ -27,7 +27,7 @@ public class ResidentDoctorController {
         this.addPrescriptionDetailForInpatientApi = addPrescriptionDetailForInpatientApi;
     }
 
-    @PutMapping("/{doctorId}/add-prescription-detail/{patientId}")
+    @PutMapping("/add-prescription-detail/{doctorId}/{patientId}")
     public InsertPrescriptionResponse addPrescriptionDetail(@RequestBody PrescriptionDetail prescriptionDetail,
                                                             @PathVariable Long doctorId,
                                                             @PathVariable Long patientId) {
@@ -35,7 +35,7 @@ public class ResidentDoctorController {
         return addPrescriptionDetailForInpatientApi.execute(insertPrescriptionRequest);
     }
 
-    @GetMapping("/{doctorId}/get-managed-patient-list")
+    @GetMapping("/get-managed-patient-list/{doctorId}")
     public GetPatientsResponse getManagedPatientList(@PathVariable Long doctorId) {
         GetInpatientsManagedByResidentDoctorRequest getInpatientsManagedByResidentDoctorRequest = new GetInpatientsManagedByResidentDoctorRequest(doctorId);
         return getInpatientsManagedByResidentDoctorApi.execute(getInpatientsManagedByResidentDoctorRequest);

@@ -17,7 +17,9 @@ import project.hospital.response.medicationrecord.InsertMedicationRecordResponse
 import project.hospital.response.treatment.GetTreatmentResponse;
 import project.hospital.response.treatment.InsertTreatmentResponse;
 
-@Controller
+import java.util.logging.Logger;
+
+@RestController
 @PreAuthorize("hasRole('DOCTOR')")
 @RequestMapping("/v1/doctor")
 public class DoctorController {
@@ -40,6 +42,8 @@ public class DoctorController {
         this.insertMedicationRecordApi = insertMedicationRecordApi;
     }
 
+
+
     @GetMapping("/get-medication-record/{doctorId}/{citizenId}")
     public GetMedicationRecordByCitizenIdResponse getMedicationRecord(@PathVariable Long doctorId, @PathVariable String citizenId) {
         GetMedicationRecordByCitizenIdRequest getMedicationRecordByCitizenIdRequest = new GetMedicationRecordByCitizenIdRequest(doctorId, citizenId);
@@ -60,7 +64,7 @@ public class DoctorController {
         return getTreatmentApi.execute(getTreatmentRequest);
     }
 
-    @PutMapping("/{doctorId}/insert-treatment/{patientId}")
+    @PutMapping("/insert-treatment/{doctorId}/{patientId}")
     public InsertTreatmentResponse updateTreatment(@RequestBody Treatment treatment,
                                                    @PathVariable Long doctorId,
                                                    @PathVariable Long patientId) {

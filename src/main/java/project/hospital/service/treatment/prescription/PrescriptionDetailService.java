@@ -41,7 +41,7 @@ public class PrescriptionDetailService implements IMoneyCountableService<Prescri
         return daysOfUsing * prescriptionDetail.getQuantityPerDay();
     }
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void createPrescriptionDetail(Long patientId, PrescriptionDetail prescriptionDetail) {
         Medication medication = medicationService.getMedicationById(prescriptionDetail.getMedicationId());
         int usedMedicationQuantity = this.countUsedMedicationQuantity(prescriptionDetail);

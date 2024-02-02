@@ -47,21 +47,21 @@ public class AdministratorController {
         return getAllPatientsApi.execute(getAllPatientsRequest);
     }
 
-    @PostMapping("/{administratorId}/admit-outpatient")
+    @PostMapping("/admit-outpatient/{administratorId}")
     public AdmitOutpatientResponse admitOutpatient(@PathVariable Long administratorId,
                                                    @RequestBody Outpatient outpatient) {
         AdmitOutpatientRequest admitOutpatientRequest = new AdmitOutpatientRequest(administratorId, outpatient);
         return admitOutpatientApi.execute(admitOutpatientRequest);
     }
 
-    @DeleteMapping("/{administratorId}/discharge-patient/{patientId}")
+    @DeleteMapping("/discharge-patient/{administratorId}/{patientId}")
     public DischargePatientResponse dischargePatient(@PathVariable Long administratorId,
                                                      @PathVariable Long patientId) {
         DischargePatientRequest dischargePatientRequest = new DischargePatientRequest(administratorId, patientId);
         return dischargePatientApi.execute(dischargePatientRequest);
     }
 
-    @PostMapping("/{administratorId}/update-advanced-payment/{patientId}/{advancedPayment}")
+    @PostMapping("/update-advanced-payment/{administratorId}/{patientId}/{advancedPayment}")
     public UpdateAdvancedPaymentResponse updateAdvancedPayment(@PathVariable Long administratorId,
                                                                @PathVariable Long patientId,
                                                                @PathVariable Integer advancedPayment) {
