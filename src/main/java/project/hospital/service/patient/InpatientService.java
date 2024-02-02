@@ -8,9 +8,12 @@ import project.hospital.mapper.TreatmentMapper;
 import project.hospital.model.patient.Inpatient;
 import project.hospital.model.patient.Outpatient;
 import project.hospital.model.patient.Patient;
+import project.hospital.model.treatment.HospitalFee;
 import project.hospital.model.treatment.Treatment;
 import project.hospital.repository.patient.InpatientRepository;
 import project.hospital.repository.patient.PatientRepository;
+import project.hospital.repository.treatment.HospitalFeeRepository;
+import project.hospital.repository.treatment.HospitalServiceRepository;
 import project.hospital.repository.treatment.TreatmentRepository;
 import project.hospital.service.treatment.HospitalFeeService;
 
@@ -23,25 +26,28 @@ public class InpatientService extends CommonPatientService implements IPatientSe
 
     private final TreatmentRepository treatmentRepository;
 
-    private final HospitalFeeService hospitalFeeService;
+    private final OutpatientService outpatientService;
 
     private final PatientMapper patientMapper;
 
     private final TreatmentMapper treatmentMapper;
 
+    private final HospitalFeeRepository hospitalFeeRepository;
 
     public InpatientService(PatientRepository patientRepository,
                             InpatientRepository inpatientRepository,
                             TreatmentRepository treatmentRepository,
-                            HospitalFeeService hospitalFeeService,
+                            OutpatientService outpatientService,
                             PatientMapper patientMapper,
-                            TreatmentMapper treatmentMapper) {
+                            TreatmentMapper treatmentMapper,
+                            HospitalFeeRepository hospitalFeeRepository) {
         super(patientRepository);
         this.inpatientRepository = inpatientRepository;
         this.treatmentRepository = treatmentRepository;
-        this.hospitalFeeService = hospitalFeeService;
+        this.outpatientService = outpatientService;
         this.patientMapper = patientMapper;
         this.treatmentMapper = treatmentMapper;
+        this.hospitalFeeRepository = hospitalFeeRepository;
     }
 
     @Override
@@ -61,13 +67,25 @@ public class InpatientService extends CommonPatientService implements IPatientSe
     }
 
     @Transactional
-    public Inpatient admitInpatient(Outpatient outpatient, Treatment treatment) {
+    public Inpatient admitInpatient(Long outpatientId, String department) {
+        Outpatient outpatient = outpatientService.getPatientById(outpatientId);
+        Treatment oldtreatment = treatmentRepository.findById(outpatientId).get();
+        HospitalFee oldhospitalFee = hospitalFeeRepository.findById(outpatientId).get();
+        Treatment newTreatment = treatmentMapper.cloneTreatment(oldtreatment);
         Inpatient inpatient = patientMapper.mapOutpatientToInpatient(outpatient);
-        Treatment newTreatment = treatmentMapper.cloneTreatment(treatment);
+        HospitalFee newHospitalFee = treatmentMapper.cloneHospitalFee(oldhospitalFee);
+
+        inpatient.setDepartment(department);
+        outpatientService.dischargePatient(outpatientId);
         Inpatient admittedPatient = inpatientRepository.saveAndFlush(inpatient);
+
         newTreatment.setPatient(admittedPatient);
-        treatmentRepository.save(treatment);
-        hospitalFeeService.createHospitalFee(treatment);
+        Treatment treatment = treatmentRepository.saveAndFlush(newTreatment);
+
+
+        newHospitalFee.setTreatment(treatment);
+        hospitalFeeRepository.save(newHospitalFee);
+
         return admittedPatient;
     }
 

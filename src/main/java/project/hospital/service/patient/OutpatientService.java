@@ -1,6 +1,5 @@
 package project.hospital.service.patient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.exception.CitizenIdIsExistedException;
 import project.hospital.exception.PatientNotFoundException;

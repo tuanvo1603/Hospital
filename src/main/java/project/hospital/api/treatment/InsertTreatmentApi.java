@@ -1,13 +1,11 @@
 package project.hospital.api.treatment;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import project.hospital.api.Api;
 import project.hospital.constant.StatusCode;
 import project.hospital.exception.EmployeeNotFoundException;
 import project.hospital.exception.IncorrectManagedEmployeeException;
 import project.hospital.exception.TreatmentNotFoundException;
-import project.hospital.model.treatment.Treatment;
 import project.hospital.request.treatment.InsertTreatmentRequest;
 import project.hospital.response.treatment.InsertTreatmentResponse;
 import project.hospital.service.SessionService;

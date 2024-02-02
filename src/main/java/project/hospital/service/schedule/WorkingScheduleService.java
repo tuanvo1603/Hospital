@@ -1,12 +1,10 @@
 package project.hospital.service.schedule;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.hospital.model.schedule.WorkingSchedule;
 import project.hospital.model.schedule.WorkingScheduleId;
 import project.hospital.repository.schedule.WorkingScheduleRepository;
 import project.hospital.service.DateService;
-import project.hospital.service.employee.CommonEmployeeService;
 
 import java.util.List;
 

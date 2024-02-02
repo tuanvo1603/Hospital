@@ -6,7 +6,6 @@ import project.hospital.api.managingpatient.AddAppointmentApi;
 import project.hospital.api.patient.AdmitInpatientApi;
 import project.hospital.api.patient.GetPatientsHaveAppointmentApi;
 import project.hospital.api.treatment.prescriptiondetail.AddPrescriptionDetailForOutpatientApi;
-import project.hospital.dto.PatientDTO;
 import project.hospital.model.treatment.medication.PrescriptionDetail;
 import project.hospital.request.managingpatient.AddAppointmentForPatientRequest;
 import project.hospital.request.patient.AdmitInpatientRequest;
@@ -18,7 +17,6 @@ import project.hospital.response.patient.GetPatientsResponse;
 import project.hospital.response.treatment.prescription.InsertPrescriptionResponse;
 
 import java.sql.Date;
-import java.util.List;
 
 
 @RestController

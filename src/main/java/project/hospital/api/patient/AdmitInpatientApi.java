@@ -49,12 +49,8 @@ public class AdmitInpatientApi extends Api<AdmitInpatientRequest, AdmitInpatient
     public AdmitInpatientResponse execute(AdmitInpatientRequest requestData) {
         try{
             SpecialistDoctor specialistDoctor = specialistDoctorService.getEmployeeById(requestData.getSpecialistDoctorId());
-            Outpatient outpatient = outpatientService.getPatientById(requestData.getPatientId());
-            Treatment treatment = treatmentService.getTreatmentById(requestData.getPatientId());
-            Inpatient inpatient = inpatientService.admitInpatient(outpatient, treatment);
-            inpatient.setDepartment(specialistDoctor.getDepartment());
+            Inpatient inpatient = inpatientService.admitInpatient(requestData.getPatientId(), specialistDoctor.getDepartment());
             managingInpatientService.initManagingPatient(inpatient.getPatientId());
-            outpatientService.dischargePatient(requestData.getPatientId());
 
             return new AdmitInpatientResponse();
         }catch (EmployeeNotFoundException e) {

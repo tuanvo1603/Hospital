@@ -1,7 +1,8 @@
 package project.hospital.service.patient;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import project.hospital.exception.PatientNotFoundException;
 import project.hospital.model.patient.Patient;
 import project.hospital.repository.patient.PatientRepository;
@@ -17,6 +18,7 @@ public class CommonPatientService {
         this.patientRepository = patientRepository;
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void dischargePatient(Long patientId) {
         this.checkExistenceOfPatient(patientId);
         patientRepository.deleteById(patientId);
