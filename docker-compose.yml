@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_DB: Hospital
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 8826
+    ports:
+      - "5432:5432"
+
+  spring-app:
+    build: C:/Users/vx/IdeaProjects/Hospital
+    container_name: spring-app-container
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/Hospital
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 8826
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    ports:
+      - "8080:8090"
+    depends_on:
+      - db

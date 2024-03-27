@@ -12,7 +12,6 @@ import project.hospital.request.treatment.prescription.GetDistributedMedicationT
 import project.hospital.response.patient.GetPatientsResponse;
 import project.hospital.response.treatment.prescription.GetDistributedMedicationTodayResponse;
 
-
 @RestController
 @RequestMapping("/v1/nurse")
 @PreAuthorize("hasRole('NURSE')")

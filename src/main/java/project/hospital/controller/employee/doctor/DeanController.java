@@ -1,7 +1,5 @@
 package project.hospital.controller.employee.doctor;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import project.hospital.api.employee.*;
@@ -16,10 +14,8 @@ import project.hospital.api.treatment.service.InsertServiceApi;
 import project.hospital.api.treatment.service.UpdateServiceApi;
 import project.hospital.api.workingschedule.DeleteWorkingScheduleApi;
 import project.hospital.api.workingschedule.InsertWorkingScheduleApi;
-import project.hospital.dto.PatientDTO;
-import project.hospital.mapper.PatientMapper;
 import project.hospital.model.employee.Administrator;
-import project.hospital.model.employee.Employee;
+import project.hospital.model.employee.Department;
 import project.hospital.model.employee.Nurse;
 import project.hospital.model.employee.Technician;
 import project.hospital.model.employee.doctor.ResidentDoctor;
@@ -27,6 +23,7 @@ import project.hospital.model.employee.doctor.SpecialistDoctor;
 import project.hospital.model.schedule.WorkingSchedule;
 import project.hospital.model.treatment.medication.Medication;
 import project.hospital.model.treatment.service.HospitalServiceEntity;
+import project.hospital.repository.employee.DepartmentRepository;
 import project.hospital.request.employee.*;
 import project.hospital.request.managingpatient.AssignNurseForInpatientRequest;
 import project.hospital.request.managingpatient.AssignResidentDoctorForInpatientRequest;
@@ -53,19 +50,6 @@ import project.hospital.response.treatment.service.InsertServiceResponse;
 import project.hospital.response.treatment.service.UpdateServiceResponse;
 import project.hospital.response.workingschedule.DeleteWorkingScheduleResponse;
 import project.hospital.response.workingschedule.InsertWorkingScheduleResponse;
-import project.hospital.service.employee.AdministratorService;
-import project.hospital.service.employee.CommonEmployeeService;
-import project.hospital.service.employee.NurseService;
-import project.hospital.service.employee.TechnicianService;
-import project.hospital.service.employee.doctor.ResidentDoctorService;
-import project.hospital.service.employee.doctor.SpecialistDoctorService;
-import project.hospital.service.managingpatient.ManagingInpatientService;
-import project.hospital.service.patient.InpatientService;
-import project.hospital.service.schedule.WorkingScheduleService;
-import project.hospital.service.treatment.prescription.MedicationService;
-import project.hospital.service.treatment.service.HospitalService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/v1/dean")
@@ -108,6 +92,8 @@ public class DeanController {
 
     private final AssignNurseForInpatientApi assignNurseForInpatientApi;
 
+    private final DepartmentRepository departmentRepository;
+
     public DeanController(InsertResidentDoctorApi insertResidentDoctorApi,
                           InsertSpecialistDoctorApi insertSpecialistDoctorApi,
                           InsertNurseApi insertNurseApi,
@@ -125,7 +111,8 @@ public class DeanController {
                           InsertWorkingScheduleApi insertWorkingScheduleApi,
                           DeleteWorkingScheduleApi deleteWorkingScheduleApi,
                           AssignResidentDoctorForInpatientApi assignResidentDoctorForInpatientApi,
-                          AssignNurseForInpatientApi assignNurseForInpatientApi) {
+                          AssignNurseForInpatientApi assignNurseForInpatientApi,
+                          DepartmentRepository departmentRepository) {
         this.insertResidentDoctorApi = insertResidentDoctorApi;
         this.insertSpecialistDoctorApi = insertSpecialistDoctorApi;
         this.insertNurseApi = insertNurseApi;
@@ -144,6 +131,7 @@ public class DeanController {
         this.deleteWorkingScheduleApi = deleteWorkingScheduleApi;
         this.assignResidentDoctorForInpatientApi = assignResidentDoctorForInpatientApi;
         this.assignNurseForInpatientApi = assignNurseForInpatientApi;
+        this.departmentRepository = departmentRepository;
     }
 
     @DeleteMapping("/delete-employee/{employeeId}")
@@ -254,6 +242,15 @@ public class DeanController {
     public DeleteServiceResponse deleteService(@PathVariable Long serviceId) {
         DeleteServiceRequest deleteServiceRequest = new DeleteServiceRequest(serviceId);
         return deleteServiceApi.execute(deleteServiceRequest);
+    }
+
+    @PostMapping("/insert-department")
+    public void insertDepartment(@RequestParam("department") String department,
+                                 @RequestParam("officeLocation") String officeLocation) {
+        Department department1 = new Department();
+        department1.setDepartment(department);
+        department1.setOfficeLocation(officeLocation);
+        departmentRepository.save(department1);
     }
 
 }

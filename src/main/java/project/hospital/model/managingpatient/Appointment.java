@@ -3,7 +3,6 @@ package project.hospital.model.managingpatient;
 import jakarta.persistence.*;
 import project.hospital.model.employee.doctor.SpecialistDoctor;
 import project.hospital.model.patient.Outpatient;
-import project.hospital.model.treatment.Treatment;
 
 import java.sql.Date;
 

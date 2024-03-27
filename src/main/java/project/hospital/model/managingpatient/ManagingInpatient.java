@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import project.hospital.model.employee.Nurse;
 import project.hospital.model.employee.doctor.ResidentDoctor;
 import project.hospital.model.patient.Inpatient;
-import project.hospital.model.treatment.Treatment;
 
 @Entity
 @Table(name = "managing_inpatient")
